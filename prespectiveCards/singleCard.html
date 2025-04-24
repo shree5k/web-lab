@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml" />
+  <title>Prespective Cards</title>
+  <style>
+    *, :before, :after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #0F1014;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Suisse Intl', sans-serif;
+    }
+
+    .perspective {
+      perspective: 1000px;
+    }
+
+    .card-element {
+      position: relative;
+      width: 400px;
+      height: 600px;
+      border-radius: 20px;
+      overflow: visible;
+      transform-style: preserve-3d;
+      transition: transform 0.3s ease;
+    }
+
+    .card-element__bg-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      background-color: #262A32;
+    }
+
+    .card-element__bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+      transition: transform 0.6s ease, opacity 0.6s ease;
+      opacity: 0;
+    }
+
+    .card-element__layer {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      transition: transform 0.4s ease, filter 0.4s ease;
+      transform-style: preserve-3d;
+    }
+
+    .card-element__logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 85%;
+      z-index: 6;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
+      transition: transform 0.4s ease, filter 0.4s ease;
+      transform-style: preserve-3d;
+      pointer-events: none;
+    }
+
+    .perspective:hover .card-element__logo {
+      transform: translate(-50%, -50%) translateZ(80px) scale(1.25);
+      filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.7));
+    }
+
+    .card-element__cutout1,
+    .card-element__cutout2 {
+      width: 150px;
+      filter: drop-shadow(0 3px 5px rgba(0,0,0,0.5));
+      opacity: 0;
+      transition: transform 0.4s ease, filter 0.4s ease, opacity 0.4s ease;
+    }
+
+    .card-element__cutout1 { z-index: 2; top: 28%; left: 60%; }
+    .card-element__cutout2 { z-index: 2; top: 40%; left: 25%; }
+
+    .perspective:hover .card-element__bg {
+      transform: scale(1.1) translateZ(-20px);
+      opacity: 1;
+    }
+
+    .perspective:hover .card-element__logo {
+      transform: translate(-50%, -50%) translateZ(80px) scale(1.25);
+      filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.7));
+    }
+
+    .perspective:hover .card-element__cutout1 {
+      transform: translate(-50%, -50%) translateZ(50px) scale(1.5);
+      filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.6));
+      opacity: 1;
+    }
+
+    .perspective:hover .card-element__cutout2 {
+      transform: translate(-50%, -50%) translateZ(35px) scale(2.15);
+      filter: drop-shadow(0 8px 12px rgba(3, 2, 2, 0.6));
+      opacity: 1;
+    }
+    .card-element__logo,
+    .card-element__cutout1,
+    .card-element__cutout2 {
+      image-rendering: auto;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+    }
+    .card-element__logo,
+    .card-element__cutout1,
+    .card-element__cutout2,
+    .card-element__bg {
+      will-change: transform;
+    }
+  </style>
+</head>
+<body>
+
+<div class="perspective">
+  <article class="card-element">
+    <!-- Background wrapper -->
+    <div class="card-element__bg-wrapper">
+      <img
+        src="assets/bg5.png"
+        class="card-element__bg"
+        alt="Rocket League Background"
+      />
+    </div>
+    <!-- Logo inside card -->
+    <img
+      src="assets/logo.svg"
+      class="card-element__layer card-element__logo"
+      alt="Rocket League Logo"
+    />
+    <!-- Cutouts -->
+    <img
+      src="assets/cutout1.png"
+      class="card-element__layer card-element__cutout1"
+      alt="Cutout 1"
+    />
+
+    <img
+      src="assets/cutout2.png"
+      class="card-element__layer card-element__cutout2"
+      alt="Cutout 2"
+    />
+  </article>
+</div>
+
+<script>
+  const card = document.querySelector('.card-element');
+  const perspective = document.querySelector('.perspective');
+
+  perspective.addEventListener('mousemove', (e) => {
+    const rect = perspective.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const rotateY = ((x / rect.width) - 0.5) * 20;
+    const rotateX = ((y / rect.height) - 0.5) * -20;
+
+    card.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
+  });
+
+  perspective.addEventListener('mouseleave', () => {
+    card.style.transform = `rotateY(0deg) rotateX(0deg)`;
+  });
+</script>
+
+</body>
+</html>

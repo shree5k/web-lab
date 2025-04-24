@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml" />
+  <title>Studio Tray</title>
+  <style>
+    *, :before, :after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #0F1014;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Suisse Intl', sans-serif;
+      padding-top: 54px;
+    }
+
+    .cards-tray {
+      display: flex;
+      gap: 0.4rem;
+      width: 100vw;
+      max-width: 100vw;
+      padding: 2rem 4rem;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .cards-tray .perspective {
+      flex: 1;
+      min-width: 220px;
+      max-width: 400px;
+    }
+
+    .card-element {
+      width: 100%;
+      aspect-ratio: 16/9;
+      position: relative;
+      border-radius: 16px;
+      overflow: visible;
+      transform-style: preserve-3d;
+      transition: transform 0.3s ease;
+    }
+
+    .card-element__bg-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      overflow: hidden;
+      background-color: #262A32;
+    }
+
+    .card-element__bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+      transition: transform 0.6s ease, opacity 0.6s ease;
+      opacity: 0;
+    }
+
+    .card-element__layer {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      transition: transform 0.4s ease, filter 0.4s ease;
+      transform-style: preserve-3d;
+    }
+
+    .card-element__logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60%;
+      z-index: 6;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
+      transition: transform 0.4s ease, filter 0.4s ease;
+      transform-style: preserve-3d;
+      pointer-events: none;
+    }
+
+    .perspective:hover .card-element__logo {
+      transform: translate(-50%, -50%) translateZ(80px) scale(1.25);
+      filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.7));
+    }
+
+    .card-element__cutout1,
+    .card-element__cutout2 {
+      width: 150px;
+      filter: drop-shadow(0 3px 5px rgba(0,0,0,0.5));
+      opacity: 0;
+      transition: transform 0.4s ease, filter 0.4s ease, opacity 0.4s ease;
+    }
+
+    .card-element__cutout1 { z-index: 2; top: 28%; left: 60%; }
+    .card-element__cutout2 { z-index: 2; top: 40%; left: 25%; }
+
+    .perspective:hover .card-element__bg {
+      transform: scale(1.1) translateZ(-20px);
+      opacity: 1;
+    }
+
+    .perspective:hover .card-element__logo {
+      transform: translate(-50%, -50%) translateZ(80px) scale(1.25);
+      filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.7));
+    }
+
+    .perspective:hover .card-element__cutout1 {
+      transform: translate(-50%, -50%) translateZ(50px) scale(1.5);
+      filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.6));
+      opacity: 1;
+    }
+
+    .perspective:hover .card-element__cutout2 {
+      transform: translate(-50%, -50%) translateZ(35px) scale(2.15);
+      filter: drop-shadow(0 8px 12px rgba(3, 2, 2, 0.6));
+      opacity: 1;
+    }
+    .card-element__logo,
+    .card-element__cutout1,
+    .card-element__cutout2 {
+      image-rendering: auto;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+    }
+    .card-element__logo,
+    .card-element__cutout1,
+    .card-element__cutout2,
+    .card-element__bg {
+      will-change: transform;
+    }
+
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: auto;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      padding: 20px 0 0 20px;
+      background: none;
+      pointer-events: auto;
+    }
+    .header a {
+      color: rgba(255,255,255,0.56);
+      font-style: italic;
+      font-size: 1.2rem;
+      text-decoration: none;
+      font-family: serif;
+      font-weight: 500;
+      user-select: none;
+      pointer-events: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <a href="/">web lab</a>
+  </div>
+  <div class="cards-tray" id="cardsTray"></div>
+  <script>
+    const cardData = [
+      {
+        bg: 'assets/bg-1.png',
+        logo: 'assets/logo-1.svg',
+        cutout1: 'assets/cutout-1a.png',
+        cutout2: 'assets/cutout-1b.png',
+        altBg: 'Card 1 Background',
+        altLogo: 'Card 1 Logo',
+        altCutout1: 'Card 1 Cutout 1',
+        altCutout2: 'Card 1 Cutout 2'
+      },
+      {
+        bg: 'assets/bg-2.png',
+        logo: 'assets/logo-2.png',
+        cutout1: 'assets/cutout-2a.png',
+        cutout2: 'assets/cutout-2b.png',
+        altBg: 'Card 2 Background',
+        altLogo: 'Card 2 Logo',
+        altCutout1: 'Card 2 Cutout 1',
+        altCutout2: 'Card 2 Cutout 2'
+      },
+      {
+        bg: 'assets/bg-3.png',
+        logo: 'assets/logo-3.png',
+        cutout1: 'assets/cutout-3a.png',
+        cutout2: 'assets/cutout-3b.png',
+        altBg: 'Card 3 Background',
+        altLogo: 'Card 3 Logo',
+        altCutout1: 'Card 3 Cutout 1',
+        altCutout2: 'Card 3 Cutout 2'
+      },
+      {
+        bg: 'assets/bg-4.png',
+        logo: 'assets/logo-4.png',
+        cutout1: 'assets/cutout-4a.png',
+        cutout2: 'assets/cutout-4b.png',
+        altBg: 'Card 4 Background',
+        altLogo: 'Card 4 Logo',
+        altCutout1: 'Card 4 Cutout 1',
+        altCutout2: 'Card 4 Cutout 2'
+      }
+    ];
+
+    const tray = document.getElementById('cardsTray');
+    tray.innerHTML = cardData.map(card => `
+      <div class="perspective">
+        <article class="card-element">
+          <div class="card-element__bg-wrapper">
+            <img src="${card.bg}" class="card-element__bg" alt="${card.altBg}" />
+          </div>
+          <img src="${card.logo}" class="card-element__layer card-element__logo" alt="${card.altLogo}" />
+          <img src="${card.cutout1}" class="card-element__layer card-element__cutout1" alt="${card.altCutout1}" />
+          <img src="${card.cutout2}" class="card-element__layer card-element__cutout2" alt="${card.altCutout2}" />
+        </article>
+      </div>
+    `).join('');
+
+    const cards = document.querySelectorAll('.card-element');
+    const perspectives = document.querySelectorAll('.perspective');
+    perspectives.forEach((perspective, index) => {
+      perspective.addEventListener('mousemove', (e) => {
+        const rect = perspective.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const rotateY = ((x / rect.width) - 0.5) * 20;
+        const rotateX = ((y / rect.height) - 0.5) * -20;
+        cards[index].style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
+      });
+      perspective.addEventListener('mouseleave', () => {
+        cards[index].style.transform = `rotateY(0deg) rotateX(0deg)`;
+      });
+    });
+  </script>
+</body>
+</html>
