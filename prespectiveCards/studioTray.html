@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="icon" href="../assets/logo.svg" type="image/svg+xml" />
   <title>Studio Tray</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     *, :before, :after {
       box-sizing: border-box;
@@ -170,11 +171,17 @@
     .header a:hover {
       color: rgba(255,255,255,0.56);
     }
+    .pageTitleText {
+      color: rgba(255, 255, 255, 0.4);
+      padding-left: 4px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.9rem;
+    }
   </style>
 </head>
 <body>
   <div class="header">
-    <a href="../index.html">web lab</a>
+    <a href="../index.html">web lab / </a><span class="pageTitleText">studioTray</span>
   </div>
   <div class="cards-tray" id="cardsTray"></div>
   <script>

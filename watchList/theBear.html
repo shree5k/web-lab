@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="../assets/logo.svg" type="image/svg+xml" />
   <title>The Bear Watchlist</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     html, body {
@@ -45,11 +46,11 @@
       background: linear-gradient(
         to bottom,
         #111 0%,
-        rgba(17,17,17,0.7) 12%,
-        rgba(17,17,17,0.0) 32%,
-        rgba(17,17,17,0.0) 60%,
-        rgba(17,17,17,0.25) 70%,
-        rgba(17,17,17,0.6) 80%,
+        rgba(17,17,17,0.7) 8%,
+        rgba(17,17,17,0.0) 20%,
+        rgba(17,17,17,0.0) 62%,
+        rgba(17,17,17,0.25) 77%,
+        rgba(17,17,17,0.6) 92%,
         #111 100%
       );
     }
@@ -100,7 +101,6 @@
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       box-shadow: 0 2px 8px 0 #18192022;
-      border: 1px solid rgba(255,255,255,0.10);
     }
 
     #salt-img, #tick-img {
@@ -228,7 +228,7 @@
       font-size: 1rem;
       color: #fff;
       font-weight: 400;
-      margin-top: 12px;
+      margin-top: 16px;
     }
 
     .show-metadata > span:not(:first-child)::before {
@@ -259,21 +259,22 @@
     .toast {
       position: absolute;
       left: 50%;
-      bottom: 36px;
+      bottom: 50px;
       transform: translateX(-50%) translateY(40px);
       min-width: 96px;
       max-width: 90%;
-      padding: 16px 16px;
+      padding: 14px 20px;
       background: #010101;
       color: #fff;
-      font-size: 1.1rem;
+      font-size: 1.06rem;
       font-weight: 400;
-      border-radius: 16px;
-      box-shadow: 0 4px 24px 0 #0007;
+      text-align: center;
+      border-radius: 40px;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.35s cubic-bezier(.4,0,.2,1), transform 0.45s cubic-bezier(.4,0,.2,1);
+      transition: opacity 0.3s cubic-bezier(.4,0,.2,1), transform 0.45s cubic-bezier(.4,0,.2,1);
       z-index: 100;
+      box-shadow: inset 0 0 0 2px rgb(255 255 255 / 7%), 0 0 0 0 rgba(0, 0, 0, .7), 0 6px 12px 0 rgba(33, 33, 38, .15);
     }
     .toast.show {
       opacity: 1;
@@ -305,11 +306,17 @@
     .header a:hover {
       color: rgba(255,255,255,0.56);
     }
+    .pageTitleText {
+      color: rgba(255, 255, 255, 0.4);
+      padding-left: 4px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.9rem;
+    }
   </style>
 </head>
 <body>
   <div class="header">
-    <a href="../index.html">web lab</a>
+    <a href="../index.html">web lab / </a><span class="pageTitleText">theBearWatchList</span>
   </div>
   <div class="mini-webview">
     <div class="show-details-card">
@@ -397,7 +404,7 @@
         });
     }
 
-    function showToast(message, duration = 1800) {
+    function showToast(message, duration = 1900) {
       const toast = document.getElementById('toast');
       if (!toast) return;
       toast.textContent = message;
@@ -443,7 +450,7 @@
                   .then(() => {
                       console.log("Tick animation finished (promise).");
                       isAnimating = false; 
-                      showToast('🐻 let it rip');
+                      showToast('added, let it rip 🐻');
                   });
 
             }, dissolveDuration); 
