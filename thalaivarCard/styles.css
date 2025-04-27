@@ -1,0 +1,234 @@
+:root {
+    --background: #111;
+    --foreground: #fff;
+    --accents-1: #111;
+    --accents-2: #333;
+    --accents-3: #252525;
+    --accents-5: #888;
+    --accents-8: #eaeaea;
+    --card-padding: 24px;
+    --radius: 12px;
+
+    --switchboard-columns: 31;
+    --dot-size: 1px;
+    --dot-gap: 15px;
+    --transition-duration: 250ms;
+    --animation-easing: cubic-bezier(0.4, 0.0, 0.2, 1);
+
+    --dot-base-color: var(--accents-5);
+    --dot-medium-color: #3291ff;
+    --dot-medium-shadow: 0 0 2px 1px rgba(50, 145, 255, 0.3);
+    --dot-high-color: #fff;
+    --dot-high-shadow: 0 0 1px 1px rgba(50, 145, 255, 0.8), 0 0 2px 1px rgba(50, 145, 255, 0.3);
+
+    --dot-text-color: #fff;
+    --dot-text-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.9), 0 0 4px 1px rgba(255, 255, 255, 0.5);
+    --dot-hover-dimmed-color: var(--accents-3);
+    --dot-hover-dimmed-opacity: 0.15;
+
+    --ds-focus-ring: 0 0 0 2px var(--background), 0 0 0 4px #3291ff;
+    --success-light: #3291ff;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: var(--accents-1);
+    color: var(--foreground);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    justify-content:center;
+}
+
+.features-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius);
+    background: linear-gradient(110deg, #272727 10%, #171717 100%);
+    padding: var(--card-padding);
+    border: 1px solid var(--accents-2);
+    transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+    width: 100%;
+    max-width: 530px;
+    min-height: 210px;
+    box-sizing: border-box;
+    cursor: pointer;
+    box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.1);
+}
+
+.features-card:focus-visible {
+    outline: 0;
+    box-shadow: var(--ds-focus-ring), inset 0 0 6px rgba(255, 255, 255, 0.1);
+}
+
+.features-card .illustration {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.switchboard-grid {
+    width: 100%;
+    height: 120px;
+    display: grid;
+    grid-template-columns: repeat(var(--switchboard-columns), 1fr);
+    gap: var(--dot-gap);
+    box-sizing: border-box;
+    transform: translateZ(0);
+    align-self: flex-start;
+    padding: 20px 16px;
+}
+
+.light-dot {
+    width: var(--dot-size);
+    height: var(--dot-size);
+    background: var(--dot-base-color);
+    position: relative;
+    border-radius: 9999px;
+    transition: transform var(--transition-duration) var(--animation-easing),
+                opacity var(--transition-duration) var(--animation-easing);
+    transform: scale(1);
+    opacity: 0.7;
+}
+
+.light-dot::before,
+.light-dot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    width: inherit;
+    height: inherit;
+    border-radius: inherit;
+    transition: opacity var(--transition-duration) var(--animation-easing);
+    pointer-events: none;
+}
+
+.light-dot::before {
+    background: var(--dot-medium-color);
+    box-shadow: var(--dot-medium-shadow);
+}
+
+.light-dot::after {
+    background: var(--dot-high-color);
+    box-shadow: var(--dot-high-shadow);
+}
+
+.light-dot[data-state="medium"]::before,
+.light-dot[data-state="high"]::after {
+    opacity: 1;
+}
+
+.light-dot[data-state="medium"] {
+    transform: scale(1);
+    opacity: 1;
+}
+.light-dot[data-state="high"] {
+    transform: scale(1.2);
+    opacity: 1;
+}
+.light-dot[data-state="off"] {
+    transform: scale(1);
+    opacity: 0.7;
+}
+
+.features-card:hover .light-dot {
+    background: var(--dot-base-color);
+    opacity: 0.7;
+    transform: scale(1);
+}
+.features-card:hover .light-dot[data-is-text="true"][data-state="medium"],
+.features-card .light-dot[data-is-text="true"][data-state="medium"] {
+    background: var(--dot-medium-color);
+    opacity: 1;
+    transform: scale(1.7);
+}
+
+.features-card:hover .light-dot:not([data-state="medium"]) {
+    opacity: 0.4;
+}
+.features-card:hover .light-dot[data-state="medium"] {
+    background: var(--dot-medium-color);
+    opacity: 1;
+    transform: scale(2);
+}
+
+.features-card .card-content {
+    position: relative;
+    z-index: 1;
+    margin-top: auto;
+    padding-top: 20px;
+}
+
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 24px;
+    font-weight: 400;
+    margin-top: 16px;
+    color: var(--accents-8);
+}
+
+.card-subtitle {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.5);
+    max-width: min(90%);
+    margin-top: 4px;
+    line-height: 1.5;
+}
+
+.card-button {
+    position: absolute;
+    bottom: var(--card-padding);
+    right: var(--card-padding);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    transition: background 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.features-card:hover .card-button {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.card-button svg {
+    color: #fff;
+    width: 16px;
+    height: 16px;
+}
+#patternTextInput {
+    font-size: 20px;
+    font-weight: 500;
+    background: transparent;
+    border: 1px solid var(--accents-3);
+    color: var(--accents-8);
+    outline: none;
+    width: 320px;
+    text-align: center;
+    border-radius: 8px;
+    padding: 10px 0;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+#patternTextInput:focus {
+    opacity: 1;
+}
