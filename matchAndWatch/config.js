@@ -1,9 +1,7 @@
 const config = {
-    TMDB_API_KEY: window.location.hostname === 'localhost' 
-        ? 'YOUR_LOCAL_API_KEY' // This will be empty in production
-        : window.location.hostname === 'github.io' 
-            ? 'YOUR_GITHUB_PAGES_API_KEY' // Add your GitHub Pages API key here
-            : 'YOUR_OTHER_ENV_API_KEY', // Fallback for other environments
+    TMDB_API_KEY: process.env.REACT_APP_TMDB_API_KEY || 
+                  process.env.TMDB_API_KEY || 
+                  (typeof window !== 'undefined' && window.TMDB_API_KEY),
     BASE_URL: 'https://api.themoviedb.org/3',
     IMAGE_BASE_URL: 'https://image.tmdb.org/t/p/w500'
 };

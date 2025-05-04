@@ -1,0 +1,33 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Install Dependencies
+        run: cd matchAndWatch && npm ci
+        
+      - name: Build
+        run: cd matchAndWatch && npm run build
+        
+      - name: Inject Environment Variables
+        run: |
+          find matchAndWatch/build -name "*.html" -type f -exec sed -i "s/%%TMDB_API_KEY%%/${{ secrets.TMDB_API_KEY }}/g" {} \;
+        
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: matchAndWatch/build
+          branch: gh-pages
