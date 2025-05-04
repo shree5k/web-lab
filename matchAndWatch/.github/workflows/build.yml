@@ -1,0 +1,44 @@
+name: Build with API Key
+
+on:
+  push:
+    branches:
+      - main  # Change to your desired branch, e.g., 'dev'
+  pull_request:
+    branches:
+      - main  # Change to your desired branch
+  workflow_dispatch:  # Allows manual triggering from GitHub UI
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.ref }}  # Checks out the specific branch
+
+    - name: Replace API Key in config.js
+      env:
+        TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+      run: |
+        sed -i "s/__TMDB_API_KEY__/$TMDB_API_KEY/" matchAndWatch/config.js
+
+    - name: Archive build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-output
+        path: |
+          matchAndWatch/index.html
+          matchAndWatch/style.css
+          matchAndWatch/script.js
+          matchAndWatch/config.js
+
+    # Optional: Deploy to GitHub Pages (remove if not needed)
+    - name: Deploy to GitHub Pages
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: matchAndWatch
