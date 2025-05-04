@@ -37,8 +37,8 @@ jobs:
 
       # === IMPORTANT: Inject API Key ===
       - name: Inject TMDB API Key into config.js
-        # This step runs specifically within your project's directory
-        working-directory: ./web-lab/matchAndWatch
+        # Corrected: Path relative to the repository root
+        working-directory: web-lab/matchAndWatch
         # Use sed to find and replace the placeholder. Delimiter '#' avoids issues with '/' in keys.
         run: sed -i "s#__TMDB_API_KEY__#${{ secrets.TMDB_API_KEY }}#g" config.js
         env:
@@ -46,7 +46,8 @@ jobs:
           TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
 
       - name: Verify API Key Replacement (Optional but Recommended)
-        working-directory: ./web-lab/matchAndWatch
+        # Corrected: Path relative to the repository root
+        working-directory: web-lab/matchAndWatch
         run: |
           echo "Checking config.js for API key placeholder..."
           if grep -q '__TMDB_API_KEY__' config.js; then
@@ -70,7 +71,8 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # IMPORTANT: Upload the specific directory containing your site
-          path: ./web-lab/matchAndWatch
+          # This path ALSO needs to be relative to the root
+          path: ./web-lab/matchAndWatch # Keep the './' here or remove it, both should work for upload path
 
       - name: Deploy to GitHub Pages
         id: deployment
