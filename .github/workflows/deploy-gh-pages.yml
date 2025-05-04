@@ -7,7 +7,8 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'web-lab/matchAndWatch/**' # Only run if files in this directory change
+      # Corrected path trigger based on repo structure
+      - 'matchAndWatch/**'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -37,17 +38,16 @@ jobs:
 
       # === IMPORTANT: Inject API Key ===
       - name: Inject TMDB API Key into config.js
-        # Corrected: Path relative to the repository root
-        working-directory: web-lab/matchAndWatch
-        # Use sed to find and replace the placeholder. Delimiter '#' avoids issues with '/' in keys.
+        # Corrected: Path relative to the repository root is simply 'matchAndWatch'
+        working-directory: matchAndWatch
         run: sed -i "s#__TMDB_API_KEY__#${{ secrets.TMDB_API_KEY }}#g" config.js
         env:
           # Make sure you have created a repository secret named TMDB_API_KEY
           TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
 
       - name: Verify API Key Replacement (Optional but Recommended)
-        # Corrected: Path relative to the repository root
-        working-directory: web-lab/matchAndWatch
+        # Corrected: Path relative to the repository root is simply 'matchAndWatch'
+        working-directory: matchAndWatch
         run: |
           echo "Checking config.js for API key placeholder..."
           if grep -q '__TMDB_API_KEY__' config.js; then
@@ -70,9 +70,8 @@ jobs:
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # IMPORTANT: Upload the specific directory containing your site
-          # This path ALSO needs to be relative to the root
-          path: ./web-lab/matchAndWatch # Keep the './' here or remove it, both should work for upload path
+          # Corrected: Upload the 'matchAndWatch' directory relative to the root
+          path: ./matchAndWatch
 
       - name: Deploy to GitHub Pages
         id: deployment
