@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // API Fetching
     async function fetchMovies() {
         console.log("fetchMovies called.");
-        if (!API_KEY || API_KEY === 'YOUR_TMDB_API_KEY' || API_KEY.length < 10) {
+        if (!API_KEY || API_KEY === '__TMDB_API_KEY__' || API_KEY === 'YOUR_LOCAL_DEVELOPMENT_API_KEY' || API_KEY.length < 10) {
             loadingIndicator.textContent = 'Error: Invalid or Missing TMDb API Key in script.js';
             console.error("TMDb API Key invalid or missing!");
             return [];
