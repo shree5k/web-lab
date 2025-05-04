@@ -1,3 +1,5 @@
+# File: .github/workflows/deploy-gh-pages.yml
+
 name: Deploy Match & Watch to GitHub Pages
 
 on:
@@ -32,14 +34,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4 # Use latest version
-
-      - name: Set up Node.js (if needed for future build steps)
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20' # Or your preferred Node.js version
-          cache: 'npm'
-          # Add cache-dependency-path if you have package-lock.json outside the working dir
-          # cache-dependency-path: ./web-lab/matchAndWatch/package-lock.json # Example if you add npm
 
       # === IMPORTANT: Inject API Key ===
       - name: Inject TMDB API Key into config.js
