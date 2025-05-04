@@ -1,0 +1,78 @@
+# File: .github/workflows/deploy-gh-pages.yml
+
+name: Deploy Match & Watch to GitHub Pages
+
+on:
+  # Runs on pushes targeting the main branch (adjust if you use a different branch)
+  push:
+    branches: [ main ]
+    paths:
+      # Corrected path trigger based on repo structure
+      - 'matchAndWatch/**'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Build and Deploy job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4 # Use latest version
+
+      # === IMPORTANT: Inject API Key ===
+      - name: Inject TMDB API Key into config.js
+        # Corrected: Path relative to the repository root is simply 'matchAndWatch'
+        working-directory: matchAndWatch
+        run: sed -i "s#__TMDB_API_KEY__#${{ secrets.TMDB_API_KEY }}#g" config.js
+        env:
+          # Make sure you have created a repository secret named TMDB_API_KEY
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+
+      - name: Verify API Key Replacement (Optional but Recommended)
+        # Corrected: Path relative to the repository root is simply 'matchAndWatch'
+        working-directory: matchAndWatch
+        run: |
+          echo "Checking config.js for API key placeholder..."
+          if grep -q '__TMDB_API_KEY__' config.js; then
+            echo "Error: API Key placeholder __TMDB_API_KEY__ was not replaced!"
+            exit 1
+          elif grep -q 'YOUR_LOCAL_DEVELOPMENT_API_KEY' config.js && [[ "${{ secrets.TMDB_API_KEY }}" != "YOUR_LOCAL_DEVELOPMENT_API_KEY" ]]; then
+             # This check is useful if you modified config.js as suggested previously
+             echo "Warning: Fallback 'YOUR_LOCAL_DEVELOPMENT_API_KEY' is still present. Ensure this is intended."
+             # You might want to exit 1 here if the fallback key should NEVER be deployed:
+             # echo "Error: Fallback 'YOUR_LOCAL_DEVELOPMENT_API_KEY' found in deployment build!"
+             # exit 1
+          else
+            echo "API Key placeholder replaced successfully."
+          fi
+
+      # === GitHub Pages Configuration ===
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Corrected: Upload the 'matchAndWatch' directory relative to the root
+          path: ./matchAndWatch
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
