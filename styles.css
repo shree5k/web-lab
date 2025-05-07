@@ -25,7 +25,7 @@
     color: rgba(255,255,255,0.56);
 }
 .pageTitleText {
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.4) !important;
     padding-left: 4px;
     font-family: "IBM Plex Mono", monospace;
     font-size: 0.85rem;

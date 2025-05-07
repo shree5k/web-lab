@@ -4,25 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Match & Watch</title>
+    <link rel="icon" href="../assets/logo.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
-    <h1>Match & Watch</h1>
-
-    <div class="card-container">
-        <div class="loading-indicator">Loading movies...</div>
+    <div class="header">
+        <a href="../index.html">web lab / </a><span class="pageTitleText">Match & Watch</span>
     </div>
+    <div id="game-area">
+        <div class="logo-container">
+            <img src="assets/logo.svg" alt="Match & Watch Logo" aria-label="Match & Watch">
+            <h1 class="sr-only">Match & Watch</h1>
+        </div>
+        <div class="card-container">
+            <div class="loading-indicator">Loading movies...</div>
+        </div>
 
-    <div class="actions">
-        <button id="dislikeBtn" aria-label="Dislike Movie">×</button>
-        <button id="likeBtn" aria-label="Like Movie">♥</button>
+        <div class="actions">
+            <button id="dislikeBtn" aria-label="Dislike Movie">×</button>
+            <button id="likeBtn" aria-label="Like Movie">♥</button>
+        </div>
     </div>
-
-    <div class="matches-section" style="display: none;">
-        <h2>Our Matches!</h2>
-        <ul id="matched-list"></ul>
+    <div id="game-over-results" class="game-over-container" style="display: none;">
+        <h2 id="game-over-heading">Popcorn ready?, You got </h2>
+        <div id="final-matches-container" class="final-matches">
+            <div class="matches-wrapper" id="matched-list">
+            </div>
+        </div>
+        <button id="play-again-btn" class="modal-button">Play Again?</button>
     </div>
-
     <script type="module" src="config.js"></script>
     <script type="module" src="script.js"></script>
 </body>
