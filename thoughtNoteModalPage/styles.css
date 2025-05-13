@@ -1,0 +1,165 @@
+:root {
+    --bg-color: #1e1e24;
+    --text-color: #e0e0e0;
+    --modal-bg-color: #2c2c34;
+    --modal-border-color: #4a4a52;
+    --modal-shadow-color-base: rgba(0, 0, 0, 0.4);
+    --modal-header-border-color: #3a3a42;
+    --modal-title-color: #e8e8e8;
+    --modal-content-text-color: #c5c5c5;
+    --modal-content-heading-color: #f0f0f0;
+    --modal-close-btn-color: #aaa;
+    --modal-close-btn-hover-color: #fff;
+    
+    --scrollbar-thumb-bg: #555;
+    --scrollbar-thumb-hover-bg: #777;
+    --scrollbar-track-bg: #ffffff00;
+
+    --fluid-easing: cubic-bezier(0.32, 0.72, 0, 1);
+    --expansion-easing: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#cd-icon {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    font-size: 32px;
+    cursor: pointer;
+    z-index: 100;
+    transition: transform 0.3s var(--fluid-easing);
+    /* filter: invert(95%) hue-rotate(180deg) brightness(1.1); */
+}
+
+#cd-icon:hover {
+    transform: scale(1.1);
+}
+
+#modal-page {
+    position: fixed;
+    background-color: var(--modal-bg-color);
+    border: 1px solid var(--modal-border-color);
+    box-shadow: inset 0 2px 5px 0 rgba(247, 246, 250, .1), 0 2px 2px 0 rgba(33, 33, 38, .5);
+    width: var(--modal-width);
+    height: var(--modal-height);
+    top: var(--modal-top);
+    left: var(--modal-left);
+
+    opacity: 0;
+    border-radius: 50%; 
+
+    transition: width 0.45s var(--expansion-easing),
+                height 0.45s var(--expansion-easing),
+                top 0.45s var(--expansion-easing),
+                left 0.45s var(--expansion-easing),
+                opacity 0.3s var(--fluid-easing) 0.05s,
+                border-radius 0.4s var(--expansion-easing) 0.0s;
+    
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+#modal-page.visible {
+    opacity: 1;
+    border-radius: 16px;
+    pointer-events: auto;
+}
+
+.modal-header, .modal-content-container {
+    opacity: 0;
+    transition: opacity 0.35s var(--fluid-easing) 0.2s;
+}
+
+#modal-page.visible .modal-header,
+#modal-page.visible .modal-content-container {
+    opacity: 1;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--modal-header-border-color);
+    padding: 14px 20px;
+    flex-shrink: 0;
+}
+
+.modal-title {
+    font-family: serif;
+    font-size: 1.15em;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--modal-title-color);
+}
+
+#close-modal-btn {
+    background: none;
+    border: none;
+    font-size: 1.4em;
+    cursor: pointer;
+    padding: 5px;
+    line-height: 1;
+    color: var(--modal-close-btn-color);
+    transition: color 0.2s ease;
+}
+#close-modal-btn:hover {
+    color: var(--modal-close-btn-hover-color);
+}
+
+.modal-content-container {
+    padding: 10px 20px 20px 20px;
+    margin-right: 5px;
+    flex-grow: 1;
+    overflow-y: auto;
+    color: var(--modal-content-text-color);
+    line-height: 1.65;
+
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+    &::-webkit-scrollbar-track {
+        background: var(--scrollbar-track-bg);
+        border-radius: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--scrollbar-thumb-bg);
+        border-radius: 10px;
+        border: 2px solid var(--scrollbar-track-bg);
+    }
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: var(--scrollbar-thumb-hover-bg);
+    }
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb-bg) var(--scrollbar-track-bg);
+}
+
+.modal-content-container h1,
+.modal-content-container h2,
+.modal-content-container h3 {
+    margin-top: 0.8em; margin-bottom: 0.6em; color: var(--modal-content-heading-color);
+}
+.modal-content-container h1 { font-size: 1.2em; }
+.modal-content-container h2 { font-size: 1em; }
+.modal-content-container h3 { font-size: 0.8em; }
+.modal-content-container p { margin-bottom: 1.1em; font-size: 0.9em; font-family: "IBM Plex Mono", monospace;}
+.modal-content-container p a { color: white;}
+.modal-content-container ul, 
+.modal-content-container ol { padding-left: 22px; margin-bottom: 1.1em;}
+.modal-content-container li { margin-bottom: 0.4em; }
+.modal-content-container code {
+    background-color: rgba(200, 200, 200, 0.1);
+    color: #b0c4de;
+    padding: 0.2em 0.5em; border-radius: 4px;
+    font-size: 0.9em;
+}
+.modal-content-container hr {
+    border: 0; border-top: 1px solid var(--modal-header-border-color);
+    margin: 1.2em 0;
+}
+.modal-content-container blockquote {
+    border-left: 3px solid var(--modal-header-border-color);
+    padding-left: 12px; margin-left: 0; font-style: italic;
+    color: var(--text-color); opacity: 0.85;
+}

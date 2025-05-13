@@ -1,5 +1,3 @@
-# Thought Note
-
 as a movie buff, I often find myself going toward content based on the studio behind it. Studios like HBO, Marvel, or A24 (tho JHS doesn't have that) those have a distinct identity.
 after watching Succession, some would naturally want to explore more of HBO shows that carry that same tone, quality (no limits kind of thing)
 
