@@ -6,8 +6,12 @@
   <link rel="icon" href="../assets/logo.svg" type="image/svg+xml" />
   <title>The Bear Watchlist</title>
   <link rel="stylesheet" href="theBear.css">
+  <link rel="stylesheet" href="../thoughtNoteModalPage/styles.css">
   <link rel="stylesheet" href="../styles.css">
+
+  <script src="../thoughtNoteModalPage/script.js"></script>
   <script src="theBear.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
   <div class="header">
@@ -58,6 +62,16 @@
       </div>
     </div>
     <div id="toast" class="toast">let it rip</div>
+  </div>
+  <div id="cd-icon" title="Open Thought Note">💿</div>
+  <div id="modal-page">
+    <div class="modal-header">
+        <span class="modal-title">Thought Note</span>
+        <button id="close-modal-btn" aria-label="Close modal">×</button>
+    </div>
+    <div class="modal-content-container">
+        <p>Loading notes...</p>
+    </div>
   </div>
 </body>
 </html>
