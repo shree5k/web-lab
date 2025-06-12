@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Memory</title>
+    <link rel="icon" href="../assets/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../thoughtNoteModalPage/styles.css">
+    <script src="../thoughtNoteModalPage/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html">web lab / </a><span class="pageTitleText">playerMemory</span>
+    </div>
+    <div class="video-player" id="video-player">
+        <div class="video-wrapper" id="video-wrapper">
+            <video class="video" id="video" src="../assets/video/mi.mp4" poster="../assets/images/mi.jpeg"></video>
+            <div class="controls-container" id="controls-container">
+                <div class="top-bar"></div>
+                <div class="bottom-bar">
+                    <div class="progress-bar-wrapper" id="progress-bar-wrapper">
+                        <div class="custom-seekbar" id="custom-seekbar">
+                            <div class="track-background"></div>
+                            <div class="track-progress" id="track-progress"></div>
+                            <div class="memory-segments-container" id="memory-segments-container"></div>
+                            <div class="track-thumb" id="track-thumb"></div>
+                        </div>
+                        <div class="selection-indicator" id="selection-indicator" style="display: none;"></div>
+                        <span class="time-remaining" id="time-remaining">00:00</span>
+                    </div>
+                    <div class="controls"></div>
+                </div>
+            </div>
+            <div class="memory-popup" id="memory-popup">
+                <h3>Add to Memories?</h3>
+                <input type="text" id="memory-title-input" placeholder="something to hold onto…">
+                <div class="buttons">
+                    <button class="cancel-btn" id="memory-cancel-btn">Cancel</button>
+                    <button class="save-btn" id="memory-save-btn">Save Memory</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="drawer-close-overlay"></div>
+        <div class="memory-drawer" id="memory-drawer">
+            <div class="drawer-header">
+                <div class="header-wrapper">
+                    <img src="../assets/icons/memory-glow.svg" alt="Memories" class="icon-svg" style="width: 32px; height: 32px;" />
+                    <h3>Memories</h3>
+                </div>
+                <button class="drawer-close-btn" id="drawer-close-btn">×</button>
+            </div>
+            <ul class="memory-list" id="memory-list"></ul>
+        </div>
+    </div>
+    <div id="cd-icon" title="Open Thought Note">💿</div>
+
+    <div id="modal-page">
+        <div class="modal-header">
+            <span class="modal-title">Thought Note</span>
+            <button id="close-modal-btn" aria-label="Close modal">×</button>
+        </div>
+        <div class="modal-content-container">
+            <p>Loading notes...</p>
+        </div>
+    </div>
+    <script>
+        document.querySelector('.top-bar').innerHTML = `
+            <button class="control-button back-arrow">
+                <img src="../assets/icons/back arrow.svg" alt="Back" class="icon-svg" />
+            </button>
+            <span class="title">Mission Impossible</span>
+            <div class="spacer"></div>
+            <div class="setting">
+                <span>
+                    <img src="../assets/icons/quality.svg" alt="Quality" class="icon-svg" />Quality
+                </span>
+            </div>
+            <div class="setting">
+                <span>
+                    <img src="../assets/icons/audio.svg" alt="Audio & Subtitles" class="icon-svg" />Audio & Subtitles
+                </span>
+            </div>
+            <div class="setting memories-btn" id="memories-btn">
+                <span>
+                    <img src="../assets/icons/memory.svg" alt="Memories" class="icon-svg" />Memories 
+                    <span class="count" id="memory-count">0</span>
+                </span>
+            </div>
+        `;
+
+        document.querySelector('.controls').innerHTML = `
+            <div class="left-controls">
+                <button class="control-button rewind" id="rewind-btn">
+                    <img src="../assets/icons/rewind.svg" alt="Rewind" class="icon-svg-md" />
+                </button>
+                <button class="control-button play-pause" id="play-pause-btn" data-state="play">
+                    <img src="../assets/icons/play.svg" alt="Play" class="icon-svg icon-play" />
+                    <img src="../assets/icons/pause.svg" alt="Pause" class="icon-svg icon-pause" />
+                </button>
+                <button class="control-button forward" id="forward-btn">
+                    <img src="../assets/icons/forward.svg" alt="Forward" class="icon-svg-md" />
+                </button>
+                <button class="control-button volume" id="volume-btn" data-state="sound">
+                    <img src="../assets/icons/sound.svg" alt="Sound" class="icon-svg-md icon-sound" />
+                    <img src="../assets/icons/mute.svg" alt="Mute" class="icon-svg-md icon-mute" />
+                </button>
+            </div>
+            <div class="right-controls">
+                <button class="control-button fullscreen" id="fullscreen-btn">
+                    <img src="../assets/icons/fullscreen.svg" alt="Full Screen" class="icon-svg-md icon-fullscreen" />
+                </button>
+            </div>
+        `;
+    </script>
+    <script>
+        // --- DOM Elements ---
+        const player = document.getElementById('video-player');
+        const video = document.getElementById('video');
+        const customSeekbar = document.getElementById('custom-seekbar');
+        const trackProgress = document.getElementById('track-progress');
+        const trackThumb = document.getElementById('track-thumb');
+        const memorySegmentsContainer = document.getElementById('memory-segments-container');
+        const memoryDrawer = document.getElementById('memory-drawer');
+        const memoryList = document.getElementById('memory-list');
+        const drawerCloseBtn = document.getElementById('drawer-close-btn');
+        const memoriesBtn = document.getElementById('memories-btn');
+        const memoryCount = document.getElementById('memory-count');
+        const drawerCloseOverlay = document.getElementById('drawer-close-overlay');
+
+        const controlsContainer = document.getElementById('controls-container');
+        const progressBarWrapper = document.getElementById('progress-bar-wrapper');
+        const selectionIndicator = document.getElementById('selection-indicator');
+        const memoryPopup = document.getElementById('memory-popup');
+        const memoryTitleInput = document.getElementById('memory-title-input');
+        const memorySaveBtn = document.getElementById('memory-save-btn');
+        const memoryCancelBtn = document.getElementById('memory-cancel-btn');
+
+        let memories = [];
+        let wasVideoPlaying = false;
+        let isSelectingMemory = false;
+        let isDraggingThumb = false;
+        let selectionStartPos = 0;
+        let tempMemory = { startTime: 0, endTime: 0 };
+        let isModifierKeyPressed = false;
+
+        function formatTime(seconds) {
+            const m = Math.floor(seconds / 60);
+            const s = Math.floor(seconds % 60);
+            return `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+
+        function showMemoryPopup() {
+            wasVideoPlaying = !video.paused;
+            if (wasVideoPlaying) {
+                video.pause();
+            }
+
+            memoryPopup.style.display = 'block';
+            setTimeout(() => {
+                memoryPopup.classList.add('show');
+                memoryTitleInput.focus();
+            }, 10);
+        }
+
+        function hideMemoryPopup() {
+            memoryPopup.classList.remove('show');
+            setTimeout(() => {
+                memoryPopup.style.display = 'none';
+
+                if (wasVideoPlaying) {
+                    video.play();
+                }
+                wasVideoPlaying = false;
+            }, 300);
+        }
+
+        function updateMemoryCount() {
+            memoryCount.textContent = memories.length;
+        }
+
+        function renderMemorySegments() {
+            memorySegmentsContainer.innerHTML = '';
+            if (!video.duration) return;
+            memories.forEach((memory) => {
+                const segment = document.createElement('div');
+                segment.className = 'memory-segment';
+                if (memory.isNew) {
+                    segment.classList.add('newly-added');
+                    setTimeout(() => {
+                        segment.classList.add('settled');
+                    }, 3000);
+                    delete memory.isNew;
+                } else {
+                    segment.classList.add('settled');
+                }
+                const leftPercent = (memory.startTime / video.duration) * 100;
+                const widthPercent = ((memory.endTime - memory.startTime) / video.duration) * 100;
+                segment.style.left = `${leftPercent}%`;
+                segment.style.width = `${Math.max(widthPercent, 0.5)}%`;
+                segment.dataset.startTime = memory.startTime;
+                const tooltip = document.createElement('div');
+                tooltip.className = 'memory-tooltip';
+                tooltip.textContent = `${memory.title}`;
+                segment.appendChild(tooltip);
+                memorySegmentsContainer.appendChild(segment);
+            });
+            updateMemoryCount();
+        }
+
+        function renderMemoryList() {
+            memoryList.innerHTML = '';
+            if (memories.length === 0) {
+                memoryList.innerHTML = '<li class="memory-list-item empty">No Memories Yet,<br> Hold Cmd/Alt & drag on the seekbar to save one!</li>';
+                return;
+            }
+            memories.forEach(memory => {
+                const li = document.createElement('li');
+                li.className = 'memory-list-item';
+                li.dataset.startTime = memory.startTime;
+                const titleDiv = document.createElement('div');
+                titleDiv.className = 'title';
+                titleDiv.textContent = memory.title;
+                const timeDiv = document.createElement('div');
+                timeDiv.className = 'time';
+                timeDiv.textContent = `${formatTime(memory.startTime)} - ${formatTime(memory.endTime)}`;
+                li.appendChild(titleDiv);
+                li.appendChild(timeDiv);
+                memoryList.appendChild(li);
+            });
+        }
+
+        function toggleDrawer() {
+            const isOpening = !player.classList.contains('drawer-open');
+            player.classList.toggle('drawer-open');
+
+            if (isOpening) {
+                wasVideoPlaying = !video.paused;
+                if (wasVideoPlaying) {
+                    video.pause();
+                }
+                memoryDrawer.classList.remove('shimmer-active');
+                setTimeout(() => {
+                    memoryDrawer.classList.add('shimmer-active');
+                }, 10);
+            } else {
+                if (wasVideoPlaying) {
+                    video.play();
+                }
+                wasVideoPlaying = false;
+            }
+        }
+
+        function updateSeekbarUI(percent) {
+            trackProgress.style.width = `${percent}%`;
+            trackThumb.style.left = `${percent}%`;
+        }
+
+        function seek(e) {
+            const rect = customSeekbar.getBoundingClientRect();
+            let percent = (e.clientX - rect.left) / rect.width;
+            percent = Math.max(0, Math.min(1, percent));
+            if (isFinite(video.duration)) {
+                video.currentTime = percent * video.duration;
+            }
+            updateSeekbarUI(percent * 100);
+        }
+
+        (function setupStandardControls() {
+            const playPauseBtn = document.getElementById("play-pause-btn"),
+                rewindBtn = document.getElementById("rewind-btn"),
+                forwardBtn = document.getElementById("forward-btn"),
+                volumeBtn = document.getElementById("volume-btn"),
+                fullscreenBtn = document.getElementById("fullscreen-btn");
+
+            function togglePlay() {
+                if (player.classList.contains('drawer-open')) {
+                    return;
+                }
+                video.paused ? video.play() : video.pause();
+            }
+
+            video.addEventListener("play", () => {
+                playPauseBtn.dataset.state = "pause";
+            });
+
+            video.addEventListener("pause", () => {
+                playPauseBtn.dataset.state = "play";
+            });
+
+            playPauseBtn.addEventListener("click", togglePlay);
+            video.addEventListener("click", togglePlay);
+            rewindBtn.addEventListener("click", () => {
+                video.currentTime -= 10;
+            });
+
+            forwardBtn.addEventListener("click", () => {
+                video.currentTime += 10;
+            });
+
+            volumeBtn.addEventListener("click", () => {
+                video.muted = !video.muted;
+                volumeBtn.dataset.state = video.muted ? "mute" : "sound";
+            });
+
+            fullscreenBtn.addEventListener("click", () => {
+                document.fullscreenElement ? document.exitFullscreen() : player.requestFullscreen().catch(err => alert(`Error: ${err.message}`));
+            });
+
+            let timeout;
+            player.addEventListener("mousemove", () => {
+                controlsContainer.classList.add("active");
+                clearTimeout(timeout);
+                video.paused || (timeout = setTimeout(() => controlsContainer.classList.remove("active"), 3000));
+            });
+
+            player.addEventListener("mouseleave", () => {
+                video.paused || controlsContainer.classList.remove("active");
+            });
+
+            video.addEventListener("pause", () => {
+                controlsContainer.classList.add("active");
+                clearTimeout(timeout);
+            });
+        })();
+
+        customSeekbar.addEventListener('mousedown', (e) => {
+            const segment = e.target.closest('.memory-segment');
+            if (segment) {
+                video.currentTime = parseFloat(segment.dataset.startTime);
+                video.play();
+                return;
+            }
+
+            if (isModifierKeyPressed) {
+                e.preventDefault();
+                e.stopPropagation();
+                isSelectingMemory = true;
+                const rect = customSeekbar.getBoundingClientRect();
+                selectionStartPos = e.clientX - rect.left;
+
+                selectionIndicator.style.left = `${selectionStartPos}px`;
+                selectionIndicator.style.width = '1px';
+                selectionIndicator.style.display = 'block';
+                selectionIndicator.style.opacity = '0.6';
+                selectionIndicator.classList.add('active');
+
+                if (navigator.vibrate) navigator.vibrate([20]);
+            } else {
+                isDraggingThumb = true;
+                seek(e);
+            }
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDraggingThumb && !isSelectingMemory) {
+                seek(e);
+            } else if (isSelectingMemory && !isDraggingThumb) {
+                const rect = customSeekbar.getBoundingClientRect();
+                const currentPos = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+                const left = Math.min(selectionStartPos, currentPos);
+                const width = Math.abs(currentPos - selectionStartPos);
+
+                selectionIndicator.style.left = `${left}px`;
+                selectionIndicator.style.width = `${Math.max(width, 1)}px`;
+
+                if (width > 3) {
+                    selectionIndicator.classList.add('dragging');
+                    selectionIndicator.style.opacity = '0.9';
+                } else {
+                    selectionIndicator.classList.remove('dragging');
+                    selectionIndicator.style.opacity = '0.6';
+                }
+            }
+        });
+
+        document.addEventListener('mouseup', (e) => {
+            if (isSelectingMemory) {
+                const rect = customSeekbar.getBoundingClientRect();
+                const selectionEndPos = e.clientX - rect.left;
+                const startPercent = Math.min(selectionStartPos, selectionEndPos) / rect.width;
+                const endPercent = Math.max(selectionStartPos, selectionEndPos) / rect.width;
+
+                selectionIndicator.classList.remove('active', 'dragging');
+                selectionIndicator.style.opacity = '0';
+
+                setTimeout(() => {
+                    selectionIndicator.style.display = 'none';
+                    isSelectingMemory = false;
+                }, 200);
+
+                if (endPercent - startPercent > 0.005) {
+                    tempMemory.startTime = startPercent * video.duration;
+                    tempMemory.endTime = endPercent * video.duration;
+                    memoryTitleInput.value = '';
+                    showMemoryPopup();
+                    if (navigator.vibrate) navigator.vibrate([40]);
+                }
+            }
+            isDraggingThumb = false;
+        });
+
+        function updateProgressBarCursor() {
+            if (isModifierKeyPressed) {
+                customSeekbar.style.cursor = 'crosshair';
+                progressBarWrapper.classList.add('memory-mode');
+                player.classList.add('focus-mode');
+            } else {
+                customSeekbar.style.cursor = 'pointer';
+                progressBarWrapper.classList.remove('memory-mode');
+                player.classList.remove('focus-mode');
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if ((e.altKey || e.ctrlKey || e.metaKey) && !isModifierKeyPressed) {
+                isModifierKeyPressed = true;
+                updateProgressBarCursor();
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (isModifierKeyPressed && !e.altKey && !e.ctrlKey && !e.metaKey) {
+                isModifierKeyPressed = false;
+                updateProgressBarCursor();
+            }
+        });
+
+        window.addEventListener('blur', () => {
+            isModifierKeyPressed = false;
+            updateProgressBarCursor();
+        });
+
+        video.addEventListener('timeupdate', () => {
+            if (!isDraggingThumb) {
+                const percent = (video.currentTime / video.duration) * 100;
+                updateSeekbarUI(percent);
+            }
+            const remainingTime = video.duration - video.currentTime;
+            document.getElementById('time-remaining').textContent = formatTime(remainingTime);
+        });
+
+        video.addEventListener('loadedmetadata', () => {
+            const totalDuration = video.duration;
+            document.getElementById('time-remaining').textContent = formatTime(totalDuration);
+            document.getElementById('time-total').textContent = formatTime(video.duration);
+            renderMemorySegments();
+        });
+
+        memorySaveBtn.addEventListener('click', () => {
+            memories.push({
+                ...tempMemory,
+                title: memoryTitleInput.value || `Memory @ ${new Date().toLocaleTimeString()}`,
+                isNew: true
+            });
+            hideMemoryPopup();
+            renderMemorySegments();
+            renderMemoryList();
+            if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+        });
+
+        memoryCancelBtn.addEventListener('click', hideMemoryPopup);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && memoryPopup.classList.contains('show')) {
+                hideMemoryPopup();
+            }
+        });
+
+        memoryTitleInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                memorySaveBtn.click();
+            }
+        });
+
+        memoriesBtn.addEventListener('click', toggleDrawer);
+        drawerCloseBtn.addEventListener('click', toggleDrawer);
+        drawerCloseOverlay.addEventListener('click', toggleDrawer);
+
+        memoryList.addEventListener('click', (e) => {
+            const item = e.target.closest('.memory-list-item');
+            if (item && item.dataset.startTime) {
+                video.currentTime = parseFloat(item.dataset.startTime);
+                video.play();
+                toggleDrawer();
+            }
+        });
+
+        updateMemoryCount();
+        renderMemoryList();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.memory-segment').forEach(segment => {
+                segment.addEventListener('mouseenter', function() {
+                    const tooltip = segment.querySelector('.memory-tooltip');
+                    if (tooltip) {
+                        tooltip.classList.remove('tooltip-appear');
+                        void tooltip.offsetWidth;
+                        tooltip.classList.add('tooltip-appear');
+                    }
+                });
+                segment.addEventListener('mouseleave', function() {
+                    const tooltip = segment.querySelector('.memory-tooltip');
+                    if (tooltip) {
+                        tooltip.classList.remove('tooltip-appear');
+                    }
+                });
+            });
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT') {
+                return;
+            }
+
+            if (e.code === 'Space') {
+                e.preventDefault();
+
+                const playPauseBtn = document.getElementById('play-pause-btn');
+                if (playPauseBtn) {
+                    playPauseBtn.click();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
