@@ -14,7 +14,7 @@ body {
 .video-player {
     position: relative;
     width: 90%;
-    max-width: 1000px;
+    max-width: 1200px;
     background-color: black;
     overflow: hidden;
     display: flex;
@@ -88,7 +88,7 @@ body {
 .top-bar {
     display: flex;
     align-items: center;
-    padding: 1em;
+    padding: 1.5em;
     font-size: 1.1em;
 }
 
@@ -125,7 +125,7 @@ body {
 }
 
 .bottom-bar {
-    padding: 1em;
+    padding: 1.5em;
 }
 
 .progress-bar-wrapper {
@@ -569,7 +569,7 @@ body {
 }
 
 .drawer-header {
-    padding: 1em;
+    padding: 1.5em 1em;
     display: flex;
     justify-content: space-between;
     align-items: center;
