@@ -270,7 +270,7 @@
             const showFeelingLuckyMessage = () => {
                 if (isPulling || isRefreshing || isDragging || !statusMessage) return;
                 if (statusMessageTimeout) clearTimeout(statusMessageTimeout);
-                const messages = ['Feeling lucky? Pull Up<img src="../assets/icons/up.svg" alt="Up arrow" class="emoji" style="width: 1.5em; height: 1.5em; vertical-align: middle;">', 'Surprise me! Pull Up<img src="../assets/icons/up.svg" alt="Up arrow" class="emoji" style="width: 1.5em; height: 1.5em; vertical-align: middle;">'];
+                const messages = ['Feeling lucky? Pull up<img src="../assets/icons/up.svg" alt="Up arrow" class="emoji" style="width: 1.5em; height: 1.5em; vertical-align: middle;">', 'Surprise me! Pull up<img src="../assets/icons/up.svg" alt="Up arrow" class="emoji" style="width: 1.5em; height: 1.5em; vertical-align: middle;">'];
                 statusMessage.innerHTML = messages[Math.floor(Math.random() * messages.length)];
                 statusMessage.classList.remove('slide-up'); statusMessage.classList.add('show');
                 statusMessageTimeout = setTimeout(() => { if (statusMessage.classList.contains('show')) hideFeelingLuckyMessage(false); }, 4000);
