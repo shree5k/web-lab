@@ -17,49 +17,63 @@
     </div>
     <div class="app-container">
         <div class="content-viewport">
-            <div class="search-container">
-                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32" fill="none">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M24 14.5C24 19.7467 19.7467 24 14.5 24C9.25329 24 5 19.7467 5 14.5C5 9.25329 9.25329 5 14.5 5C19.7467 5 24 9.25329 24 14.5ZM23.3082 21.894C24.9881 19.8949 26 17.3156 26 14.5C26 8.14873 20.8513 3 14.5 3C8.14873 3 3 8.14873 3 14.5C3 20.8513 8.14873 26 14.5 26C17.3156 26 19.8949 24.9881 21.894 23.3082L26.2929 27.7071C26.6834 28.0976 27.3166 28.0976 27.7071 27.7071C28.0976 27.3166 28.0976 26.6834 27.7071 26.2929L23.3082 21.894Z" fill="#8F98B2"/>
-                  </svg>
-                <input type="text" class="search-bar" placeholder="Movies, shows and more">
-            </div>
-            <div class="scroll-container">
-                <div class="card-grid">
-                    <h1>Trending</h1> 
-                    <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=107Kai87ekNV-Svd578OTLVsIaU2QB_Gp&sz=w500" alt="Movie 1" loading="lazy"></div>
-                    <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=10JlIuMQe8nLh9ZssmI-d5huAikPNIDTs&sz=w500" alt="Movie 2" loading="lazy"></div>
-                    <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=10mNpf9KsaoLV0_yPQWJ4SCQlCTATp-AB&sz=w500" alt="Movie 3" loading="lazy"></div>
-                    <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=11IHb7P-pVZe0qQ9_Te3ujoYmae8Fxdvh&sz=w500" alt="Movie 4" loading="lazy"></div>
-                    <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=12H3L2Vx-sSt6tvAQQaRyjXzP_es47qKW&sz=w500" alt="Movie 5" loading="lazy"></div>
-                    <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=137h3EF1IdwqaQBT1F6cYJTwvQCMmA93S&sz=w500" alt="Movie 6" loading="lazy"></div>
-                    <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=143iK41S3q5-yR1USUR8ZbSqEZ7rAAqFc&sz=w500" alt="Movie 7" loading="lazy"></div>
-                    <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=14lMAxidbShs82vCLKVSHGia4MjL7cPN4&sz=w500" alt="Movie 8" loading="lazy"></div>
-                    <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=14y2lML3LeVUo5XjD93MEC-G4qsBTNeEi&sz=w500" alt="Movie 9" loading="lazy"></div>
-                    <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=16YS7CKgetklh6NsYVXZ0MWSQTnj_X8p5&sz=w500" alt="Movie 10" loading="lazy"></div>
-                    <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=178zaXM6K4WkOf9nFvV6p_-TxhuqTjd7x&sz=w500" alt="Movie 11" loading="lazy"></div>
-                    <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=18O4pAx2qAj9AK4NeQfcV81RqMzUjj3ln&sz=w500" alt="Movie 12" loading="lazy"></div>
-                    <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=1BCxYlBxlhmYezz_ybBN3VFt1e7j_HCpq&sz=w500" alt="Movie 13" loading="lazy"></div>
-                    <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=1DAzYbwMZfeoxKrJty8-xlnvRSILLXFMo&sz=w500" alt="Movie 14" loading="lazy"></div>
-                    <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=1G7A7qSwg24_qGMVrNLJRjTXy0pebHwA6&sz=w500" alt="Movie 15" loading="lazy"></div>
-                    <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=1Gl7aPb15whzU5KGRAvEoO5gctFqlSl0V&sz=w500" alt="Movie 16" loading="lazy"></div>
+            <div class="sidebar">
+                <img class="logo" src="../assets/images/logo.png" alt="Logo">
+                <div class="nav">
+                  <img src="../assets/images/12.png" alt="Home">
+                  <img src="../assets/icons/Icon.svg" class="active" alt="Search">
+                  <img src="../assets/icons/hs tv.svg" alt="TV">
+                  <img src="../assets/icons/hs movies.svg" alt="Movies">
+                  <img src="../assets/icons/hs sports.svg" alt="Sports">
+                  <img src="../assets/icons/category.svg" alt="Categories">
                 </div>
-                
-                <div class="refresh-area">
-                    <div class="refresh-content">
-                        <div class="refresh-text">
-                            <div class="refresh-spinner">
-                                <div class="conic-loader"></div>
-                            </div>
-                            <div class="refresh-title">Pull up for recommendations</div>
-                            <div class="refresh-subtitle">Release to get movie suggestions</div>
-                        </div>
+            </div>
+            <div class="main-content-sfl">
+                <div class="search-container">
+                    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M24 14.5C24 19.7467 19.7467 24 14.5 24C9.25329 24 5 19.7467 5 14.5C5 9.25329 9.25329 5 14.5 5C19.7467 5 24 9.25329 24 14.5ZM23.3082 21.894C24.9881 19.8949 26 17.3156 26 14.5C26 8.14873 20.8513 3 14.5 3C8.14873 3 3 8.14873 3 14.5C3 20.8513 8.14873 26 14.5 26C17.3156 26 19.8949 24.9881 21.894 23.3082L26.2929 27.7071C26.6834 28.0976 27.3166 28.0976 27.7071 27.7071C28.0976 27.3166 28.0976 26.6834 27.7071 26.2929L23.3082 21.894Z" fill="#8F98B2"/>
+                      </svg>
+                    <input type="text" class="search-bar" placeholder="Movies, shows and more">
+                </div>
+                <div class="scroll-container">
+                    <div class="card-grid">
+                        <h1>Trending</h1>
+                        <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=107Kai87ekNV-Svd578OTLVsIaU2QB_Gp&sz=w500" alt="Movie 1" loading="lazy"></div>
+                        <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=10JlIuMQe8nLh9ZssmI-d5huAikPNIDTs&sz=w500" alt="Movie 2" loading="lazy"></div>
+                        <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=10mNpf9KsaoLV0_yPQWJ4SCQlCTATp-AB&sz=w500" alt="Movie 3" loading="lazy"></div>
+                        <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=11IHb7P-pVZe0qQ9_Te3ujoYmae8Fxdvh&sz=w500" alt="Movie 4" loading="lazy"></div>
+                        <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=12H3L2Vx-sSt6tvAQQaRyjXzP_es47qKW&sz=w500" alt="Movie 5" loading="lazy"></div>
+                        <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=137h3EF1IdwqaQBT1F6cYJTwvQCMmA93S&sz=w500" alt="Movie 6" loading="lazy"></div>
+                        <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=143iK41S3q5-yR1USUR8ZbSqEZ7rAAqFc&sz=w500" alt="Movie 7" loading="lazy"></div>
+                        <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=14lMAxidbShs82vCLKVSHGia4MjL7cPN4&sz=w500" alt="Movie 8" loading="lazy"></div>
+                        <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=14y2lML3LeVUo5XjD93MEC-G4qsBTNeEi&sz=w500" alt="Movie 9" loading="lazy"></div>
+                        <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=16YS7CKgetklh6NsYVXZ0MWSQTnj_X8p5&sz=w500" alt="Movie 10" loading="lazy"></div>
+                        <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=178zaXM6K4WkOf9nFvV6p_-TxhuqTjd7x&sz=w500" alt="Movie 11" loading="lazy"></div>
+                        <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=18O4pAx2qAj9AK4NeQfcV81RqMzUjj3ln&sz=w500" alt="Movie 12" loading="lazy"></div>
+                        <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=1BCxYlBxlhmYezz_ybBN3VFt1e7j_HCpq&sz=w500" alt="Movie 13" loading="lazy"></div>
+                        <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=1DAzYbwMZfeoxKrJty8-xlnvRSILLXFMo&sz=w500" alt="Movie 14" loading="lazy"></div>
+                        <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=1G7A7qSwg24_qGMVrNLJRjTXy0pebHwA6&sz=w500" alt="Movie 15" loading="lazy"></div>
+                        <div class="movie-card"><img src="https://drive.google.com/thumbnail?id=1Gl7aPb15whzU5KGRAvEoO5gctFqlSl0V&sz=w500" alt="Movie 16" loading="lazy"></div>
                     </div>
                 </div>
             </div>
-            
-            <div class="status-message">Feeling lucky?<span class="emoji">🎬</span></div>
+
+            <div class="refresh-area">
+                <div class="refresh-content">
+                    <div class="refresh-text">
+                        <div class="refresh-spinner">
+                            <div class="conic-loader"></div>
+                        </div>
+                        <div class="refresh-title">Pull up for recommendations</div>
+                        <div class="refresh-subtitle">Release to get movie suggestions</div>
+                    </div>
+                </div>
+            </div>
+
             <div class="light-glint-overlay"><div class="light-source"></div></div>
-            
+
+            <div class="status-message">Feeling lucky?<span class="emoji">🎬</span></div>
+
             <div class="hero-reveal">
                 <div class="hero-content">
                     <img class="hero-poster" src="" alt="Featured Movie Poster">
@@ -90,286 +104,442 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const grid = document.querySelector('.card-grid');
-            const scrollContainer = document.querySelector('.scroll-container');
             const contentViewport = document.querySelector('.content-viewport');
+            const mainContentSflEl = document.querySelector('.main-content-sfl');
             const refreshTextEl = document.querySelector('.refresh-text');
             const refreshTitleEl = document.querySelector('.refresh-title');
             const refreshSubtitleEl = document.querySelector('.refresh-subtitle');
             const refreshSpinnerEl = document.querySelector('.refresh-spinner');
             const heroReveal = document.querySelector('.hero-reveal');
-            const heroCloseBtn = document.querySelector('.hero-close');
-            const statusMessage = document.querySelector('.status-message');
-            const lightGlintOverlay = document.querySelector('.light-glint-overlay');
-            const refreshArea = document.querySelector('.refresh-area'); 
-            const refreshContent = document.querySelector('.refresh-content');
+            const statusMessage = document.querySelector('.content-viewport > .status-message');
+            const lightGlintOverlay = document.querySelector('.content-viewport > .light-glint-overlay');
+            const refreshArea = document.querySelector('.content-viewport > .refresh-area');
+            const refreshContent = refreshArea ? refreshArea.querySelector('.refresh-content') : null;
+            const sidebarEl = document.querySelector('.sidebar');
+            const cdIconGlobal = document.getElementById('cd-icon');
+            const thoughtNoteModal = document.getElementById('modal-page');
+            const thoughtNoteModalCloseButton = document.getElementById('close-modal-btn');
 
-            const REVEAL_AREA_CSS_VAR_HEIGHT = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--reveal-height').trim(), 10);
-            const PULL_THRESHOLD = 80;
-            const MAX_PULL = REVEAL_AREA_CSS_VAR_HEIGHT;
-            const BOTTOM_THRESHOLD = 100;
+            const REVEAL_AREA_CSS_VAR_HEIGHT_STR = getComputedStyle(document.documentElement).getPropertyValue('--reveal-height').trim();
+            const REVEAL_AREA_CSS_VAR_HEIGHT = parseInt(REVEAL_AREA_CSS_VAR_HEIGHT_STR, 10);
             
-            const REFRESH_ANIMATION_DURATION = 300; 
+            const PULL_THRESHOLD_ENGAGE = 80; 
+            const PULL_THRESHOLD_DISENGAGE = 60; 
+            const MAX_PULL = REVEAL_AREA_CSS_VAR_HEIGHT; 
 
-            refreshArea.style.height = `${MAX_PULL}px`;
-            refreshArea.style.bottom = `-${MAX_PULL}px`;
+            const BOTTOM_THRESHOLD = 100;
+            const EXTRA_HEIGHT_DURING_REFRESH_ANIMATION = 12; 
 
-            let isPulling = false;
-            let pullDistance = 0;
+            const resetTransform = 'translateY(0px)';
+
+            let isPulling = false; 
+            let pullDistance = 0;  
             let isRefreshing = false;
             let startY = 0;
-            let isDragging = false;
+            let isDragging = false; 
             let lastScrollTop = 0;
             let isNearBottom = false;
             let statusMessageTimeout = null;
+            let isSnapEngaged = false; 
+
+            let currentAnimatedPullDistance = 0; 
+            let pullAnimationRequest = null;     
+            const PULL_ANIMATION_EASING_FACTOR = 0.2; 
+
+
+            function applyElementTransitions(element, properties) {
+                if (element) element.style.transition = properties;
+            }
+            
+            function removeElementTransitions(element) {
+                if (element) element.style.transition = 'none';
+            }
+
+            function startPullAnimationLoop() {
+                if (!pullAnimationRequest) {
+                    pullAnimationRequest = requestAnimationFrame(pullAnimationTick);
+                }
+            }
+
+            function stopPullAnimationLoop() {
+                if (pullAnimationRequest) {
+                    cancelAnimationFrame(pullAnimationRequest);
+                    pullAnimationRequest = null;
+                }
+            }
+
+            function pullAnimationTick() {
+                let targetPullDistance;
+                if (isSnapEngaged) {
+                    targetPullDistance = MAX_PULL;
+                } else {
+                    targetPullDistance = Math.min(pullDistance, MAX_PULL); 
+                }
+
+                const diff = targetPullDistance - currentAnimatedPullDistance;
+
+                if (Math.abs(diff) < 0.5 && !isDragging) { 
+                    currentAnimatedPullDistance = targetPullDistance;
+                    stopPullAnimationLoop();
+                } else {
+                    currentAnimatedPullDistance += diff * PULL_ANIMATION_EASING_FACTOR;
+                    pullAnimationRequest = requestAnimationFrame(pullAnimationTick);
+                }
+                
+                const transformValue = `translateY(-${currentAnimatedPullDistance}px)`;
+                if (sidebarEl) sidebarEl.style.transform = transformValue;
+                if (mainContentSflEl) mainContentSflEl.style.transform = transformValue;
+                if (refreshArea) refreshArea.style.transform = transformValue;
+
+                const blurRatio = Math.min(currentAnimatedPullDistance / PULL_THRESHOLD_ENGAGE, 1.5); 
+                const blurAmount = Math.min(blurRatio * 3, 5); 
+                const blurValue = `blur(${blurAmount}px)`;
+                if(grid) grid.style.filter = blurValue;
+                if (sidebarEl) sidebarEl.style.filter = blurValue;
+
+                if (isSnapEngaged) {
+                    if (refreshTitleEl) refreshTitleEl.textContent = 'Release to get recommendations';
+                    if (refreshSubtitleEl) refreshSubtitleEl.textContent = 'We\'ll find something perfect for you';
+                    if (refreshTextEl && !refreshTextEl.classList.contains('pull-active')) {
+                        refreshTextEl.classList.add('pull-active');
+                    }
+                } else {
+                    if (refreshTitleEl) refreshTitleEl.textContent = 'Pull up for recommendations';
+                    if (refreshSubtitleEl) refreshSubtitleEl.textContent = 'Release to get movie suggestions';
+                    if (refreshTextEl) refreshTextEl.classList.remove('pull-active');
+                }
+            }
+
+            function resetPullToRefreshState(immediate = false) {
+                stopPullAnimationLoop(); 
+
+                if (immediate) {
+                    removeElementTransitions(mainContentSflEl);
+                    removeElementTransitions(sidebarEl);
+                    removeElementTransitions(refreshArea);
+                    removeElementTransitions(grid);
+                } else {
+                    applyElementTransitions(mainContentSflEl, 'transform 0.3s ease');
+                    applyElementTransitions(sidebarEl, 'transform 0.3s ease, filter 0.4s ease');
+                    applyElementTransitions(refreshArea, 'transform 0.3s ease, height 0.3s ease, bottom 0.3s ease');
+                    applyElementTransitions(grid, 'filter 0.4s ease, opacity 0.3s ease');
+                }
+
+                if (sidebarEl) { sidebarEl.style.transform = resetTransform; sidebarEl.style.filter = 'blur(0px)'; }
+                if (mainContentSflEl) mainContentSflEl.style.transform = resetTransform;
+                if (refreshArea) {
+                    refreshArea.style.transform = resetTransform;
+                    refreshArea.style.height = REVEAL_AREA_CSS_VAR_HEIGHT_STR;
+                    refreshArea.style.bottom = `calc(${REVEAL_AREA_CSS_VAR_HEIGHT_STR} * -1)`;
+                    refreshArea.style.paddingBottom = ''; 
+                }
+                if (grid) { 
+                    grid.style.filter = 'blur(0px)';
+                }
+
+                if (refreshTextEl) refreshTextEl.classList.remove('pull-active');
+                if (refreshSpinnerEl) refreshSpinnerEl.style.display = 'none';
+                if (refreshTitleEl) refreshTitleEl.textContent = 'Pull up for recommendations';
+                if (refreshSubtitleEl) refreshSubtitleEl.textContent = 'Release to get movie suggestions';
+                
+                if (immediate && mainContentSflEl) mainContentSflEl.offsetHeight; 
+                
+                isPulling = false;
+                isSnapEngaged = false; 
+                currentAnimatedPullDistance = 0; 
+                pullDistance = 0; 
+            }
 
             const updateScrollState = () => {
-                if (isRefreshing || isDragging) return; 
-                
+                if (isRefreshing || isDragging || !grid) return;
                 const scrollTop = grid.scrollTop;
                 const scrollHeight = grid.scrollHeight;
                 const clientHeight = grid.clientHeight;
                 const distanceFromBottom = scrollHeight - scrollTop - clientHeight;
                 const scrollDirection = scrollTop > lastScrollTop ? 'down' : 'up';
-                
                 const wasNearBottom = isNearBottom;
                 isNearBottom = distanceFromBottom < BOTTOM_THRESHOLD;
-                
-                contentViewport.classList.toggle('near-bottom', isNearBottom);
-                
-                if (isNearBottom && !wasNearBottom && scrollDirection === 'down') {
-                    showFeelingLuckyMessage();
-                } else if ((!isNearBottom && wasNearBottom && scrollDirection === 'up') || (scrollDirection === 'up' && statusMessage.classList.contains('show'))) {
+                if (contentViewport) contentViewport.classList.toggle('near-bottom', isNearBottom);
+                if (isNearBottom && !wasNearBottom && scrollDirection === 'down') showFeelingLuckyMessage();
+                else if ((!isNearBottom && wasNearBottom && scrollDirection === 'up') || (scrollDirection === 'up' && statusMessage && statusMessage.classList.contains('show'))) {
                     hideFeelingLuckyMessage(!isNearBottom && wasNearBottom);
                 }
-                
                 lastScrollTop = scrollTop;
             };
-
-            const updatePullState = (distance) => {
-                const effectivePullDistance = Math.min(distance, MAX_PULL);
-                const pullRatio = Math.min(effectivePullDistance / PULL_THRESHOLD, 1);
-                const isThresholdMet = effectivePullDistance >= PULL_THRESHOLD;
-
-                if (refreshArea.style.height !== `${MAX_PULL}px`) {
-                    refreshArea.style.height = `${MAX_PULL}px`;
-                    refreshArea.style.bottom = `-${MAX_PULL}px`;
-                }
-                scrollContainer.classList.remove('is-refreshing');
-
-                scrollContainer.style.transform = `translateY(-${effectivePullDistance}px)`;
-                refreshTextEl.classList.toggle('pull-active', isThresholdMet);
-                
-                if (isThresholdMet) {
-                    refreshTitleEl.textContent = 'Release to get recommendations';
-                    refreshSubtitleEl.textContent = 'We\'ll find something perfect for you';
-                } else {
-                    refreshTitleEl.textContent = 'Pull up for recommendations';
-                    refreshSubtitleEl.textContent = 'Release to get movie suggestions';
-                }
-                
-                grid.style.filter = `blur(${pullRatio * 3}px)`;
-
-                if (distance > 10 && statusMessage.classList.contains('show')) { 
-                    hideFeelingLuckyMessage(true); 
-                }
-            };
-
+            
             const showFeelingLuckyMessage = () => {
-                if (isPulling || isRefreshing || isDragging) return;
+                if (isPulling || isRefreshing || isDragging || !statusMessage) return;
                 if (statusMessageTimeout) clearTimeout(statusMessageTimeout);
-                const messages = [
-                    'Feeling lucky? Pull Up<span class="emoji">🎬</span>',
-                    'Surprise me! Pull Up<span class="emoji">✨</span>'
-                ];
+                const messages = ['Feeling lucky? Pull Up<img src="../assets/icons/up.svg" alt="Up arrow" class="emoji" style="width: 1.5em; height: 1.5em; vertical-align: middle;">', 'Surprise me! Pull Up<img src="../assets/icons/up.svg" alt="Up arrow" class="emoji" style="width: 1.5em; height: 1.5em; vertical-align: middle;">'];
                 statusMessage.innerHTML = messages[Math.floor(Math.random() * messages.length)];
-                statusMessage.classList.remove('slide-up');
-                statusMessage.classList.add('show');
-                statusMessageTimeout = setTimeout(() => {
-                    if (statusMessage.classList.contains('show')) hideFeelingLuckyMessage(false);
-                }, 4000);
+                statusMessage.classList.remove('slide-up'); statusMessage.classList.add('show');
+                statusMessageTimeout = setTimeout(() => { if (statusMessage.classList.contains('show')) hideFeelingLuckyMessage(false); }, 4000);
             };
 
             const hideFeelingLuckyMessage = (immediate = false) => {
-                if (statusMessageTimeout) {
-                    clearTimeout(statusMessageTimeout);
-                    statusMessageTimeout = null;
-                }
+                if (!statusMessage) return;
+                if (statusMessageTimeout) { clearTimeout(statusMessageTimeout); statusMessageTimeout = null; }
                 if (immediate) {
                     statusMessage.classList.add('slide-up');
-                    setTimeout(() => statusMessage.classList.remove('show', 'slide-up'), 200); 
-                } else {
-                    statusMessage.classList.remove('show');
-                }
-            };
-
-            const resetRefreshAreaVisuals = () => {
-                refreshTextEl.classList.remove('pull-active');
-                refreshSpinnerEl.style.display = 'none';
-                refreshTitleEl.textContent = 'Pull up for recommendations';
-                refreshSubtitleEl.textContent = 'Release to get movie suggestions';
-
-                scrollContainer.classList.remove('is-refreshing');
-
-                requestAnimationFrame(() => {
-                    refreshArea.style.height = `${MAX_PULL}px`;
-                    refreshArea.style.bottom = `-${MAX_PULL}px`;
-                });
+                    setTimeout(() => statusMessage.classList.remove('show', 'slide-up'), 200);
+                } else statusMessage.classList.remove('show');
             };
 
             const triggerRefresh = () => {
-                if (isRefreshing) return;
-                
-                isRefreshing = true;
-                scrollContainer.classList.add('is-refreshing'); 
-                
-                hideFeelingLuckyMessage(true); 
-                
-                refreshTitleEl.textContent = 'Finding recommendations...';
-                refreshSubtitleEl.textContent = ''; 
-                refreshSpinnerEl.style.display = 'block'; 
-                
-                if (!refreshTextEl.classList.contains('pull-active')) {
-                    refreshTextEl.classList.add('pull-active');
-                }
+                if (isRefreshing || !refreshArea || !refreshContent) return;
+                isRefreshing = true; isPulling = false; 
+                hideFeelingLuckyMessage(true);
 
-                requestAnimationFrame(() => {
-                    const refreshAreaVerticalPadding = parseFloat(getComputedStyle(refreshArea).paddingTop) + 
-                                                   parseFloat(getComputedStyle(refreshArea).paddingBottom);
-                    
-                    const contentHeight = refreshContent.offsetHeight; 
-                    
-                    const dynamicFindingRevealHeight = contentHeight + refreshAreaVerticalPadding;
+                const desiredPaddingBottomDuringRefresh = '0px'; 
+                const originalInlinePaddingBottom = refreshArea.style.paddingBottom; 
 
-                    refreshArea.style.height = `${dynamicFindingRevealHeight}px`;
-                    refreshArea.style.bottom = `-${dynamicFindingRevealHeight}px`;
-                    scrollContainer.style.transform = `translateY(-${dynamicFindingRevealHeight}px)`;
+                if (refreshTitleEl) refreshTitleEl.textContent = 'Finding recommendations...';
+                if (refreshSubtitleEl) refreshSubtitleEl.textContent = ''; 
+                if (refreshSpinnerEl) refreshSpinnerEl.style.display = 'block';
+                if (refreshTextEl && !refreshTextEl.classList.contains('pull-active')) refreshTextEl.classList.add('pull-active');
+                
+                refreshArea.style.paddingBottom = desiredPaddingBottomDuringRefresh;
+
+                requestAnimationFrame(() => { 
+                    const refreshAreaVerticalPadding = parseFloat(getComputedStyle(refreshArea).paddingTop) + parseFloat(getComputedStyle(refreshArea).paddingBottom);
+                    const contentHeight = refreshContent.offsetHeight;
+                    const dynamicHeightForRefresh = contentHeight + refreshAreaVerticalPadding + EXTRA_HEIGHT_DURING_REFRESH_ANIMATION;
+                    const upwardShift = dynamicHeightForRefresh; 
+
+                    const mainContentTransformTarget = `translateY(-${upwardShift}px)`;
+
+                    applyElementTransitions(mainContentSflEl, 'transform 0.3s ease');
+                    applyElementTransitions(sidebarEl, 'transform 0.3s ease, filter 0.3s ease'); 
+
+                    if (mainContentSflEl) mainContentSflEl.style.transform = mainContentTransformTarget;
+                    if (sidebarEl) sidebarEl.style.transform = mainContentTransformTarget;
+
+                    if (refreshArea) {
+                        applyElementTransitions(refreshArea, 'transform 0.3s ease, height 0.3s ease, bottom 0.3s ease');
+                        refreshArea.style.transform = resetTransform; 
+                        refreshArea.style.bottom = '0px';             
+                        refreshArea.style.height = `${dynamicHeightForRefresh}px`; 
+                    }
 
                     setTimeout(() => { 
-                        const newMovies = [
-                            { src: 'https://drive.google.com/thumbnail?id=107Kai87ekNV-Svd578OTLVsIaU2QB_Gp&sz=w500', alt: 'New Movie A' },
-                            { src: 'https://drive.google.com/thumbnail?id=10JlIuMQe8nLh9ZssmI-d5huAikPNIDTs&sz=w500', alt: 'New Movie B' },
-                            { src: 'https://drive.google.com/thumbnail?id=10mNpf9KsaoLV0_yPQWJ4SCQlCTATp-AB&sz=w500', alt: 'New Movie C' }
-                        ];
-                        const headingElement = grid.querySelector('h1'); 
-                        newMovies.forEach(movie => {
-                            const newCard = document.createElement('div');
-                            newCard.className = 'movie-card';
-                            newCard.innerHTML = `<img src="${movie.src}" alt="${movie.alt}">`;
-                            if (headingElement && headingElement.nextSibling) {
-                                grid.insertBefore(newCard, headingElement.nextSibling);
-                            } else if (headingElement) {
-                                 grid.appendChild(newCard); 
-                            } else {
-                                 grid.insertBefore(newCard, grid.firstChild); 
-                            }
-                        });
                         const moviesData = [
-                            { title: "Ford vs Ferrari", poster: "https://drive.google.com/thumbnail?id=107Kai87ekNV-Svd578OTLVsIaU2QB_Gp&sz=w500" },
-                            { title: "Joker", poster: "https://drive.google.com/thumbnail?id=10JlIuMQe8nLh9ZssmI-d5huAikPNIDTs&sz=w500" },
-                            { title: "The Intern", poster: "https://drive.google.com/thumbnail?id=10mNpf9KsaoLV0_yPQWJ4SCQlCTATp-AB&sz=w500" },
-                            { title: "Interstellar", poster: "https://drive.google.com/thumbnail?id=1BCxYlBxlhmYezz_ybBN3VFt1e7j_HCpq&sz=w500" }
+                             { title: "The Intern", poster: "https://drive.google.com/thumbnail?id=10mNpf9KsaoLV0_yPQWJ4SCQlCTATp-AB&sz=w500" },
+                             { title: "Interstellar", poster: "https://drive.google.com/thumbnail?id=1BCxYlBxlhmYezz_ybBN3VFt1e7j_HCpq&sz=w500" },
+                             { title: "Ford vs Ferrari", poster: "https://drive.google.com/thumbnail?id=107Kai87ekNV-Svd578OTLVsIaU2QB_Gp&sz=w500" },
+                             { title: "Joker", poster: "https://drive.google.com/thumbnail?id=10JlIuMQe8nLh9ZssmI-d5huAikPNIDTs&sz=w500" }
                         ];
                         const randomMovie = moviesData[Math.floor(Math.random() * moviesData.length)];
-                        heroReveal.querySelector('.hero-poster').src = randomMovie.poster;
-                        heroReveal.querySelector('.hero-title').textContent = randomMovie.title;
+                        if (heroReveal) {
+                            const heroPoster = heroReveal.querySelector('.hero-poster');
+                            const heroTitle = heroReveal.querySelector('.hero-title');
+                            if (heroPoster) heroPoster.src = randomMovie.poster;
+                            if (heroTitle) heroTitle.textContent = randomMovie.title;
+                        }
                         
-                        lightGlintOverlay.classList.add('is-wiping');
-                        heroReveal.classList.add('is-visible');
-                        grid.classList.add('grid-hidden');
+                        if (refreshArea) {
+                            refreshArea.style.paddingBottom = originalInlinePaddingBottom || ''; 
+                        }
+                        
+                        if (grid) {
+                            removeElementTransitions(grid); 
+                            grid.classList.add('grid-hidden');
+                            void grid.offsetHeight; 
+                        }
 
-                        scrollContainer.style.transform = 'translateY(0)';
-                        grid.style.filter = 'blur(0px)';
+                        applyElementTransitions(mainContentSflEl, 'transform 0.3s ease');
+                        applyElementTransitions(sidebarEl, 'transform 0.3s ease, filter 0.4s ease'); 
+                        applyElementTransitions(refreshArea, 'transform 0.3s ease, height 0.3s ease, bottom 0.3s ease');
 
-                        setTimeout(() => {
-                            isRefreshing = false; 
-                            isPulling = false;    
-                            pullDistance = 0;
-                        }, REFRESH_ANIMATION_DURATION);
+
+                        if (sidebarEl) { sidebarEl.style.transform = resetTransform; sidebarEl.style.filter = 'blur(0px)';}
+                        if (mainContentSflEl) mainContentSflEl.style.transform = resetTransform;
+                        if (grid) grid.style.filter = 'blur(0px)'; 
+
+                        if (refreshArea) { 
+                            refreshArea.style.height = REVEAL_AREA_CSS_VAR_HEIGHT_STR;
+                            refreshArea.style.bottom = `calc(${REVEAL_AREA_CSS_VAR_HEIGHT_STR} * -1)`;
+                            refreshArea.style.transform = resetTransform; 
+                            if (refreshTitleEl) refreshTitleEl.textContent = 'Pull up for recommendations';
+                            if (refreshSubtitleEl) refreshSubtitleEl.textContent = 'Release to get movie suggestions';
+                            if (refreshSpinnerEl) refreshSpinnerEl.style.display = 'none';
+                            if (refreshTextEl) refreshTextEl.classList.remove('pull-active');
+                        }
+                        
+                        if(lightGlintOverlay) lightGlintOverlay.classList.add('is-wiping');
+                        if (heroReveal) heroReveal.classList.add('is-visible');
+
+                        isRefreshing = false; 
+                        pullDistance = 0; 
+                        currentAnimatedPullDistance = 0; 
+                        isSnapEngaged = false; 
                         
                     }, 2000); 
-                });
+                }); 
             };
 
             const hideHero = () => {
-                heroReveal.classList.remove('is-visible');
-                grid.classList.remove('grid-hidden');
-                setTimeout(() => { 
-                    if (!heroReveal.classList.contains('is-visible')) {
-                         heroReveal.querySelector('.hero-poster').src = "";
-                    }
-                }, 500); 
-                lightGlintOverlay.classList.remove('is-wiping');
-                resetRefreshAreaVisuals(); 
+                if (heroReveal) heroReveal.classList.remove('is-visible');
+                if (grid) {
+                    applyElementTransitions(grid, 'filter 0.4s ease, opacity 0.3s ease');
+                    grid.classList.remove('grid-hidden');
+                    grid.style.filter = 'blur(0px)';
+                }
+                if(lightGlintOverlay) lightGlintOverlay.classList.remove('is-wiping');
+                resetPullToRefreshState(true); 
+                isRefreshing = false;
             };
 
-            let scrollTimeout = null;
-            grid.addEventListener('scroll', () => {
-                if (scrollTimeout) clearTimeout(scrollTimeout);
-                scrollTimeout = setTimeout(updateScrollState, 16);
-            });
-            
+            if (grid) {
+                let scrollTimeout = null;
+                grid.addEventListener('scroll', () => {
+                    if (isRefreshing) return;
+                    if (scrollTimeout) clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(updateScrollState, 16);
+                });
+            }
+
             const handleDragStart = (clientY) => {
-                if (isRefreshing || isDragging) return false;
-                if (scrollContainer.classList.contains('is-refreshing')) {
-                    resetRefreshAreaVisuals();
-                }
+                if (isRefreshing || isDragging || !grid || (heroReveal && heroReveal.classList.contains('is-visible'))) return false;
                 const isAtBottom = grid.scrollTop + grid.clientHeight >= grid.scrollHeight - 5;
                 if (isAtBottom) {
-                    startY = clientY;
-                    isDragging = true;
-                    if (statusMessage.classList.contains('show')) {
-                        hideFeelingLuckyMessage(true);
-                    }
+                    startY = clientY; 
+                    isDragging = true; 
+                    isPulling = false; 
+                    isSnapEngaged = false; 
+                    
+                    stopPullAnimationLoop(); 
+                    currentAnimatedPullDistance = 0; 
+                    pullDistance = 0; 
+
+                    removeElementTransitions(mainContentSflEl); 
+                    removeElementTransitions(sidebarEl);
+                    removeElementTransitions(refreshArea);
+                    removeElementTransitions(grid);
+
+                    const initialTransform = `translateY(-${currentAnimatedPullDistance}px)`;
+                    if (sidebarEl) sidebarEl.style.transform = initialTransform;
+                    if (mainContentSflEl) mainContentSflEl.style.transform = initialTransform;
+                    if (refreshArea) refreshArea.style.transform = initialTransform;
+                    if(grid) grid.style.filter = 'blur(0px)';
+
+
+                    if (statusMessage && statusMessage.classList.contains('show')) hideFeelingLuckyMessage(true);
                     return true;
-                }
-                return false;
+                } return false;
             };
 
             const handleDragMove = (clientY, event) => {
                 if (!isDragging || isRefreshing) return;
-                const deltaY = startY - clientY;
+                const deltaY = startY - clientY; 
+                
                 if (deltaY > 0) { 
-                    if (!isPulling) { 
-                        isPulling = true;
-                        if (statusMessage.classList.contains('show')) {
-                            hideFeelingLuckyMessage(true);
-                        }
-                    }
-                    pullDistance = deltaY * (event.type.startsWith('touch') ? 1 : 0.8);
-                    updatePullState(pullDistance); 
-                    if (event && event.cancelable) event.preventDefault();
-                } else if (isPulling) { 
-                    isPulling = false;
-                    pullDistance = 0;
-                    updatePullState(0);
+                    if (!isPulling) { isPulling = true; } 
+                    pullDistance = deltaY * (event.type.startsWith('touch') ? 1 : 0.8); 
+                } else {
+                    pullDistance = 0; 
                 }
+
+                if (!isSnapEngaged && pullDistance >= PULL_THRESHOLD_ENGAGE) {
+                    isSnapEngaged = true;
+                } else if (isSnapEngaged && pullDistance < PULL_THRESHOLD_DISENGAGE) {
+                    isSnapEngaged = false;
+                }
+                
+                startPullAnimationLoop(); 
+
+                if (isPulling && event && event.cancelable && deltaY > 0) event.preventDefault(); 
             };
 
             const handleDragEnd = () => {
                 if (!isDragging || isRefreshing) return;
-                const wasPulling = isPulling;
-                isDragging = false;
-                isPulling = false;
-                if (wasPulling && pullDistance >= PULL_THRESHOLD) {
+                
+                isDragging = false; 
+
+                if (isSnapEngaged) {
+                    stopPullAnimationLoop(); 
+
+                    const finalTransform = `translateY(-${MAX_PULL}px)`;
+                    const blurRatioFinal = Math.min(MAX_PULL / PULL_THRESHOLD_ENGAGE, 1.5);
+                    const blurAmountFinal = Math.min(blurRatioFinal * 3, 5);
+                    const finalBlurValue = `blur(${blurAmountFinal}px)`;
+
+                    removeElementTransitions(mainContentSflEl); 
+                    removeElementTransitions(sidebarEl);
+                    removeElementTransitions(refreshArea);
+
+                    if (sidebarEl) { sidebarEl.style.transform = finalTransform; sidebarEl.style.filter = finalBlurValue;}
+                    if (mainContentSflEl) mainContentSflEl.style.transform = finalTransform;
+                    if (refreshArea) {
+                        refreshArea.style.transform = finalTransform; 
+                        refreshArea.style.height = REVEAL_AREA_CSS_VAR_HEIGHT_STR; 
+                        refreshArea.style.bottom = `calc(${REVEAL_AREA_CSS_VAR_HEIGHT_STR} * -1)`; 
+                    }
+                    if(grid) {
+                        removeElementTransitions(grid);
+                        grid.style.filter = finalBlurValue;
+                    }
+                    
+                    if (refreshTextEl && !refreshTextEl.classList.contains('pull-active')) refreshTextEl.classList.add('pull-active');
+                    if (refreshTitleEl) refreshTitleEl.textContent = 'Release to get recommendations';
+                    if (refreshSubtitleEl) refreshSubtitleEl.textContent = 'We\'ll find something perfect for you';
+
                     triggerRefresh();
                 } else {
-                    scrollContainer.style.transform = 'translateY(0)';
-                    grid.style.filter = 'blur(0px)';
-                    resetRefreshAreaVisuals(); 
+                    stopPullAnimationLoop();
+                    resetPullToRefreshState(false); 
                 }
-                pullDistance = 0;
             };
             
-            grid.addEventListener('touchstart', (e) => handleDragStart(e.touches[0].clientY), { passive: true });
-            grid.addEventListener('touchmove', (e) => { if (isDragging) handleDragMove(e.touches[0].clientY, e); }, { passive: false });
-            grid.addEventListener('touchend', handleDragEnd);
-            grid.addEventListener('touchcancel', handleDragEnd);
-            grid.addEventListener('mousedown', (e) => { if (e.button === 0) handleDragStart(e.clientY); });
-            document.addEventListener('mousemove', (e) => { if (isDragging) handleDragMove(e.clientY, e); });
-            document.addEventListener('mouseup', (e) => { if (e.button === 0 && isDragging) handleDragEnd(); });
-            grid.addEventListener('contextmenu', (e) => { if (isDragging) e.preventDefault(); });
-            heroCloseBtn.addEventListener('click', hideHero);
-            lightGlintOverlay.querySelector('.light-source').addEventListener('animationend', () => lightGlintOverlay.classList.remove('is-wiping'));
+            if (grid) {
+                grid.addEventListener('touchstart', (e) => handleDragStart(e.touches[0].clientY), { passive: true });
+                grid.addEventListener('touchmove', (e) => { if (isDragging) handleDragMove(e.touches[0].clientY, e); }, { passive: false });
+                grid.addEventListener('touchend', handleDragEnd);
+                grid.addEventListener('touchcancel', handleDragEnd);
+                grid.addEventListener('mousedown', (e) => { if (e.button === 0) handleDragStart(e.clientY); });
+                document.addEventListener('mousemove', (e) => { if (isDragging) handleDragMove(e.clientY, e); });
+                document.addEventListener('mouseup', (e) => { if (e.button === 0 && isDragging) handleDragEnd(); });
+                grid.addEventListener('contextmenu', (e) => { if (isDragging) e.preventDefault(); });
+            }
+
+            const heroCloseButtonElement = document.querySelector('.hero-reveal .hero-close');
+            if (heroCloseButtonElement) {
+                heroCloseButtonElement.addEventListener('click', hideHero);
+            }
+            
+            if (cdIconGlobal && thoughtNoteModal && thoughtNoteModalCloseButton) {
+                cdIconGlobal.addEventListener('click', () => {
+                    if (isRefreshing || isPulling || isSnapEngaged) { 
+                        stopPullAnimationLoop(); 
+                        resetPullToRefreshState(true); 
+                        isRefreshing = false; 
+                        isPulling = false; 
+                    }
+                });
+
+                thoughtNoteModalCloseButton.addEventListener('click', () => {
+                    if (grid && !(heroReveal && heroReveal.classList.contains('is-visible'))) {
+                        applyElementTransitions(grid, 'filter 0.4s ease, opacity 0.3s ease');
+                        grid.classList.remove('grid-hidden'); 
+                        grid.style.filter = 'blur(0px)';
+                    }
+                });
+            }
+
+            if(lightGlintOverlay && lightGlintOverlay.querySelector('.light-source')) {
+                lightGlintOverlay.querySelector('.light-source').addEventListener('animationend', () => {
+                    if(lightGlintOverlay) lightGlintOverlay.classList.remove('is-wiping');
+                });
+            }
+            
+            if (refreshArea) {
+                 refreshArea.style.height = REVEAL_AREA_CSS_VAR_HEIGHT_STR;
+                 refreshArea.style.bottom = `calc(${REVEAL_AREA_CSS_VAR_HEIGHT_STR} * -1)`;
+                 refreshArea.style.willChange = 'transform, height, bottom';
+            }
+            if (mainContentSflEl) mainContentSflEl.style.willChange = 'transform';
+            if (sidebarEl) sidebarEl.style.willChange = 'transform, filter';
+            if (grid) grid.style.willChange = 'opacity, filter';
+
             updateScrollState();
         });
     </script>

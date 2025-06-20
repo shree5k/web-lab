@@ -1,23 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 :root { --reveal-height: 120px; }
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
     min-height: 100vh;
     height: 100%;
     margin: 0;
     padding: 20px;
     box-sizing: border-box;
     font-family: 'Inter', Arial, sans-serif;
-    background-color: #1a1a1a;
-    color: #fff;
+    background-color: #1a1a1a; 
+    color: #fff; 
     overflow: hidden;
 }
 
-.app-container {
+.app-container { 
     width: 100%;
-    text-align: center;
+    text-align: center; 
     padding: 20px 0;
     display: flex;
     justify-content: center;
@@ -37,87 +37,31 @@ body {
     background: #0f1014;
     margin: 0 auto;
     display: flex;
-    flex-direction: row;
-}
-
-.sidebar {
-  position: relative;
-  width: 100px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 32px 0 0 0;
-  z-index: 10;
-  flex-shrink: 0;
-  background: #0f1014;
-  height: 100%;
-  box-sizing: border-box;
-  transition: filter 0.4s ease, transform 0.3s ease;
-}
-
-.sidebar .logo {
-  width: 40px;
-  height: auto;
-  object-fit: contain;
-  margin-bottom: 0;
-}
-
-.sidebar .nav {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  margin-top: 126px;
-}
-
-.sidebar .nav img {
-  width: 20px;
-  height: 20px;
-  opacity: 0.7;
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
-
-.sidebar .nav img.active {
-  opacity: 1;
-  transform: scale(1.1);
-}
-
-.sidebar .nav img:hover {
-  opacity: 1;
-  transform: scale(1.1);
-}
-
-.main-content-sfl {
-    flex: 1;
-    display: flex;
     flex-direction: column;
-    position: relative;
-    overflow: hidden;
-    height: 100%;
-    z-index: 20;
-    transition: transform 0.3s ease;
 }
 
 .search-container {
     padding: 15px 20px;
     background: transparent;
     position: relative;
+    z-index: 1;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     padding-top: 24px;
-    padding-left: 0;
-    flex-shrink: 0;
+    padding-left: 20px;
 }
 
 .search-bar {
     width: 100%;
+    max-width: 500px;
     height: 56px;
     background: #252833;
     border-radius: 8px;
     color: #e1e6f0;
     font-size: 1rem;
-    padding: 0 20px 0 48px;
+    /* This padding-left makes space for the icon. Text starts after this. */
+    padding: 0 20px 0 48px; 
     outline: none;
     display: block;
     border: none;
@@ -130,7 +74,7 @@ body {
 
 .search-icon {
     position: absolute;
-    left: 16px;
+    left: 36px;
     top: 42px;
     color: #8F98B2;
     width: 20px;
@@ -139,24 +83,24 @@ body {
     z-index: 1;
 }
 
+
 .scroll-container {
-    flex-grow: 1;
-    min-height: 0;
+    height: calc(100% - 86px);
     position: relative;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    transition: transform 0.3s ease;
 }
 
 .card-grid {
-    flex-grow: 1;
-    min-height: 0;
+    flex-grow: 1; 
+    min-height: 0; 
     overflow-y: auto;
-    padding: 0px 24px 0px 0px;
+    padding: 1.5rem; 
     box-sizing: border-box;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 0.6rem;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.6rem; 
     transition: filter 0.4s ease, opacity 0.3s ease;
     overscroll-behavior-y: contain;
     width: 100%;
@@ -192,12 +136,13 @@ body {
 .card-grid::-webkit-scrollbar-thumb {
     background-color: #4F525C;
     border-radius: 10px;
-    border: 2px solid #0f1014;
+    border: 2px solid #0f1014; 
 }
 
 .card-grid::-webkit-scrollbar-thumb:hover {
     background-color: #6a6e78;
 }
+
 
 .movie-card {
     aspect-ratio: 3/4;
@@ -217,22 +162,19 @@ body {
     display: block;
 }
 
-.content-viewport > .refresh-area {
+.refresh-area { 
     position: absolute;
     left: 0;
     right: 0;
-    bottom: calc(var(--reveal-height) * -1);
-    height: var(--reveal-height);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: #1f1f1f;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    background: #1f1f1f; 
     padding: 10px;
     box-sizing: border-box;
     text-align: center;
-    z-index: 30;
-    transition: transform 0.3s ease, height 0.3s ease, bottom 0.3s ease;
+    transition: height 0.3s ease, bottom 0.3s ease; 
 }
 
 .refresh-content {
@@ -244,6 +186,12 @@ body {
     max-width: 280px;
     text-align: center;
     margin: 0 auto;
+    transition: padding-top 0.3s ease, padding-bottom 0.3s ease;
+}
+
+.scroll-container.is-refreshing .refresh-content {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .refresh-text {
@@ -267,7 +215,7 @@ body {
     font-size: 1rem;
     font-weight: 600;
     color: #fff;
-    margin: 0;
+    margin: 0; 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -277,18 +225,18 @@ body {
 .refresh-subtitle {
     font-size: 0.85rem;
     color: #aaa;
-    margin: 4px 0 0 0;
-    white-space: normal;
+    margin: 4px 0 0 0; 
+    white-space: normal; 
     line-height: 1.3;
     width: 100%;
     min-height: 1.3em;
 }
 
 .refresh-spinner {
-    width: 24px;
+    width: 24px; 
     height: 24px;
-    margin: 0 auto 8px;
-    display: none;
+    margin: 0 auto 8px; 
+    display: none; 
 }
 
 .conic-loader {
@@ -296,17 +244,17 @@ body {
     height: 100%;
     border-radius: 50%;
     background: conic-gradient(
-        from 94deg at 50% 50%,
-        rgba(3, 22, 38, 0.00) 0deg,
-        rgba(3, 22, 38, 0.00) 72.0021253824234deg,
-        rgba(1, 38, 70, 0.50) 144.00866031646729deg,
-        rgba(2, 95, 177, 0.75) 200deg,
-        #08F 250deg,
-        #93F 305deg,
+        from 94deg at 50% 50%, 
+        rgba(3, 22, 38, 0.00) 0deg, 
+        rgba(3, 22, 38, 0.00) 72.0021253824234deg, 
+        rgba(1, 38, 70, 0.50) 144.00866031646729deg, 
+        rgba(2, 95, 177, 0.75) 200deg, 
+        #08F 250deg,                  
+        #93F 305deg,                  
         #FF006E 360deg
     );
     animation: conic-spin 1s linear infinite;
-    position: relative;
+    position: relative; 
 }
 
 .conic-loader::before {
@@ -315,9 +263,9 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: calc(100% - 6px);
-    height: calc(100% - 6px);
-    background-color: #1f1f1f;
+    width: calc(100% - 6px); 
+    height: calc(100% - 6px); 
+    background-color: #1f1f1f; 
     border-radius: 50%;
 }
 
@@ -325,26 +273,19 @@ body {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-
-.content-viewport > .light-glint-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 90;
-    overflow: hidden;
+.light-glint-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 2; overflow: hidden;
 }
-.content-viewport > .light-glint-overlay .light-source {
+.light-glint-overlay .light-source {
     position: absolute; left: 0; top: 110%; width: 100%; height: 80%;
     opacity: 0;
-    background:
+    background: 
         linear-gradient(90deg, transparent, rgba(235, 0, 102, 0.4), transparent),
         radial-gradient(ellipse at 20% 50%, rgba(20, 146, 255, 0.3), transparent 70%),
         radial-gradient(ellipse at 80% 50%, rgba(8, 96, 196, 0.4), transparent 70%);
 }
-.content-viewport > .light-glint-overlay.is-wiping .light-source {
+.light-glint-overlay.is-wiping .light-source {
     opacity: 1;
     animation: light-glint-effect 0.9s cubic-bezier(0.65, 0, 0.35, 1) forwards;
 }
@@ -354,39 +295,36 @@ body {
     100% { transform: translateY(-250%) scale(1.5); opacity: 0; }
 }
 
-.content-viewport > .status-message {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.8);
+.status-message {
+    position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8); 
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 12px 20px;
-    border-radius: 25px;
+    padding: 12px 20px; 
+    border-radius: 25px; 
     font-size: 0.9rem;
-    color: #fff;
-    opacity: 0;
+    color: #fff; 
+    opacity: 0; 
     pointer-events: none;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 28;
+    z-index: 10;
     font-weight: 500;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     white-space: nowrap;
-    padding-right: 16px;
 }
-.content-viewport > .status-message.show {
-    opacity: 1;
+.status-message.show {
+    opacity: 1; 
     transform: translateX(-50%) translateY(-8px);
 }
-.content-viewport > .status-message.slide-up {
+.status-message.slide-up {
     transform: translateX(-50%) translateY(40px);
     opacity: 0;
 }
-.content-viewport > .status-message .emoji {
+
+.status-message .emoji {
     display: inline-block;
     animation: gentle-bounce 2s ease-in-out infinite;
-    margin-left: 2px;
+    margin-left: 4px;
 }
 @keyframes gentle-bounce {
     0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
@@ -397,17 +335,9 @@ body {
 .scroll-indicator { display: none; }
 
 .content-viewport::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
     background: linear-gradient(90deg, transparent, rgba(20, 146, 255, 0.5), rgba(235, 0, 102, 0.5), transparent);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-    z-index: 25;
+    opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
 }
 .content-viewport.near-bottom::after {
     opacity: 1; animation: pulse-glow 2s ease-in-out infinite;
@@ -417,20 +347,13 @@ body {
 }
 
 .hero-reveal {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     display: flex; justify-content: center; align-items: center;
-    pointer-events: none;
-    z-index: 100;
-    opacity: 0;
+    pointer-events: none; z-index: 3; opacity: 0;
     backdrop-filter: blur(0px); background: rgba(10, 10, 10, 0.2);
     transition: opacity 0.5s ease, backdrop-filter 0.5s ease;
 }
 .hero-reveal.is-visible { opacity: 1; pointer-events: all; backdrop-filter: blur(16px); }
-
 .hero-content {
     text-align: center; opacity: 0; transform: scale(0.95);
     transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s, opacity 0.5s ease 0.2s;
@@ -480,23 +403,7 @@ body {
 }
 
 .hero-close {
-    position: absolute; top: 1.5rem; right: 1.5rem;
+    position: absolute; top: 1.5rem; right: 1.5rem; font-size: 2rem;
     color: rgba(255,255,255,0.7); cursor: pointer; transition: all 0.2s;
-    width: 32px; height: 32px;
 }
 .hero-close:hover { transform: scale(1.02); color: #fff; }
-
-.content-viewport > #modal-page {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 200;
-}
-
-@media (max-width: 1200px) {
-  .sidebar {
-    display: none;
-  }
-}
