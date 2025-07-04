@@ -76,8 +76,8 @@ body {
     width: 20px;
     height: 20px;
     background: linear-gradient(93deg, #e5bb44 6%, #fde8a6 53%, #e5bc45 102%);
-    -webkit-mask: url('/assets/icons/caret.svg') no-repeat center;
-    mask: url('/assets/icons/caret.svg') no-repeat center;
+    -webkit-mask: url('../assets/icons/caret.svg') no-repeat center;
+    mask: url('../assets/icons/caret.svg') no-repeat center;
     -webkit-mask-size: contain;
     mask-size: contain;
 }
@@ -189,7 +189,7 @@ body {
 }
     .profile-auto.add .avatar-auto {
     background-color: #232323;
-    background-image: url('/assets/icons/add.svg');
+    background-image: url('../assets/icons/add.svg');
     background-size: 40%;
     background-repeat: no-repeat;
     background-position: center;
