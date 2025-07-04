@@ -20,14 +20,14 @@
   <div class="app-container">
     <div class="content-viewport"> 
       <div class="sidebar">
-        <img class="logo" src="/assets/images/logo.png" alt="Logo">
+        <img class="logo" src="../assets/images/logo.png" alt="Logo">
         <div class="nav">
-          <img src="/assets/images/12.png" class="active" alt="Home">
-          <img src="/assets/icons/Icon.svg" alt="Search">
-          <img src="/assets/icons/hs tv.svg" alt="TV">
-          <img src="/assets/icons/hs movies.svg" alt="Movies">
-          <img src="/assets/icons/hs sports.svg" alt="Sports">
-          <img src="/assets/icons/category.svg" alt="Categories">
+          <img src="../assets/images/12.png" class="active" alt="Home">
+          <img src="../assets/icons/Icon.svg" alt="Search">
+          <img src="../assets/icons/hs tv.svg" alt="TV">
+          <img src="../assets/icons/hs movies.svg" alt="Movies">
+          <img src="../assets/icons/hs sports.svg" alt="Sports">
+          <img src="../assets/icons/category.svg" alt="Categories">
         </div>
       </div>
       <div class="main"> 
@@ -40,32 +40,32 @@
             <span class="phone">+91 8********0</span>
           </div>
           <button class="help-settings">
-            <img src="/assets/icons/settings.svg" alt="Settings">
+            <img src="../assets/icons/settings.svg" alt="Settings">
             Help & Settings
           </button>
         </div>
         <div class="profiles-header">
           <div class="section-title">Profiles</div>
           <button class="edit-profile-btn">
-            <img src="/assets/icons/edit.svg" alt="Edit Icon">Edit
+            <img src="../assets/icons/edit.svg" alt="Edit Icon">Edit
           </button>
         </div>
         <div class="profiles-row-auto">
           <div class="profile-auto">
-            <div class="avatar-auto selected" style="background-image:url('/assets/images/12.png')">
+            <div class="avatar-auto selected" style="background-image:url('../assets/images/12.png')">
             </div>
             <div class="name-auto">SK</div>
           </div>
           <div class="profile-auto">
-            <div class="avatar-auto" style="background-image:url('/assets/images/37.png')"></div>
+            <div class="avatar-auto" style="background-image:url('../assets/images/37.png')"></div>
             <div class="name-auto">Hari</div>
           </div>
           <div class="profile-auto">
-            <div class="avatar-auto" style="background-image:url('/assets/images/24.png')"></div>
+            <div class="avatar-auto" style="background-image:url('../assets/images/24.png')"></div>
             <div class="name-auto">Vivek</div>
           </div>
           <div class="profile-auto">
-            <div class="avatar-auto" style="background-image:url('/assets/images/19_rebranded.png')"></div>
+            <div class="avatar-auto" style="background-image:url('../assets/images/19_rebranded.png')"></div>
             <div class="name-auto">Kids</div>
           </div>
           <div class="profile-auto add">
@@ -238,7 +238,7 @@
                   const checkmarkIndicator = document.createElement('div');
                   checkmarkIndicator.classList.add('checkmark-selected-indicator');
                   const checkmarkImg = document.createElement('img');
-                  checkmarkImg.src = '/assets/icons/check.svg';
+                  checkmarkImg.src = '../assets/icons/check.svg';
                   checkmarkImg.alt = 'Selected Profile';
                   checkmarkIndicator.appendChild(checkmarkImg);
                   avatar.appendChild(checkmarkIndicator);
@@ -256,7 +256,7 @@
                 const checkmarkIndicator = document.createElement('div');
                 checkmarkIndicator.classList.add('checkmark-selected-indicator');
                 const checkmarkImg = document.createElement('img');
-                checkmarkImg.src = '/assets/icons/check.svg';
+                checkmarkImg.src = '../assets/icons/check.svg';
                 checkmarkImg.alt = 'Selected Profile';
                 checkmarkIndicator.appendChild(checkmarkImg);
                 firstAvatar.appendChild(checkmarkIndicator);
@@ -293,12 +293,12 @@
           // 4. Create the 'Watch Now' button
           const watchBtn = document.createElement('button');
           watchBtn.className = 'zoom-action-btn watch-now';
-          watchBtn.innerHTML = `<img src="/assets/icons/play.svg" alt="Play"><span>Watch Now</span>`;
+          watchBtn.innerHTML = `<img src="../assets/icons/play.svg" alt="Play"><span>Watch Now</span>`;
 
           // 5. Create the 'Add to Watchlist' button with its own class and no visible text
           const addBtn = document.createElement('button');
           addBtn.className = 'zoom-action-btn add-watchlist';
-          addBtn.innerHTML = `<img src="/assets/icons/add.svg" alt="Add to Watchlist"><span class="visually-hidden">Add to Watchlist</span>`;
+          addBtn.innerHTML = `<img src="../assets/icons/add.svg" alt="Add to Watchlist"><span class="visually-hidden">Add to Watchlist</span>`;
 
           // 6. Append buttons to their container
           actionsContainer.appendChild(watchBtn);
