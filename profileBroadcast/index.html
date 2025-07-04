@@ -4,524 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=1366, initial-scale=1.0">
   <title>Profile Broadcast</title>
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml" />
   <link href="https://fonts.googleapis.com/css?family=Inter:400,500,600&display=swap" rel="stylesheet">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-    body {
-      margin: 0;
-      background: #1A1A1A;
-      color: #e1e6f0;
-      font-family: 'Inter', sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-    .sidebar {
-      position: relative;
-      width: 112px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 32px 0 0 0;
-      z-index: 2;
-      flex-shrink: 0;
-    }
-    .sidebar .logo {
-      width: 40px;
-      height: auto;
-      object-fit: contain;
-      margin-bottom: 0;
-    }
-    .sidebar .nav {
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-      margin-top: 126px;
-    }
-    .sidebar .nav img {
-      width: 20px;
-      height: 20px;
-      opacity: 0.7;
-      transition: all 0.2s ease;
-      cursor: pointer;
-    }
-    .sidebar .nav img.active {
-      opacity: 1;
-      transform: scale(1.1);
-    }
-    .sidebar .nav img:hover {
-      opacity: 1;
-      transform: scale(1.1);
-    }
-    .main {
-      flex: 1;
-      position: relative;
-      background-size: cover;
-      overflow-y: auto;
-      padding-left: 16px;
-      padding-right: 64px;
-      box-sizing: border-box;
-    }
-    .help-settings {
-      display: flex;
-      align-items: center;
-      background: rgba(255,255,255,0.08);
-      border-radius: 12px;
-      padding: 0 24px;
-      height: 52px;
-      font-size: 16px;
-      font-weight: 500;
-      color: #fff;
-      gap: 10px;
-      cursor: pointer;
-      border: none;
-      outline: none;
-    }
-    .help-settings img {
-      width: 20px;
-      height: 20px;
-    }
-    .chevron {
-      width: 20px;
-      height: 20px;
-      background: linear-gradient(93deg, #e5bb44 6%, #fde8a6 53%, #e5bc45 102%);
-      -webkit-mask: url('/assets/icons/caret.svg') no-repeat center;
-      mask: url('/assets/icons/caret.svg') no-repeat center;
-      -webkit-mask-size: contain;
-      mask-size: contain;
-    }
-    
-    .plan {
-      display: inline-block;
-      font-size: 20px;
-      font-weight: 500;
-      background: linear-gradient(93deg, #e5bb44 6%, #fde8a6 53%, #e5bc45 102%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .avatar-auto {
-      width: 96px;
-      height: 96px;
-      border-radius: 50%;
-      background-size: cover;
-      background-position: center;
-      border: 2px solid transparent;
-      box-sizing: border-box;
-      overflow: visible;
-      background-repeat: no-repeat;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-      position: relative;
-    }
-    .avatar-auto.selected {
-      border-color: #fff;
-    }
-    .checkmark-selected-indicator {
-        position: absolute;
-        bottom: 5px; 
-        left: 68px;   
-        right: auto; 
-        width: 26px;
-        height: 26px;
-        background-color: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 2; 
-    }
-    .checkmark-selected-indicator img {
-        width: 16px;
-        height: 16px;
-    }
-
-    .header-flex {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      padding-top: 56px;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    .header-info {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 4px;
-    }
-    .plan-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .phone {
-      color: rgba(255,255,255,0.6);
-      font-size: 16px;
-    }
-    .profiles-header {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 48px;
-      margin-bottom: 12px;
-    }
-    .section-title {
-      font-size: 20px;
-      font-weight: 500;
-      color: #e1e6f0;
-      letter-spacing: -0.2px;
-      line-height: 1;
-      padding-bottom: 16px;
-    }
-    .profiles-row-auto {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-end;
-      gap: 36px;
-      margin-bottom: 40px;
-      padding-top: 10px;
-    }
-    .profile-auto {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 96px;
-      gap: 12px;
-      transition: transform 0.2s ease;
-      cursor: pointer;
-      position: relative;
-    }
-    .profile-auto:hover {
-      transform: scale(1.08);
-    }
-     .profile-auto.add .avatar-auto {
-      background-color: #232323;
-      background-image: url('/assets/icons/add.svg');
-      background-size: 40%;
-      background-repeat: no-repeat;
-      background-position: center;
-    }
-    .profile-auto.add:hover {
-        transform: scale(1.05);
-    }
-    .profile-auto.add .name-auto {
-      color: #cad2e5;
-    }
-    .name-auto {
-      font-size: 16px;
-      color: #cad2e5;
-      font-weight: 500;
-      text-align: center;
-      line-height: 1.2;
-    }
-   
-    .watchlist-section-auto {
-      margin-top: 40px;
-    }
-    .watchlist-row-auto {
-      display: flex;
-      flex-direction: row;
-      gap: 16px;
-      overflow-x: auto;
-      padding-bottom: 16px;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-    .watchlist-row-auto::-webkit-scrollbar {
-      display: none;
-    }
-    .watchlist-item-auto {
-      width: 160px;
-      height: 213.33px;
-      border-radius: 8px;
-      background-size: cover;
-      background-position: center;
-      flex: 0 0 auto;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      cursor: pointer; 
-    }
-    .edit-profile-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: none;
-      color: #e1e6f0;
-      font-size: 16px;
-      font-weight: 500;
-      padding: 8px 12px;
-      cursor: pointer;
-      border: none;
-      line-height: 1;
-      transition: transform 0.2s ease;
-    }
-    .edit-profile-btn:hover {
-        transform: scale(1.08);
-    }
-    .edit-profile-btn img {
-      width: 20px;
-      height: 20px;
-    }
-
-    @media (max-width: 1200px) {
-      .main {
-        padding-left: 24px !important;
-        padding-right: 24px !important; 
-      }
-      .sidebar {
-        display: none;
-      }
-      .profiles-row-auto {
-        gap: 24px;
-      }
-    }
-
-    .app-container { 
-      width: 100%;
-      padding: 20px 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      box-sizing: border-box;
-    }
-
-    .content-viewport {
-      width: 1100px;
-      height: 700px;
-      max-width: 98vw;
-      max-height: 90vh;
-      border-radius: 18px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      overflow: hidden;
-      position: relative;
-      background: #0f1014;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: row;
-      background: radial-gradient(116.47% 99.46% at 50% 0%, #02001F 0%, #14001F 30%, #1F000D 55.52%, #140F11 100%);
-    }
-
-    #customContextMenu {
-      position: absolute;
-      background-color: #2c2c34;
-      border: 1px solid #444;
-      border-radius: 6px;
-      padding: 5px 0;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.3); 
-      z-index: 1000; 
-      font-size: 14px;
-      color: #e1e6f0;
-      opacity: 0;
-      transform: scale(0.85) translateY(-3px); 
-      transition: opacity 0.18s cubic-bezier(0.215, 0.610, 0.355, 1),
-                  transform 0.18s cubic-bezier(0.215, 0.610, 0.355, 1);
-      pointer-events: none;
-      display: none;
-    }
-    #customContextMenu.visible {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-      pointer-events: auto;
-    }
-    .context-menu-item {
-      padding: 8px 16px;
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-    }
-    .context-menu-item:hover {
-      background-color: #3a3a42;
-    }
-
-    .profile-note-poster {
-      position: absolute;
-      width: 32px;
-      height: calc(32px * 4 / 3);
-      background-size: cover;
-      background-position: center;
-      border-radius: 6px;
-      border: 1.5px solid rgba(255, 255, 255, 0.9); 
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
-      z-index: 3; 
-      cursor: zoom-in;
-      top: -7px; 
-      right: -7px;
-      opacity: 0;
-      transform: scale(0.4) translate(30px, -30px) rotate(15deg); 
-      transform-origin: center center; 
-      will-change: transform, opacity; 
-    }
-    .profile-note-poster.landed {
-      opacity: 1;
-      transform: scale(1) translate(0, 0) rotate(2deg); 
-      transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.320, 1.275), opacity 0.3s ease-out; 
-    }
-
-    .toast-notification {
-        position: absolute;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%) translateY(100px); 
-        background-color: #333;
-        color: #fff;
-        padding: 12px 24px;
-        border-radius: 25px;
-        font-size: 13px;
-        font-weight: 500;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        z-index: 3000;
-        opacity: 0;
-        transition: transform 0.4s cubic-bezier(0.215, 0.610, 0.355, 1), opacity 0.4s ease;
-        pointer-events: none;
-        background: rgba(0, 0, 0, 0.6);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    }
-    .toast-notification.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0); 
-    }
-
-    .image-zoom-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(15, 16, 20, 0.96); 
-        display: flex; 
-        align-items: center;
-        justify-content: center;
-        z-index: 100; 
-        opacity: 0;
-        transition: opacity 0.3s ease-in-out; 
-        cursor: zoom-out; 
-        padding: 20px; 
-        box-sizing: border-box;
-    }
-    .image-zoom-overlay.visible {
-        opacity: 1;
-    }
-
-    .enlarged-image-container {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
-        aspect-ratio: 3 / 4; 
-        max-width: 45%;  
-        max-height: 60%; 
-        width: auto; 
-        height: auto;
-        box-sizing: border-box;
-        justify-content: center;
-        transform: scale(0.85); 
-        opacity: 0;
-        transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.320, 1.275) 0.15s, 
-                    opacity 0.25s ease-out 0.15s;
-        will-change: transform, opacity;
-    }
-
-    .image-zoom-overlay.visible .enlarged-image-container {
-        transform: scale(1); 
-        opacity: 1;
-    }
-
-    .zoomed-profile-recommendation {
-        position: absolute;
-        top: 0; 
-        left: 50%;
-        transform: translate(-50%, calc(-140% + 10px)); 
-        background: rgba(30, 30, 30, 0.75);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        color: #e8ecf2;
-        padding: 7px 18px;
-        border-radius: 20px;
-        font-size: 14.5px;
-        font-weight: 500;
-        white-space: nowrap;
-        opacity: 0;
-        transition: opacity 0.3s ease-out 0.05s, 
-                    transform 0.3s cubic-bezier(0.215, 0.610, 0.355, 1) 0.05s; 
-        will-change: opacity, transform;
-        z-index: 5; 
-    }
-
-    .image-zoom-overlay.visible .zoomed-profile-recommendation {
-        opacity: 1;
-        transform: translate(-50%, -250%); 
-    }
-
-    .enlarged-image {
-        display: block;
-        width: 100%; 
-        height: 100%; 
-        object-fit: cover; 
-        border-radius: 8px; 
-    }
-
-    .zoomed-image-actions {
-        display: flex;
-        gap: 12px;
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.3s ease-out 0.3s,
-                    transform 0.3s cubic-bezier(0.215, 0.610, 0.355, 1) 0.3s;
-        will-change: opacity, transform;
-        width: 100%;
-        justify-content: center;
-        flex-shrink: 0;
-        padding-bottom: 5px;
-    }
-
-    .image-zoom-overlay.visible .zoomed-image-actions {
-        opacity: 1;
-        transform: translateY(0); 
-    }
-
-    .zoom-action-btn {
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        transition: background-color 0.2s ease, transform 0.15s ease;
-        color: white;
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(20px);
-        border-radius: 10px;
-    }
-    .zoom-action-btn img {
-        width: 24px;
-        height: 24px;
-        filter: brightness(0) invert(1);
-    }
-    .zoom-action-btn.watch-now {
-        padding: 0 24px;
-        height: 52px;    
-        font-size: 16px;
-        font-weight: 500;
-    }
-    .zoom-action-btn.watch-now:hover {
-        background-color: rgba(255, 255, 255, 0.15);
-        transform: scale(1.03);
-    }
-    .zoom-action-btn.add-watchlist {
-        padding: 10px;
-        height: 52px;
-        width: 52px;
-        justify-content: center;
-    }
-    .zoom-action-btn.add-watchlist:hover {
-        background-color: rgba(255, 255, 255, 0.3);
-        transform: scale(1.05);
-    }  
-  </style>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../thoughtNoteModalPage/styles.css">
+  <script src="../thoughtNoteModalPage/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  
 </head>
 <body>
+  <div class="header">
+    <a href="../index.html">web lab / </a><span class="pageTitleText">profileBroadcast</span>
+  </div>
   <div class="app-container">
     <div class="content-viewport"> 
       <div class="sidebar">
@@ -567,7 +62,7 @@
           </div>
           <div class="profile-auto">
             <div class="avatar-auto" style="background-image:url('/assets/images/24.png')"></div>
-            <div class="name-auto">Chirag</div>
+            <div class="name-auto">Vivek</div>
           </div>
           <div class="profile-auto">
             <div class="avatar-auto" style="background-image:url('/assets/images/19_rebranded.png')"></div>
@@ -602,18 +97,9 @@
       </div>
 
       <div id="imageZoomOverlay" class="image-zoom-overlay" style="display: none;">
-        <div class="enlarged-image-container">
+        <div class="zoom-content-container">
           <div id="zoomedProfileName" class="zoomed-profile-recommendation"></div>
-          <img id="enlargedImage" class="enlarged-image" src="" alt="Enlarged Poster">
-          <div class="zoomed-image-actions">
-            <button id="zoomWatchNowBtn" class="zoom-action-btn watch-now">
-              <img src="/assets/icons/play.svg" alt="Play">
-              Watch Now
-            </button>
-            <button id="zoomAddToWatchlistBtn" class="zoom-action-btn add-watchlist">
-              <img src="/assets/icons/add.svg" alt="Add to watchlist">
-            </button>
-          </div>
+          <div id="enlargedImagesWrapper"></div>
         </div>
       </div>
 
@@ -623,6 +109,18 @@
 
   <div id="customContextMenu">
     <div class="context-menu-item" id="addNoteToProfileBtn">Add to Profile Broadcast</div>
+  </div>
+
+  <div id="cd-icon" title="Open Thought Note">💿</div>
+
+  <div id="modal-page">
+      <div class="modal-header">
+          <span class="modal-title">Thought Note</span>
+          <button id="close-modal-btn" aria-label="Close modal">×</button>
+      </div>
+      <div class="modal-content-container">
+          <p>Loading notes...</p>
+      </div>
   </div>
 
   <script>
@@ -637,10 +135,7 @@
       let currentWatchlistItemUrl = null;
 
       const imageZoomOverlay = document.getElementById('imageZoomOverlay');
-      const enlargedImageContainer = imageZoomOverlay.querySelector('.enlarged-image-container');
-      const enlargedImage = document.getElementById('enlargedImage');
-      const zoomWatchNowBtn = document.getElementById('zoomWatchNowBtn');
-      const zoomAddToWatchlistBtn = document.getElementById('zoomAddToWatchlistBtn');
+      const enlargedImagesWrapper = document.getElementById('enlargedImagesWrapper');
       const zoomedProfileNameDiv = document.getElementById('zoomedProfileName');
 
       function showToast(message) {
@@ -654,97 +149,74 @@
 
       function hideContextMenu() {
         if (!contextMenu.classList.contains('visible')) return;
-
         const onHideTransitionEnd = () => {
           contextMenu.style.display = 'none';
           currentWatchlistItemUrl = null;
         };
-
         contextMenu.addEventListener('transitionend', onHideTransitionEnd, { once: true });
-        contextMenu.classList.remove('visible');
-
         setTimeout(() => {
-          if (contextMenu.style.display !== 'none' && !contextMenu.classList.contains('visible')) {
-            onHideTransitionEnd();
-          }
+          if (contextMenu.style.display !== 'none' && !contextMenu.classList.contains('visible')) onHideTransitionEnd();
         }, 250);
+        contextMenu.classList.remove('visible');
       }
 
       watchlistItems.forEach(item => {
         item.addEventListener('contextmenu', (e) => {
           e.preventDefault();
-
           if (contextMenu.classList.contains('visible')) {
             contextMenu.classList.remove('visible');
             contextMenu.style.display = 'none';
           }
-          
           currentWatchlistItemUrl = item.style.backgroundImage;
-          
           contextMenu.style.display = 'block';
-
           const menuWidth = contextMenu.offsetWidth;
           const menuHeight = contextMenu.offsetHeight;
           const viewportWidth = window.innerWidth;
           const viewportHeight = window.innerHeight;
-
           let topPosition = e.clientY;
           let leftPosition = e.clientX;
-
-          if (topPosition + menuHeight > viewportHeight) {
-            topPosition = viewportHeight - menuHeight - 5;
-            if (topPosition < 5) topPosition = 5;
-          }
-          if (leftPosition + menuWidth > viewportWidth) {
-            leftPosition = viewportWidth - menuWidth - 5;
-            if (leftPosition < 5) leftPosition = 5;
-          }
-          
-          contextMenu.style.top = `${topPosition}px`;
-          contextMenu.style.left = `${leftPosition}px`;
-
-          let originX = e.clientX - leftPosition;
-          let originY = e.clientY - topPosition;
-
-          originX = Math.max(0, Math.min(originX, menuWidth));
-          originY = Math.max(0, Math.min(originY, menuHeight));
-          
+          if (topPosition + menuHeight > viewportHeight) topPosition = viewportHeight - menuHeight - 5;
+          if (leftPosition + menuWidth > viewportWidth) leftPosition = viewportWidth - menuWidth - 5;
+          contextMenu.style.top = `${topPosition < 5 ? 5 : topPosition}px`;
+          contextMenu.style.left = `${leftPosition < 5 ? 5 : leftPosition}px`;
+          let originX = Math.max(0, Math.min(e.clientX - leftPosition, menuWidth));
+          let originY = Math.max(0, Math.min(e.clientY - topPosition, menuHeight));
           contextMenu.style.transformOrigin = `${originX}px ${originY}px`;
-          
           void contextMenu.offsetHeight; 
-          
           contextMenu.classList.add('visible');
         });
       });
 
       document.addEventListener('click', (e) => {
-        if (!e.target.closest('#customContextMenu') && contextMenu.classList.contains('visible')) {
-          hideContextMenu();
-        }
+        if (!e.target.closest('#customContextMenu') && contextMenu.classList.contains('visible')) hideContextMenu();
       });
       
       if (mainContentArea) {
-        mainContentArea.addEventListener('scroll', () => {
-            if (contextMenu.classList.contains('visible')) {
-                hideContextMenu();
-            }
-        });
+        mainContentArea.addEventListener('scroll', () => { if (contextMenu.classList.contains('visible')) hideContextMenu(); });
       }
 
       addNoteToProfileBtn.addEventListener('click', () => {
         if (currentWatchlistItemUrl) {
           const selectedProfileAvatar = document.querySelector('.profile-auto .avatar-auto.selected');
           if (selectedProfileAvatar) {
-            const existingNote = selectedProfileAvatar.querySelector('.profile-note-poster');
-            if (existingNote) existingNote.remove();
-            const notePosterDiv = document.createElement('div');
-            notePosterDiv.classList.add('profile-note-poster');
-            notePosterDiv.style.backgroundImage = currentWatchlistItemUrl;
-            selectedProfileAvatar.appendChild(notePosterDiv);
-            setTimeout(() => { notePosterDiv.classList.add('landed'); }, 10); 
+            const existingPosters = selectedProfileAvatar.querySelectorAll('.profile-note-poster');
+            if (existingPosters.length >= 2) {
+              showToast("Broadcast more tomorrow!");
+              hideContextMenu();
+              return;
+            }
+            const posterToDemote = selectedProfileAvatar.querySelector('.profile-note-poster.primary');
+            if (posterToDemote) {
+              posterToDemote.classList.remove('primary');
+              posterToDemote.classList.add('secondary');
+            }
+            const newPoster = document.createElement('div');
+            newPoster.classList.add('profile-note-poster', 'primary');
+            newPoster.style.backgroundImage = currentWatchlistItemUrl;
+            selectedProfileAvatar.appendChild(newPoster);
+            setTimeout(() => newPoster.classList.add('landed'), 10);
             showToast("Poster Pinned!");
           } else {
-            console.warn('No profile selected to add the note to.');
             showToast("Select a profile first!");
           }
         }
@@ -754,17 +226,12 @@
       const profileAutos = document.querySelectorAll('.profile-auto');
       profileAutos.forEach(profileDiv => {
           profileDiv.addEventListener('click', function(event) {
-              if (event.target.closest('.profile-note-poster')) {
-                  return;
-              }
-              if (this.classList.contains('add')) return;
-
+              if (event.target.closest('.profile-note-poster') || this.classList.contains('add')) return;
               document.querySelectorAll('.avatar-auto.selected').forEach(selectedAv => {
                   selectedAv.classList.remove('selected');
                   const checkmark = selectedAv.querySelector('.checkmark-selected-indicator');
                   if (checkmark) checkmark.remove();
               });
-
               const avatar = this.querySelector('.avatar-auto');
               if (avatar) {
                   avatar.classList.add('selected');
@@ -783,30 +250,71 @@
       if (firstProfileDiv) {
           const firstAvatar = firstProfileDiv.querySelector('.avatar-auto');
           if (firstAvatar) {
-              if (!firstAvatar.classList.contains('selected')) {
-                 document.querySelectorAll('.avatar-auto.selected').forEach(sa => sa.classList.remove('selected'));
-                 firstAvatar.classList.add('selected');
+              if (!firstAvatar.classList.contains('selected')) firstAvatar.classList.add('selected');
+              const existingCheckmark = firstAvatar.querySelector('.checkmark-selected-indicator');
+              if (!existingCheckmark) {
+                const checkmarkIndicator = document.createElement('div');
+                checkmarkIndicator.classList.add('checkmark-selected-indicator');
+                const checkmarkImg = document.createElement('img');
+                checkmarkImg.src = '/assets/icons/check.svg';
+                checkmarkImg.alt = 'Selected Profile';
+                checkmarkIndicator.appendChild(checkmarkImg);
+                firstAvatar.appendChild(checkmarkIndicator);
               }
-              const staticCheckmark = firstAvatar.querySelector('.checkmark-selected-indicator');
-              if (staticCheckmark) staticCheckmark.remove();
-              const checkmarkIndicator = document.createElement('div');
-              checkmarkIndicator.classList.add('checkmark-selected-indicator');
-              const checkmarkImg = document.createElement('img');
-              checkmarkImg.src = '/assets/icons/check.svg';
-              checkmarkImg.alt = 'Selected Profile';
-              checkmarkIndicator.appendChild(checkmarkImg);
-              firstAvatar.appendChild(checkmarkIndicator);
           }
       }
 
-      function showEnlargedImage(imageUrl, recommendationText) {
-        const cleanUrl = imageUrl.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
-        enlargedImage.src = cleanUrl;
-        zoomedProfileNameDiv.textContent = recommendationText || "Recommendation";
-
-        imageZoomOverlay.style.display = 'flex';
-        setTimeout(() => { imageZoomOverlay.classList.add('visible'); }, 10); 
+      function showEnlargedImage(avatarElement, recommendationText) {
+        enlargedImagesWrapper.innerHTML = '';
         
+        const postersToShow = [
+          avatarElement.querySelector('.profile-note-poster.primary'),
+          avatarElement.querySelector('.profile-note-poster.secondary')
+        ].filter(Boolean);
+
+        postersToShow.forEach(posterDiv => {
+          const bgImage = window.getComputedStyle(posterDiv).backgroundImage;
+          const cleanUrl = bgImage.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
+          
+          // 1. Create the main container for the poster item
+          const posterItemContainer = document.createElement('div');
+          posterItemContainer.className = 'enlarged-poster-item';
+
+          // 2. Create the image
+          const img = document.createElement('img');
+          img.src = cleanUrl;
+          img.alt = "Enlarged Poster";
+          img.className = 'enlarged-image';
+          
+          // 3. Create the actions container
+          const actionsContainer = document.createElement('div');
+          actionsContainer.className = 'enlarged-poster-actions';
+
+          // 4. Create the 'Watch Now' button
+          const watchBtn = document.createElement('button');
+          watchBtn.className = 'zoom-action-btn watch-now';
+          watchBtn.innerHTML = `<img src="/assets/icons/play.svg" alt="Play"><span>Watch Now</span>`;
+
+          // 5. Create the 'Add to Watchlist' button with its own class and no visible text
+          const addBtn = document.createElement('button');
+          addBtn.className = 'zoom-action-btn add-watchlist';
+          addBtn.innerHTML = `<img src="/assets/icons/add.svg" alt="Add to Watchlist"><span class="visually-hidden">Add to Watchlist</span>`;
+
+          // 6. Append buttons to their container
+          actionsContainer.appendChild(watchBtn);
+          actionsContainer.appendChild(addBtn);
+
+          // 7. Append the image and actions container to the main item container
+          posterItemContainer.appendChild(img);
+          posterItemContainer.appendChild(actionsContainer);
+          
+          // 8. Append the complete item to the main wrapper
+          enlargedImagesWrapper.appendChild(posterItemContainer);
+        });
+
+        zoomedProfileNameDiv.textContent = recommendationText || "Recommendations";
+        imageZoomOverlay.style.display = 'flex';
+        setTimeout(() => imageZoomOverlay.classList.add('visible'), 10); 
         if (mainContentArea) mainContentArea.style.overflowY = 'hidden'; 
       }
 
@@ -814,7 +322,7 @@
         imageZoomOverlay.classList.remove('visible');
         setTimeout(() => {
           imageZoomOverlay.style.display = 'none';
-          enlargedImage.src = '';
+          enlargedImagesWrapper.innerHTML = '';
           zoomedProfileNameDiv.textContent = '';
           if (mainContentArea) mainContentArea.style.overflowY = 'auto';
         }, 400);
@@ -822,64 +330,38 @@
 
       if (mainContentArea) {
           mainContentArea.addEventListener('click', function(event) {
-              if (imageZoomOverlay.classList.contains('visible') || imageZoomOverlay.style.display === 'flex') {
-                  return;
-              }
+              if (imageZoomOverlay.classList.contains('visible')) return;
               const notePoster = event.target.closest('.profile-note-poster');
               if (notePoster) {
                   event.preventDefault();
                   event.stopPropagation();
-                  const bgImage = window.getComputedStyle(notePoster).backgroundImage;
-                  
-                  let recommendationText = "Recommendation";
                   const avatarOfPoster = notePoster.closest('.avatar-auto');
                   if (avatarOfPoster) {
-                      const profileAutoDiv = avatarOfPoster.closest('.profile-auto');
-                      if (profileAutoDiv) {
-                          const nameElement = profileAutoDiv.querySelector('.name-auto');
-                          if (nameElement) {
-                              const name = nameElement.textContent.trim();
-                              if (name) {
-                                  recommendationText = `${name}'s Recommendation`;
-                              }
-                          }
-                      }
-                  }
-                  
-                  if (bgImage && bgImage !== 'none') {
-                      showEnlargedImage(bgImage, recommendationText);
+                    let recommendationText = "Recommendations";
+                    const profileAutoDiv = avatarOfPoster.closest('.profile-auto');
+                    if (profileAutoDiv) {
+                        const nameElement = profileAutoDiv.querySelector('.name-auto');
+                        if (nameElement) {
+                            const name = nameElement.textContent.trim();
+                            if (name) recommendationText = `${name}'s Recommendations`;
+                        }
+                    }
+                    showEnlargedImage(avatarOfPoster, recommendationText);
                   }
               }
           });
       }
-
-      imageZoomOverlay.addEventListener('click', function(event) {
-        if (event.target === imageZoomOverlay) {
-          hideEnlargedImage();
+      
+      imageZoomOverlay.addEventListener('click', (event) => {
+        if (event.target === imageZoomOverlay || event.target === document.querySelector('.zoom-content-container')) {
+             hideEnlargedImage();
         }
       });
 
       document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && imageZoomOverlay.classList.contains('visible')) {
-          hideEnlargedImage();
-        }
+        if (event.key === 'Escape' && imageZoomOverlay.classList.contains('visible')) hideEnlargedImage();
       });
 
-      if (zoomWatchNowBtn) {
-        zoomWatchNowBtn.addEventListener('click', (event) => {
-          event.stopPropagation();
-          console.log("Watch Now clicked for:", enlargedImage.src);
-          alert("Placeholder: Watch Now for " + enlargedImage.src.split('/').pop());
-        });
-      }
-
-      if (zoomAddToWatchlistBtn) {
-        zoomAddToWatchlistBtn.addEventListener('click', (event) => {
-          event.stopPropagation();
-          console.log("Add to Watchlist clicked for:", enlargedImage.src);
-          showToast("Added to your (pretend) watchlist!");
-        });
-      }
     });
   </script>
 </body>
