@@ -9,9 +9,9 @@
 .hover-image {
     position: absolute;
     top: 30%;
-    left: 100%;
+    left: 110%;
     margin-left: 20px;
-    width: 400px;
+    width: 360px;
     height: auto;
     opacity: 0;
     transform: translateY(-50%) scale(0.95) translateX(10px);
