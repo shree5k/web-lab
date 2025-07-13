@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="hoverEffects.css">
   <style>
     html, body {
       height: 100%;
@@ -115,6 +116,9 @@
         font-size: 0.8rem;
         padding: 6px 8px;
       }
+      .hover-image {
+        display: none !important;
+      }
     }
   </style>
 </head>
@@ -140,11 +144,20 @@
       { href: 'searchFeelingLucky/index.html', label: '250620 searchFeelingLucky' },
       { href: 'profileBroadcast/index.html', label: '250704 profileBroadcast' }
     ];
+
     const nav = document.querySelector('.linksList');
+
     links.forEach(link => {
       const a = document.createElement('a');
       a.href = link.href;
       a.textContent = link.label;
+      a.classList.add('hover-effect');
+      const img = document.createElement('img');
+      img.classList.add('hover-image');
+      const projectName = link.label.split(' ')[1];
+      img.src = `assets/gifs/${projectName}.gif`;
+      img.alt = `${projectName} project preview`;
+      a.appendChild(img);
       nav.appendChild(a);
     });
   </script>
