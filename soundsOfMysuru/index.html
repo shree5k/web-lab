@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sounds Of Mysuru</title>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif;
+            margin: 0;
+            padding: 2em 1em;
+            background-color: #f8f9fa;
+            color: #202124;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5em;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 1em;
+        }
+
+        h1 {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 2.5em;
+            font-weight: normal;
+        }
+
+        #status {
+            text-align: center;
+            color: #5f6368;
+            padding: 2em;
+        }
+
+        /* The container for each individual file player */
+        .file-entry {
+            margin-bottom: 2.5em; /* Space between each player */
+        }
+
+        /* The filename title with a serif font */
+        p.filename {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 0.8em;
+            margin: 0 0 0.75em 0;
+            word-wrap: break-word;
+            color: #000;
+        }
+
+        /* Styling for the Google Drive iframe player */
+        iframe {
+            width: 100%;
+            height: 55px;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+        }
+        
+        .source-link {
+            display: block;
+            margin-top: 2em;
+            font-size: 0.9em;
+            text-align: center;
+            color: #5f6368;
+            text-decoration: none;
+        }
+        .source-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Sounds Of Mysuru</h1>
+        </header>
+        
+        <div id="status">Loading files...</div>
+        
+        <div id="file-container">
+            <!-- Simplified file entries will be inserted here -->
+        </div>
+
+        <a id="source-sheet-link" class="source-link" href="#" style="display: none;">Link to Source Google Sheet</a>
+    </div>
+
+    <script>
+        // The URL of your Google Apps Script Web App
+        const apiUrl = 'https://script.google.com/macros/s/AKfycbzQ-B6eHTpBvu3lXIrlBOIDUSj5OlzeiGec87kyXx6btRN1L6dD8jCYMa8_OZwWPFst-A/exec';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('file-container');
+                    const status = document.getElementById('status');
+                    const sourceLink = document.getElementById('source-sheet-link');
+
+                    // --- CHANGE: Check for the new 'files' property ---
+                    if (data.status !== 'success' || !data.files) {
+                        status.textContent = 'Error: Could not retrieve file list.';
+                        return;
+                    }
+                    
+                    if (data.sourceSheetUrl) {
+                        sourceLink.href = data.sourceSheetUrl;
+                        sourceLink.style.display = 'block';
+                    }
+                    
+                    // --- CHANGE: Use the 'files' array from the JSON ---
+                    const allFiles = data.files;
+                    if (allFiles.length === 0) {
+                        status.textContent = 'No file links were found.';
+                        return;
+                    }
+                    
+                    status.style.display = 'none';
+
+                    let playableFilesFound = 0;
+
+                    // --- CHANGE: Loop through the array of file objects ---
+                    allFiles.forEach(file => {
+                        // The URL is now a property of the file object
+                        const url = file.url;
+                        const fileIdMatch = url.match(/[-\w]{25,}/);
+                        
+                        // Skip any items that aren't valid Google Drive file links
+                        if (!fileIdMatch) { return; }
+                        
+                        playableFilesFound++;
+                        const fileId = fileIdMatch[0];
+                        
+                        const embedUrl = `https://drive.google.com/file/d/${fileId}/preview`;
+                        
+                        const entryDiv = document.createElement('div');
+                        entryDiv.className = 'file-entry';
+
+                        // --- NEW: Create the filename title element ---
+                        const fileNameElement = document.createElement('p');
+                        fileNameElement.className = 'filename';
+                        // Use the 'name' property from the file object
+                        fileNameElement.textContent = file.name;
+
+                        const iframeElement = document.createElement('iframe');
+                        iframeElement.src = embedUrl;
+
+                        // --- CHANGE: Add both the title and the player to the page ---
+                        entryDiv.appendChild(fileNameElement);
+                        entryDiv.appendChild(iframeElement);
+                        
+                        container.appendChild(entryDiv);
+                    });
+
+                    if (playableFilesFound === 0) {
+                        status.style.display = 'block';
+                        status.textContent = 'No playable Google Drive files were found in the list.';
+                    }
+                })
+                .catch(error => {
+                    const status = document.getElementById('status');
+                    status.textContent = 'Failed to load data. Error: ' + error;
+                });
+        });
+    </script>
+
+</body>
+</html>
