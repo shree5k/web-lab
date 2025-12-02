@@ -13,6 +13,7 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
+  <canvas id="sparkleCanvasPlan"></canvas>
   <div class="header">
     <a href="../index.html">web lab / </a><span class="pageTitleText">myspaceChristmasTheme</span>
   </div>
@@ -37,6 +38,7 @@
           <div class="header-info">
             <div class="plan-row">
               <span class="plan">Premium 3 Month Plan</span>
+              <span class="plan-light-overlay" id="planLight">Premium 3 Month Plan</span>
               <div class="chevron"></div>
             </div>
             <span class="phone">+91 8********0</span>
@@ -160,8 +162,6 @@
           
           snowflake.style.setProperty('--wind-drift', `${windDrift}px`);
           
-          // Composite Animation: Fall + Sway + Twinkle
-          // We assign the specific sway animation in CSS based on the class 'sway-type-X'
           snowflake.style.animationDuration = `${duration}s, ${swayDuration}s, ${swayDuration * 1.5}s`;
           snowflake.style.animationDelay = `${randomDelay}s, ${randomDelay}s, ${randomDelay}s`;
 
@@ -221,5 +221,234 @@
       }
     });
   </script>
+  <script>
+(() => {
+    const target = document.querySelector('.plan');
+    const overlay = document.getElementById('planLight');
+    const canvas = document.getElementById('sparkleCanvasPlan');
+    const ctx = canvas.getContext('2d');
+
+    let width, height, particles = [];
+    const wand = { x:0, y:0, vx:0, vy:0, active:false, alpha:1 };
+
+    const config = {
+        ease: 0.12,          // slightly tighter spring
+        drag: 0.92,          // less air drag -> faster snap
+        waveSpeed: 0.08,     // faster oscillation (readable on small text)
+        waveAmp: 6,          // subtle but noticeable
+        spawnRate: 1,        // fewer but sharper sparks
+        particleDrag: 0.96,
+        gravity: 0.015,       // tiny pull
+        colors: [
+            {r:255,g:255,b:255},
+            {r:255,g:235,b:200},
+            {r:255,g:210,b:140}
+        ]
+    };
+
+    function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    target.addEventListener("mouseenter", () => {
+        const rect = target.getBoundingClientRect();
+        wand.x = rect.left - 20;
+        wand.y = rect.top + rect.height/2;
+        wand.targetX = rect.left - 20;
+        wand.active = true;
+        overlay.style.opacity = 1;
+
+        wand.vx = 0;
+        wand.vy = 0;
+        wand.t = 0;
+        
+        wand.path = null;     // force new curve generation
+        wand.travel = 0;      // restart progress
+        wand.phase = 0;   
+        wand.alpha = 1;    // clean up leftover oscillation state (harmless but tidy)
+
+        // position overlay over text
+        overlay.style.left = rect.left + "px";
+        overlay.style.top = rect.top + "px";
+        overlay.style.position = "fixed";
+        overlay.style.fontSize = getComputedStyle(target).fontSize;
+        overlay.style.fontWeight = getComputedStyle(target).fontWeight;
+    });
+
+    target.addEventListener("mouseleave", () => {
+        wand.active = false;
+        overlay.style.opacity = 0;
+    });
+
+    function drawStar(x,y,size,alpha,color){
+        ctx.save();
+        ctx.translate(x,y);
+        const g = ctx.createRadialGradient(0,0,0,0,0,size);
+        g.addColorStop(0,`rgba(255,255,255,${alpha})`);
+        g.addColorStop(0.4,`rgba(${color.r},${color.g},${color.b},${alpha*0.5})`);
+        g.addColorStop(1,`rgba(${color.r},${color.g},${color.b},0)`);
+        ctx.fillStyle = g;
+        ctx.beginPath(); ctx.arc(0,0,size,0,Math.PI*2); ctx.fill();
+        ctx.restore();
+    }
+
+    class Particle {
+        constructor(x,y,vx,vy){
+            this.x=x; this.y=y;
+            this.vx = vx*0.2 + (Math.random()-0.5)*1.5;
+            this.vy = vy*0.2 + (Math.random()-0.5)*1.5;
+            this.size = Math.random() * 2.5 + 0.8;   // smaller, sharper
+            this.alpha = 1;
+            this.decay = Math.random() * 0.008 + 0.003; // faster fade
+            this.color = config.colors[Math.random()*config.colors.length|0];
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+
+            this.vx *= config.particleDrag;
+            this.vy *= config.particleDrag;
+            this.vy += config.gravity;
+
+            const FADE_LINE = 0.15;
+            const fadeStartY = height * FADE_LINE;
+
+            if (this.y > fadeStartY) {
+                const fadeFactor = (this.y - fadeStartY) / (height - fadeStartY);
+                this.alpha -= this.decay * (1 + fadeFactor * 4);
+            } else {
+                this.alpha -= this.decay * 0.3;
+            }
+        }
+        draw(){ if(this.alpha>0) drawStar(this.x,this.y,this.size,this.alpha,this.color); }
+    }
+
+    function animate(){
+        ctx.clearRect(0,0,width,height);
+        ctx.globalCompositeOperation = "lighter";
+
+        if(wand.active){
+            const rect = target.getBoundingClientRect();
+            const startX = rect.left - 20;
+            const endX = rect.right + 20;
+
+            wand.targetX += 2.2;
+            if(wand.targetX >= endX){
+                wand.active = false;
+                overlay.style.opacity = 0;
+            }
+
+            const dx = wand.targetX - wand.x;
+            wand.vx += dx*config.ease;
+            wand.vx *= config.drag;
+            wand.x += wand.vx;
+
+            if (!wand.path) {
+                const sx = startX;
+                const sy = rect.bottom;      // bottom-left
+                const ex = endX;
+                const ey = rect.top;         // top-right
+
+                const cx = (sx + ex) / 2;
+                const cy = rect.top - rect.height * 0.7;
+
+                const pts = [];
+                const STEPS = 120;
+                let last = null;
+                let total = 0;
+
+                for (let i = 0; i <= STEPS; i++) {
+                    const t = i / STEPS;
+                    const inv = 1 - t;
+                    const x = inv*inv*sx + 2*inv*t*cx + t*t*ex;
+                    const y = inv*inv*sy + 2*inv*t*cy + t*t*ey;
+
+                    if (last) total += Math.hypot(x - last.x, y - last.y);
+                    pts.push({x, y, d: total});
+                    last = {x, y};
+                }
+
+                pts.forEach(p => p.d /= total);
+
+                wand.path = pts;
+                wand.travel = 0;
+            }
+
+            // move along path at constant speed
+            let baseSpeed = 0.012;
+
+            // when wand reaches last 25% of path, gradually slow down
+            let slowDownStart = 0.15;
+
+            if (wand.travel > slowDownStart) {
+                let t = (wand.travel - slowDownStart) / (1 - slowDownStart);
+                baseSpeed *= (1 - 0.7 * t); 
+                // slows to 30% of original at the end
+            }
+
+            wand.travel += baseSpeed;
+            if (wand.travel >= 1) {
+                wand.travel = 1;
+
+                // stop movement completely
+                wand.vx = 0;
+                wand.vy = 0;
+
+                // fade the spark gently
+                wand.alpha -= 0.04;    // fade speed (0.02 = slower, 0.06 = faster)
+
+                if (wand.alpha <= 0) {
+                    wand.active = false;
+                    overlay.style.opacity = 0;
+                    wand.alpha = 0;
+                }
+            }
+
+            const pts = wand.path;
+            let idx = pts.findIndex(p => p.d >= wand.travel);
+            if (idx < 1) idx = 1;
+
+            const p0 = pts[idx - 1];
+            const p1 = pts[idx];
+
+            const segT = (wand.travel - p0.d) / (p1.d - p0.d);
+            const targetX = p0.x + (p1.x - p0.x) * segT;
+            const targetY = p0.y + (p1.y - p0.y) * segT;
+
+            // follow the curve point smoothly
+            wand.vx += (targetX - wand.x) * 0.25;
+            wand.vy += (targetY - wand.y) * 0.25;
+
+            wand.vx *= 0.85;
+            wand.vy *= 0.85;
+
+            wand.x += wand.vx;
+            wand.y += wand.vy;
+
+            overlay.style.webkitMaskImage =
+                `radial-gradient(circle at ${wand.x - rect.left}px ${wand.y - rect.top}px,
+                 black 0%, transparent 35%)`;
+            if (wand.active) {
+                for (let i = 0; i < config.spawnRate; i++) {
+                    particles.push(new Particle(wand.x, wand.y, wand.vx, wand.vy));
+                }
+            }
+
+            drawStar(wand.x, wand.y, 5, 0.35 * wand.alpha, {r:255,g:255,b:255});
+        }
+
+        for(let i=particles.length-1;i>=0;i--){
+            particles[i].update(); particles[i].draw();
+            if(particles[i].alpha <= 0) particles.splice(i,1);
+        }
+
+        requestAnimationFrame(animate);
+    }
+    animate();
+})();
+</script>
 </body>
 </html>
