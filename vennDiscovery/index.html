@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1366, initial-scale=1.0">
+  <title>Venn Discovery</title>
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml" />
+  <link href="https://fonts.googleapis.com/css?family=Inter:400,500,600,700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="categories.css">
+  
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../thoughtNoteModalPage/styles.css">
+  <script src="../thoughtNoteModalPage/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <div class="header">
+    <a href="../index.html">web lab / </a><span class="pageTitleText">vennDiscovery</span>
+  </div>
+  <div class="app-container">
+    <div class="content-viewport"> 
+      
+      <div class="sidebar">
+        <img class="logo" src="../assets/images/logo.png" alt="Logo">
+        <div class="nav">
+          <img src="../assets/images/12.png" id="nav-home" alt="Home">
+          <img src="../assets/icons/Icon.svg" alt="Search">
+          <img src="../assets/icons/hs tv.svg" alt="TV">
+          <img src="../assets/icons/hs movies.svg" alt="Movies">
+          <img src="../assets/icons/hs sports.svg" alt="Sports">
+          <img src="../assets/icons/category.svg" id="nav-categories" class="active" alt="Categories">
+        </div>
+      </div>
+      
+      <div class="main no-padding" id="main-container"> 
+        
+        <div id="dashboard-content" style="display: none;">
+            <div class="header-flex">
+            <div class="header-info">
+                <div class="plan-row">
+                <span class="plan">Premium 3 Month Plan</span>
+                <div class="chevron"></div>
+                </div>
+                <span class="phone">+91 8********0</span>
+            </div>
+            <button class="help-settings">
+                <img src="../assets/icons/settings.svg" alt="Settings">
+                Help & Settings
+            </button>
+            </div>
+            <div class="profiles-header">
+            <div class="section-title">Profiles</div>
+            <button class="edit-profile-btn">
+                <img src="../assets/icons/edit.svg" alt="Edit Icon">Edit
+            </button>
+            </div>
+            <div class="profiles-row-auto">
+            <div class="profile-auto">
+                <div class="avatar-auto selected" style="background-image:url('../assets/images/12.png')">
+                </div>
+                <div class="name-auto">Shree</div>
+            </div>
+            <div class="profile-auto">
+                <div class="avatar-auto" style="background-image:url('../assets/images/37.png')"></div>
+                <div class="name-auto">Hari</div>
+            </div>
+            <div class="profile-auto">
+                <div class="avatar-auto" style="background-image:url('../assets/images/24.png')"></div>
+                <div class="name-auto">Vivek</div>
+            </div>
+            <div class="profile-auto">
+                <div class="avatar-auto" style="background-image:url('../assets/images/19_rebranded.png')"></div>
+                <div class="name-auto">Kids</div>
+            </div>
+            <div class="profile-auto add">
+                <div class="avatar-auto"></div>
+                <div class="name-auto">Add</div>
+            </div>
+            </div>
+            <div class="watchlist-section-auto">
+            <div class="section-title">Watchlist</div>
+            <div class="watchlist-row-auto">
+                <div class="watchlist-item-auto" style="background-image:url('https://drive.google.com/thumbnail?id=107Kai87ekNV-Svd578OTLVsIaU2QB_Gp&sz=w500')"></div>
+                <div class="watchlist-item-auto" style="background-image:url('https://drive.google.com/thumbnail?id=10JlIuMQe8nLh9ZssmI-d5huAikPNIDTs&sz=w500')"></div>
+                <div class="watchlist-item-auto" style="background-image:url('https://drive.google.com/thumbnail?id=10mNpf9KsaoLV0_yPQWJ4SCQlCTATp-AB&sz=w500')"></div>
+                <div class="watchlist-item-auto" style="background-image:url('https://drive.google.com/thumbnail?id=11IHb7P-pVZe0qQ9_Te3ujoYmae8Fxdvh&sz=w500')"></div>
+                <div class="watchlist-item-auto" style="background-image:url('https://drive.google.com/thumbnail?id=12H3L2Vx-sSt6tvAQQaRyjXzP_es47qKW&sz=w500')"></div>
+                <div class="watchlist-item-auto" style="background-image:url('https://drive.google.com/thumbnail?id=137h3EF1IdwqaQBT1F6cYJTwvQCMmA93S&sz=w500')"></div>
+                <div class="watchlist-item-auto" style="background-image:url('https://drive.google.com/thumbnail?id=143iK41S3q5-yR1USUR8ZbSqEZ7rAAqFc&sz=w500')"></div>
+                <div class="watchlist-item-auto" style="background-image:url('https://drive.google.com/thumbnail?id=14lMAxidbShs82vCLKVSHGia4MjL7cPN4&sz=w500')"></div>
+                <div class="watchlist-item-auto" style="background-image:url('https://drive.google.com/thumbnail?id=14y2lML3LeVUo5XjD93MEC-G4qsBTNeEi&sz=w500')"></div>
+                <div class="watchlist-item-auto" style="background-image:url('https://drive.google.com/thumbnail?id=16YS7CKgetklh6NsYVXZ0MWSQTnj_X8p5&sz=w500')"></div>
+                <div class="watchlist-item-auto" style="background-image:url('https://drive.google.com/thumbnail?id=178zaXM6K4WkOf9nFvV6p_-TxhuqTjd7x&sz=w500')"></div>
+                <div class="watchlist-item-auto" style="background-image:url('https://drive.google.com/thumbnail?id=18O4pAx2qAj9AK4NeQfcV81RqMzUjj3ln&sz=w500')"></div>
+                <div class="watchlist-item-auto" style="background-image:url('https://drive.google.com/thumbnail?id=1BCxYlBxlhmYezz_ybBN3VFt1e7j_HCpq&sz=w500')"></div>
+                <div class="watchlist-item-auto" style="background-image:url('https://drive.google.com/thumbnail?id=1DAzYbwMZfeoxKrJty8-xlnvRSILLXFMo&sz=w500')"></div>
+                <div class="watchlist-item-auto" style="background-image:url('https://drive.google.com/thumbnail?id=1G7A7qSwg24_qGMVrNLJRjTXy0pebHwA6&sz=w500')"></div>
+                <div class="watchlist-item-auto" style="background-image:url('https://drive.google.com/thumbnail?id=1Gl7aPb15whzU5KGRAvEoO5gctFqlSl0V&sz=w500')"></div>
+            </div>
+            </div>
+        </div>
+
+        <div id="venn-view">
+            <div id="venn-scaler">
+                <div class="venn-container">
+                    <svg class="venn-background" viewBox="0 0 1100 700" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="350" cy="320" r="300" class="venn-circle-path" />
+                        <circle cx="750" cy="320" r="300" class="venn-circle-path" />
+                    </svg>
+            
+                    <div class="wheels-wrapper">
+                        <div class="scroll-wheel left-wheel">
+                            <div class="scroll-list" id="list-left">
+                                <div class="scroll-item"><span>Action</span></div>
+                                <div class="scroll-item"><span>Comedy</span></div>
+                                <div class="scroll-item"><span>Drama</span></div>
+                                <div class="scroll-item"><span>Thriller</span></div>
+                                <div class="scroll-item"><span>Horror</span></div>
+                                <div class="scroll-item"><span>Sci-Fi</span></div>
+                                <div class="scroll-item"><span>Fantasy</span></div>
+                                <div class="scroll-item"><span>Romance</span></div>
+                                <div class="scroll-item"><span>Mystery</span></div>
+                                <div class="scroll-item"><span>Documentary</span></div>
+                                <div class="scroll-item"><span>Crime</span></div>
+                                <div class="scroll-item"><span>Adventure</span></div>
+                                <div class="scroll-item"><span>Animation</span></div>
+                                <div class="scroll-item"><span>Musical</span></div>
+                                <div class="scroll-item"><span>Biopic</span></div>
+                            </div>
+                        </div>
+            
+                        <div class="scroll-wheel right-wheel">
+                            <div class="scroll-list" id="list-right">
+                                <div class="scroll-item"><span>Cozy</span></div>
+                                <div class="scroll-item"><span>Chaotic</span></div>
+                                <div class="scroll-item"><span>Moody</span></div>
+                                <div class="scroll-item"><span>Slow Burn</span></div>
+                                <div class="scroll-item"><span>High Energy</span></div>
+                                <div class="scroll-item"><span>Artsy</span></div>
+                                <div class="scroll-item"><span>Gritty</span></div>
+                                <div class="scroll-item"><span>Wholesome</span></div>
+                                <div class="scroll-item"><span>Dark Humor</span></div>
+                                <div class="scroll-item"><span>Surreal</span></div>
+                                <div class="scroll-item"><span>Nostalgic</span></div>
+                                <div class="scroll-item"><span>Feel-Good</span></div>
+                                <div class="scroll-item"><span>Tense</span></div>
+                                <div class="scroll-item"><span>Weirdcore</span></div>
+                                <div class="scroll-item"><span>Mind-Bendy</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="generated-poster-container" class="poster-container">
+                        <img class="stacked-poster poster-3" src="" alt="Poster 3">
+                        <img class="stacked-poster poster-2" src="" alt="Poster 2">
+                        <img class="stacked-poster poster-1" src="" alt="Poster 1">
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="venn-tray">
+                <div class="tray-content">
+                    <span class="tray-label">Current Mix:</span>
+                    <span class="tray-result" id="venn-result-text">Select words...</span>
+                </div>
+                <button class="tray-action">Generate</button>
+            </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div id="cd-icon" title="Open Thought Note">💿</div>
+  
+  <div id="modal-page">
+      <div class="modal-header">
+          <span class="modal-title">Thought Note</span>
+          <button id="close-modal-btn" aria-label="Close modal">×</button>
+      </div>
+      <div class="modal-content-container">
+          <p>Loading notes...</p>
+      </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="categories.js"></script>
+</body>
+</html>
