@@ -5,3 +5,5 @@ imagine a venn diagram with one circle for what it is, another for what i’m fe
 maybe this goes further, swap circles for actors, themes, vibes as lens. maybe people share mixes. maybe mixes become pages (convergence). i’m just poking at the idea.
 
 and for the implementation nerds: the venn discovery runs on simple geometry. we track each genre chip’s vertical distance from center (dy), then solve for its horizontal stretch using the circle equation x² + y² = r². the visual radius is larger than the math radius, creating a hyper-curve that keeps elements from clipping while still feeling satisfyingly circular.
+
+venn diagram idea credits : superrandom studio
