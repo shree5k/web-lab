@@ -154,12 +154,34 @@
       a.href = link.href;
       a.textContent = link.label;
       a.classList.add('hover-effect');
-      const img = document.createElement('img');
-      img.classList.add('hover-image');
+
+      const video = document.createElement('video');
+      video.classList.add('hover-image');
+
       const projectName = link.label.split(' ')[1];
-      img.src = `assets/gifs/${projectName}.gif`;
-      img.alt = `${projectName} project preview`;
-      a.appendChild(img);
+      video.src = `assets/video/${projectName}.mp4`;
+      video.muted = true;
+      video.loop = true;
+      video.playsInline = true;
+      video.controls = false;
+      // video.preload = 'none';
+
+      a.appendChild(video);
+
+      const playVideo = () => {
+        if (video.readyState === 0) video.load();
+        video.play().catch(() => {});
+      };
+      const stopVideo = () => {
+        video.pause();
+        video.currentTime = 0;
+      };
+
+      a.addEventListener('mouseenter', playVideo);
+      a.addEventListener('mouseleave', stopVideo);
+      a.addEventListener('focus', playVideo);
+      a.addEventListener('blur', stopVideo);
+
       nav.appendChild(a);
     });
   </script>
