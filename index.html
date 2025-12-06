@@ -98,7 +98,131 @@
       background: #f5f5f5;
       color: #222;
     }
+    [hidden] {
+      display: none !important;
+    }
+    .viewToggle {
+      margin-left: 2px;
+      background: transparent;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.48);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s;
+    }
+    .viewToggle:hover {
+      border-color: rgba(255,255,255,0.5);
+    }
+    .viewToggle svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    /* icon animation */
+    .viewToggle svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+      shape-rendering: geometricPrecision;
+    }
+    
+    .icon-rect {
+      transition: 
+        x 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+        y 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+        width 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+        height 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+        rx 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+        opacity 0.4s ease,
+        transform 0.4s ease;
+
+      transform-origin: center;
+    }
+
+    .r1 { x: 3px; y: 4px;  width: 18px; height: 2px; rx: 1px; }
+    .r2 { x: 3px; y: 8px;  width: 18px; height: 2px; rx: 1px; }
+    .r3 { x: 3px; y: 12px; width: 18px; height: 2px; rx: 1px; }
+    .r4 { x: 3px; y: 16px; width: 18px; height: 2px; rx: 1px; }
+    .r5 { x: 3px; y: 20px; width: 18px; height: 2px; rx: 1px; opacity: 1; transform: scale(1); }
+
+    .r1 { transition-delay: 0ms; }
+    .r2 { transition-delay: 30ms; }
+    .r3 { transition-delay: 60ms; }
+    .r4 { transition-delay: 90ms; }
+    .r5 { transition-delay: 120ms; }
+    
+    .viewToggle.is-grid .r1 { 
+      x: 2px; y: 2px; width: 9px; height: 6px; rx: 1px; 
+      transition-delay: 0ms;
+    }
+    
+    .viewToggle.is-grid .r2 { 
+      x: 13px; y: 2px; width: 9px; height: 12px; rx: 1px; 
+      transition-delay: 40ms;
+    }
+    
+    .viewToggle.is-grid .r3 { 
+      x: 2px; y: 10px; width: 9px; height: 12px; rx: 1px; 
+      transition-delay: 80ms;
+    }
+    
+    .viewToggle.is-grid .r4 { 
+      x: 13px; y: 16px; width: 9px; height: 6px; rx: 1px; 
+      transition-delay: 120ms;
+    }
+    
+    .viewToggle.is-grid .r5 { 
+      opacity: 0; 
+      transform: scale(0.5);
+      transition-delay: 0ms;
+    }
+
+    .gridView {
+      column-count: 3;
+      column-gap: 40px;
+      width: 88%;
+      padding-top: 64px;
+      padding-bottom: 64px;
+    }
+
+    .grid-card {
+      text-decoration: none;
+      color: #A1A1A1;
+      display: inline-block;
+      width: 100%;
+      margin: 0 0 40px;
+      break-inside: avoid;
+    }
+
+    .grid-video {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      pointer-events: none;
+    }
+
+    .grid-label {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.4px;
+      background-color: #e3e3e3;
+      padding: 2px 2px 3px;
+      color: #000000;
+      display: inline-block;
+      align-self: flex-start;
+      line-height: 1.05;
+      margin-top: 4px;
+      border-radius: 2px;
+    }
+    @media (max-width: 900px) {
+      .gridView { column-count: 2; }
+    }
     @media (max-width: 600px) {
+      .gridView { column-count: 1; }
       .header {
         padding: 14px 0 0 10px;
       }
@@ -126,12 +250,22 @@
   <div class="mainLayout">
     <div class="header">
       <a href="/">web lab</a>
+      <button id="viewToggle" class="viewToggle" aria-label="Toggle View" aria-pressed="false">
+        <svg viewBox="0 0 24 24">
+          <rect class="icon-rect r1" />
+          <rect class="icon-rect r2" />
+          <rect class="icon-rect r3" />
+          <rect class="icon-rect r4" />
+          <rect class="icon-rect r5" />
+        </svg>
+      </button>
       <a class="secondaryText" href="https://shree5k.github.io/">engineering surprises (shreeram k)</a>
     </div>
     <div class="rootContainer">
       <nav class="linksList" aria-label="Project Links">
         <!-- links will be injected here by JS -->
       </nav>
+      <div class="gridView" hidden aria-label="Project Grid"></div>
     </div>
   </div>
   <script>
@@ -148,41 +282,106 @@
     ];
 
     const nav = document.querySelector('.linksList');
+    const grid = document.querySelector('.gridView');
+    const toggleBtn = document.getElementById('viewToggle');
 
-    links.forEach(link => {
-      const a = document.createElement('a');
-      a.href = link.href;
-      a.textContent = link.label;
-      a.classList.add('hover-effect');
-
-      const video = document.createElement('video');
-      video.classList.add('hover-image');
-
-      const projectName = link.label.split(' ')[1];
-      video.src = `assets/video/${projectName}.mp4`;
-      video.muted = true;
-      video.loop = true;
-      video.playsInline = true;
-      video.controls = false;
-      // video.preload = 'none';
-
-      a.appendChild(video);
-
-      const playVideo = () => {
+    const bindVideoEvents = (container, video) => {
+      const playVideo = async () => {
         if (video.readyState === 0) video.load();
-        video.play().catch(() => {});
+        try { await video.play(); } catch (e) { /* Abort expected on quick hover */ }
       };
       const stopVideo = () => {
         video.pause();
         video.currentTime = 0;
       };
 
-      a.addEventListener('mouseenter', playVideo);
-      a.addEventListener('mouseleave', stopVideo);
-      a.addEventListener('focus', playVideo);
-      a.addEventListener('blur', stopVideo);
+      container.addEventListener('mouseenter', playVideo);
+      container.addEventListener('mouseleave', stopVideo);
+      container.addEventListener('focus', playVideo);
+      container.addEventListener('blur', stopVideo);
+    };
 
+    // 1. Build List View (With Videos)
+    links.forEach((link, index) => {
+      const a = document.createElement('a');
+      a.href = link.href;
+      a.textContent = link.label;
+      a.classList.add('hover-effect');
+      a.dataset.index = index;
+
+      // Create the SINGLE video element here
+      const video = document.createElement('video');
+      video.classList.add('hover-image');
+      
+      const projectName = link.label.split(' ')[1];
+      video.src = `assets/video/${projectName}.mp4`;
+      video.muted = true;
+      video.loop = true;
+      video.playsInline = true;
+      video.controls = false;
+
+      a.appendChild(video);
+      bindVideoEvents(a, video);
       nav.appendChild(a);
+    });
+
+    // 2. Build Grid View
+    links.forEach((link, index) => {
+      const card = document.createElement('a');
+      card.href = link.href;
+      card.className = 'grid-card';
+      card.dataset.index = index;
+
+      const label = document.createElement('div');
+      label.className = 'grid-label';
+      label.textContent = link.label;
+
+      card.appendChild(label);
+      grid.appendChild(card);
+    });
+
+    // 3. Toggle Logic
+    toggleBtn.addEventListener('click', () => {
+      const showingGrid = grid.hasAttribute('hidden');
+      const listItems = nav.querySelectorAll('a');
+      const gridItems = grid.querySelectorAll('.grid-card');
+
+      toggleBtn.classList.toggle('is-grid');
+
+      if (showingGrid) {
+        // switch to grid view
+        listItems.forEach((listItem, i) => {
+          const video = listItem.querySelector('video');
+          if (video) {
+            video.classList.remove('hover-image');
+            video.classList.add('grid-video');
+            const gridCard = gridItems[i];
+            gridCard.insertBefore(video, gridCard.firstChild);
+            bindVideoEvents(gridCard, video);
+          }
+        });
+
+        grid.removeAttribute('hidden');
+        nav.setAttribute('hidden', '');
+        toggleBtn.setAttribute('aria-pressed', 'true');
+
+      } else {
+        // switch to list view
+        gridItems.forEach((gridItem, i) => {
+          const video = gridItem.querySelector('video');
+          if (video) {
+            video.classList.remove('grid-video');
+            video.classList.add('hover-image');
+            const listItem = listItems[i];
+            listItem.appendChild(video);
+            bindVideoEvents(listItem, video);
+          }
+        });
+
+        nav.removeAttribute('hidden');
+        grid.setAttribute('hidden', '');
+        toggleBtn.setAttribute('aria-pressed', 'false');
+      }
     });
   </script>
 </body>
