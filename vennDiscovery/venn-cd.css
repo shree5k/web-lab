@@ -1,0 +1,139 @@
+.content-viewport.cd-mode-active {
+    background: #0f1014 !important;
+}
+
+.content-viewport.cd-mode-active .scroll-item {
+    font-size: 1.9rem;
+}
+
+.venn-icons {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.venn-icon {
+    position: absolute;
+    top: 320px; 
+    width: 600px; height: 600px;
+    opacity: 0.4;
+    mix-blend-mode: plus-lighter; 
+    object-fit: contain;
+    will-change: transform;
+    transform: translate(-50%, -50%) scale(0.9);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.venn-icon.left { left: 350px; }
+.venn-icon.right { left: 750px; }
+
+.content-viewport.cd-mode-active .venn-icons {
+    opacity: 1;
+}
+
+.content-viewport.cd-mode-active .venn-icon.left {
+    transform: translate(-50%, -50%) rotate(-40deg) scale(1);
+}
+
+.content-viewport.cd-mode-active .venn-icon.right {
+    transform: translate(-50%, -50%) rotate(-40deg) scale(1);
+}
+
+.content-viewport.cd-mode-active .venn-circle-path {
+    stroke: rgba(255, 255, 255, 0);
+    transition: stroke 0.3s ease;
+}
+
+.venn-circle-path {
+    transition: stroke 0.3s ease;
+}
+
+.venn-controls {
+    position: absolute;
+    top: 40px;  /* Top Right Position */
+    right: 40px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#cd-mode-toggle {
+    display: none;
+}
+.visual-track {
+    position: relative;
+    width: 14px;
+    height: 38px;
+    cursor: pointer;
+    display: block;
+}
+
+.track-shape {
+    position: absolute;
+    top: 0; bottom: 0; left: 50%;
+    width: 6px;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    transition: background 0.2s ease;
+}
+
+.visual-track:hover .track-shape {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.track-thumb {
+    position: absolute;
+    left: 50%;
+    width: 6px;
+    height: 13px;
+    background: #bfbfbf;
+    border-radius: 4px;
+    transform: translateX(-50%);
+    transition: top 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#cd-mode-toggle:not(:checked) ~ .visual-track .track-thumb {
+    top: 2px;
+}
+#cd-mode-toggle:checked ~ .visual-track .track-thumb {
+    top: 24px;
+}
+
+.text-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 38px; /* Matches track height */
+    padding-top: 1px;
+    padding-bottom: 1px;
+    box-sizing: border-box;
+}
+
+.text-option {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+#cd-mode-toggle:not(:checked) ~ .text-col .top {
+    color: #ffffff;
+}
+#cd-mode-toggle:not(:checked) ~ .text-col .bottom {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+#cd-mode-toggle:checked ~ .text-col .top {
+    color: rgba(255, 255, 255, 0.4);
+}
+#cd-mode-toggle:checked ~ .text-col .bottom {
+    color: #ffffff;
+}
