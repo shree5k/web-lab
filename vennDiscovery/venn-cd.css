@@ -20,7 +20,7 @@
     position: absolute;
     top: 320px; 
     width: 600px; height: 600px;
-    opacity: 0.4;
+    opacity: 0.45;
     mix-blend-mode: plus-lighter; 
     object-fit: contain;
     will-change: transform;
