@@ -76,10 +76,20 @@ body {
   flex: 1 1 0; min-width: 0; max-width: 100%; box-sizing: border-box;
   height: 56px; padding: 0 22px; border-radius: 12px;
   background: linear-gradient(93deg, #1492FF 0%, #0860C4 50%, #EB0066 100%);
-  color: #fff; font-size: 1.4rem; font-weight: 500; display: flex;
+  color: #fff; 
+  font-size: 1.33rem;
+  font-weight: 400;
+  letter-spacing: -0.4px;
+  display: flex;
   align-items: center; justify-content: center; box-shadow: 0 2px 8px 0 #18192044;
   margin: 0; white-space: nowrap; border: none; outline: none; cursor: pointer;
   transition: box-shadow 0.2s, transform 0.2s;
+}
+a.brand-button,
+a.brand-button:hover,
+a.brand-button:focus,
+a.brand-button:active {
+  text-decoration: none;
 }
 .brand-button.watch-now-red {
   animation: improved-horror-flicker 1.2s ease-in-out forwards;
