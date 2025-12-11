@@ -182,7 +182,7 @@
     }
 
     .gridView {
-      column-count: 3;
+      column-count: 2;
       column-gap: 40px;
       width: 88%;
       padding-top: 64px;
@@ -217,6 +217,10 @@
       line-height: 1.05;
       margin-top: 4px;
       border-radius: 2px;
+    }
+    .grid-card:hover .grid-label {
+      background-color: #D4D4D4;
+      color: #000000;
     }
     @media (max-width: 900px) {
       .gridView { column-count: 2; }
@@ -277,8 +281,8 @@
       { href: 'playerMemory/index.html', label: '250612 playerMemory' },
       { href: 'searchFeelingLucky/index.html', label: '250620 searchFeelingLucky' },
       { href: 'profileBroadcast/index.html', label: '250704 profileBroadcast' },
-      { href: 'myspaceChristmasTheme/index.html', label: '251201 myspaceChristmasTheme' }
-      // { href: 'vennDiscovery/index.html', label: '251204 vennDiscovery' }
+      { href: 'myspaceChristmasTheme/index.html', label: '251201 myspaceChristmasTheme' },
+      { href: 'vennDiscovery/index.html', label: '251210 vennDiscovery' }
     ];
 
     const nav = document.querySelector('.linksList');
