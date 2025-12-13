@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1366, initial-scale=1.0">
+  <title>Touchline Sports Comms</title>
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml" />
+  <link href="https://fonts.googleapis.com/css?family=Inter:400,500,600,700,800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../thoughtNoteModalPage/styles.css">
+  <script src="../thoughtNoteModalPage/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <div class="header">
+    <a href="../index.html">web lab / </a><span class="pageTitleText">touchlineSportsComms</span>
+  </div>
+  <div class="app-container">
+    <div class="content-viewport">
+      
+      <div class="sidebar">
+        <img class="logo" src="../assets/images/logo.png" alt="Logo">
+        <div class="nav">
+          <img src="../assets/images/12.png" id="nav-home" alt="Home">
+          <img src="../assets/icons/Icon.svg" alt="Search">
+          <img src="../assets/icons/hs tv.svg" alt="TV">
+          <img src="../assets/icons/hs movies.svg" alt="Movies">
+          <img src="../assets/icons/jhs-sports.svg" class="active" alt="Sports">
+          <img src="../assets/icons/category.svg" alt="Categories">
+        </div>
+      </div>
+      
+      <div class="main" id="main-container">
+
+        <div id="dashboard-content">
+            <div class="news-section-auto">
+                <div class="section-title">Trending Now</div>
+                <div class="news-row-auto" id="news-tray-1"></div>
+            </div>
+
+            <div id="ad-container-1"></div>
+            
+            <div class="news-section-auto">
+                <div class="section-title">Top Picks for You</div>
+                <div class="news-row-auto" id="news-tray-2"></div>
+            </div>
+
+            <div class="news-section-auto">
+                <div class="section-title">TATA IPL 2026 Auction on Dec 16</div>
+                <div class="news-row-auto" id="news-tray-3"></div>
+            </div>
+
+            <div class="news-section-auto">
+                <div class="section-title">IND vs SA: Highlights</div>
+                <div class="news-row-auto" id="news-tray-4"></div>
+            </div>
+
+            <div id="ad-container-2"></div>
+
+            <div class="news-section-auto">
+                <div class="section-title">Follow the Men in Blue</div>
+                <div class="news-row-auto" id="news-tray-5"></div>
+            </div>
+
+            <div class="news-section-auto">
+                <div class="section-title">Deep Dive into Teams' Auction Plans</div>
+                <div class="news-row-auto" id="news-tray-6"></div>
+            </div>
+            
+            <div style="height: 40px;"></div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div id="cd-icon" title="Open Thought Note">💿</div>
+  
+  <div id="modal-page">
+      <div class="modal-header">
+          <span class="modal-title">Thought Note</span>
+          <button id="close-modal-btn" aria-label="Close modal">×</button>
+      </div>
+      <div class="modal-content-container">
+          <p>Loading notes...</p>
+      </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
