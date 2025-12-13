@@ -305,6 +305,9 @@
       container.addEventListener('blur', stopVideo);
     };
 
+    // Mobile detection helper
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
     // 1. Build List View (With Videos)
     links.forEach((link, index) => {
       const a = document.createElement('a');
@@ -316,13 +319,20 @@
       // Create the SINGLE video element here
       const video = document.createElement('video');
       video.classList.add('hover-image');
-      
+
       const projectName = link.label.split(' ')[1];
       video.src = `assets/video/${projectName}.mp4`;
       video.muted = true;
       video.loop = true;
       video.playsInline = true;
       video.controls = false;
+      video.preload = 'metadata'; // Load metadata and first frame for preview
+
+
+      // Force load video metadata on mobile for preview
+      if (isMobile && video.readyState === 0) {
+        video.load();
+      }
 
       a.appendChild(video);
       bindVideoEvents(a, video);
@@ -352,40 +362,48 @@
 
       toggleBtn.classList.toggle('is-grid');
 
-      if (showingGrid) {
-        // switch to grid view
-        listItems.forEach((listItem, i) => {
-          const video = listItem.querySelector('video');
-          if (video) {
-            video.classList.remove('hover-image');
-            video.classList.add('grid-video');
-            const gridCard = gridItems[i];
-            gridCard.insertBefore(video, gridCard.firstChild);
-            bindVideoEvents(gridCard, video);
-          }
-        });
+      // Add delay to allow icon animation to start before view change
+      setTimeout(() => {
+        if (showingGrid) {
+          // switch to grid view
+          listItems.forEach((listItem, i) => {
+            const video = listItem.querySelector('video');
+            if (video) {
+              video.classList.remove('hover-image');
+              video.classList.add('grid-video');
+              const gridCard = gridItems[i];
+              gridCard.insertBefore(video, gridCard.firstChild);
+              bindVideoEvents(gridCard, video);
 
-        grid.removeAttribute('hidden');
-        nav.setAttribute('hidden', '');
-        toggleBtn.setAttribute('aria-pressed', 'true');
+              // Force load video on mobile for preview
+              if (isMobile && video.readyState === 0) {
+                video.load();
+              }
+            }
+          });
 
-      } else {
-        // switch to list view
-        gridItems.forEach((gridItem, i) => {
-          const video = gridItem.querySelector('video');
-          if (video) {
-            video.classList.remove('grid-video');
-            video.classList.add('hover-image');
-            const listItem = listItems[i];
-            listItem.appendChild(video);
-            bindVideoEvents(listItem, video);
-          }
-        });
+          grid.removeAttribute('hidden');
+          nav.setAttribute('hidden', '');
+          toggleBtn.setAttribute('aria-pressed', 'true');
 
-        nav.removeAttribute('hidden');
-        grid.setAttribute('hidden', '');
-        toggleBtn.setAttribute('aria-pressed', 'false');
-      }
+        } else {
+          // switch to list view
+          gridItems.forEach((gridItem, i) => {
+            const video = gridItem.querySelector('video');
+            if (video) {
+              video.classList.remove('grid-video');
+              video.classList.add('hover-image');
+              const listItem = listItems[i];
+              listItem.appendChild(video);
+              bindVideoEvents(listItem, video);
+            }
+          });
+
+          nav.removeAttribute('hidden');
+          grid.setAttribute('hidden', '');
+          toggleBtn.setAttribute('aria-pressed', 'false');
+        }
+      }, 150);
     });
   </script>
 </body>
