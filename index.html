@@ -35,7 +35,7 @@
       z-index: 1;
       pointer-events: auto;
       background: none;
-      padding: 12px 20px 0 20px;
+      padding: 6px 20px 0 20px;
       margin-bottom: 0;
     }
     .header a {
@@ -72,6 +72,7 @@
       box-sizing: border-box;
       padding: 24px;
       margin: 10px;
+      margin-top: 4px;
       overflow: auto;
       display: grid;
       place-items: center;
@@ -228,7 +229,7 @@
     @media (max-width: 600px) {
       .gridView { column-count: 1; }
       .header {
-        padding: 14px 0 0 10px;
+        padding: 14px 10px 0 10px
       }
       .rootContainer {
         padding: 10px;
@@ -253,7 +254,7 @@
 <body>
   <div class="mainLayout">
     <div class="header">
-      <a href="/">web lab</a>
+      <a href="index.html">web lab</a>
       <button id="viewToggle" class="viewToggle" aria-label="Toggle View" aria-pressed="false">
         <svg viewBox="0 0 24 24">
           <rect class="icon-rect r1" />
@@ -263,7 +264,7 @@
           <rect class="icon-rect r5" />
         </svg>
       </button>
-      <a class="secondaryText" href="https://shree5k.github.io/">engineering surprises (shreeram k)</a>
+      <a class="secondaryText" href="https://shree5k.github.io/">design engineered by (shreeram k)</a>
     </div>
     <div class="rootContainer">
       <nav class="linksList" aria-label="Project Links">
