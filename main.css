@@ -1,0 +1,285 @@
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    background: #010101;
+    display: flex;
+    flex-direction: column;
+}
+
+.mainLayout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.rootContainer {
+    flex: 1 1 0;
+    min-height: 0;
+    background: rgba(255, 255, 255, 0.96);
+    box-sizing: border-box;
+    padding: 0; 
+    margin: 10px;
+    margin-top: 4px;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.dualView {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.header {
+    position: relative;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1;
+    pointer-events: auto;
+    background: none;
+    padding: 14px 20px 8px 20px;
+    margin-bottom: 0;
+}
+
+.header a {
+    color: #fff;
+    opacity: 1;
+    font-weight: 500;
+    text-decoration: none;
+    user-select: none;
+    pointer-events: auto;
+    font-style: italic;
+    font-size: 1.1rem;
+}
+
+.header a:hover {
+    color: #fff;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+.header a.secondaryText {
+    margin-left: auto;
+    color: rgba(255, 255, 255, 0.48);
+    font-size: 0.9rem;
+    font-family: Times;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.header a.secondaryText:hover {
+    color: #fff;
+    background: transparent;
+}
+
+.linksList {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 24px;
+    position: relative; 
+    align-items: flex-start;
+    padding-right: 0;
+    gap: 8px;
+}
+
+.hover-bg {
+    position: absolute;
+    background-color: #D4D4D4; 
+    border-radius: 4px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 0; 
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.list-item {
+    text-decoration: none;
+    color: #A1A1A1;
+    letter-spacing: -0.2px;
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 400;
+    font-size: 0.9rem;
+    padding: 6px 10px; 
+    display: block;
+    transition: color 0.2s ease;
+    position: relative;
+    z-index: 1;
+    width: fit-content; 
+    box-sizing: border-box;
+
+    white-space: nowrap; 
+}
+
+.list-item:hover,
+.list-item.manual-hover {
+    color: #000000;
+}
+
+.secondaryText {
+    color: rgba(255, 255, 255, 0.32);
+}
+  
+.gridView {
+    height: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 100%;
+    box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 24px 0 24px;
+}
+  
+.masonry-stack {
+    display: flex;
+    flex-direction: row;
+    gap: 20px; 
+    width: 100%;
+    height: auto;
+    padding-top: 24px;
+    padding-bottom: 24px;
+}
+
+.masonry-col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+    flex: 1;   
+    min-width: 0; 
+}
+
+.grid-card {
+    text-decoration: none;
+    color: #A1A1A1;
+    display: block;
+    width: 100%;
+    margin: 0; 
+    position: relative;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    transition: opacity 0.4s ease, transform 0.3s ease, filter 0.4s ease;
+    opacity: 1;
+}
+
+.grid-video {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    pointer-events: none;
+    display: block;
+}
+
+.masonry-stack.dim-mode .grid-card {
+    opacity: 0.25;
+    filter: grayscale(80%);
+    transform: scale(0.98);
+}
+.masonry-stack.dim-mode .grid-card.highlighted {
+    opacity: 1;
+    filter: grayscale(0%);
+    transform: scale(1.02);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+}
+
+@media (max-width: 1024px) {
+    .dualView {
+        grid-template-columns: max-content 1fr;
+        gap: 0;
+    }
+    .linksList {
+        padding: 20px;
+    }
+    .gridView {
+        padding: 0 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .header { padding: 14px 10px 0 10px; }
+    .rootContainer { margin: 4px; border-radius: 7px; max-width: calc(100vw - 8px); }
+
+    .dualView { grid-template-columns: 1fr; }
+    .masonry-stack { gap: 16px; }
+    .masonry-col { gap: 16px; }
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.4);
+}
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+}
+
+@media (max-width: 1024px) {
+    .dualView {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    .masonry-stack {
+        column-count: 1;
+    }
+    .linksList {
+        padding: 20px;
+    }
+    .gridView {
+        padding: 0 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .header {
+        padding: 14px 10px 0 10px;
+    }
+    .rootContainer {
+        margin: 4px;
+        border-radius: 7px;
+        max-width: calc(100vw - 8px);
+    }
+    .dualView {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    .linksList {
+        max-width: 100%;
+        gap: 16px;
+        max-height: 200px;
+        padding: 16px;
+    }
+    .list-item {
+        font-size: 0.8rem;
+        padding: 8px 12px;
+    }
+    .gridView {
+        padding: 0 16px;
+    }
+    .masonry-stack {
+        column-count: 2;
+        column-gap: 16px;
+        padding-top: 16px;
+    }
+}
