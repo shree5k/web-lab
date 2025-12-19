@@ -51,6 +51,7 @@ const bindListToGridEvents = (listItem, gridCard) => {
 
   // 1. MOUSE ENTER: Wait 250ms before acting
   const onMouseEnter = () => {
+    if (hasBeenClicked) return;
     clearTimeout(hoverTimeout);
     
     hoverTimeout = setTimeout(() => {
@@ -61,6 +62,7 @@ const bindListToGridEvents = (listItem, gridCard) => {
   // 2. MOUSE LEAVE: Cancel timer if we leave too fast
   const onMouseLeave = () => {
     clearTimeout(hoverTimeout);
+    hasBeenClicked = false;
     deactivateGrid();           
   };
 
@@ -133,4 +135,64 @@ projects.forEach((link, index) => {
       bindListToGridEvents(listItem, card);
       bindGridToListEvents(card, listItem);
     }
-  });
+});
+
+let hasBeenClicked = false;
+document.addEventListener('DOMContentLoaded', () => {
+  const easterEggPlant = document.querySelector('.easter-egg-container');
+  const clickTooltip = document.querySelector('.easter-egg-click-tooltip');
+  const hoverTooltip = document.querySelector('.easter-egg-tooltip');
+
+  if (easterEggPlant && clickTooltip && hoverTooltip) {
+    easterEggPlant.addEventListener('mouseleave', () => {
+      hoverTooltip.style.opacity = '';
+      hoverTooltip.style.animation = '';
+      hoverTooltip.style.transition = '';
+    });
+
+    const handleInteraction = async () => {
+      hasBeenClicked = true;
+      try {
+        hoverTooltip.style.animation = 'none';
+        hoverTooltip.style.transition = 'none';
+        hoverTooltip.style.opacity = '0';
+        hoverTooltip.style.transform = 'translateX(-50%) translateY(0)';
+
+        hoverTooltip.offsetHeight;
+
+        setTimeout(() => {
+          clickTooltip.style.opacity = '1';
+          clickTooltip.style.transform = 'translateX(-50%) translateY(-4px)';
+        }, 150);
+
+        const response = await fetch('assets/easter-eggs/art.svg');
+        const svgText = await response.text();
+        await navigator.clipboard.writeText(svgText);
+
+        easterEggPlant.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          easterEggPlant.style.transform = 'scale(1)';
+        }, 150);
+
+        setTimeout(() => {
+          clickTooltip.style.opacity = '0';
+          clickTooltip.style.transform = 'translateX(-50%) translateY(0)';
+        }, 2000);
+
+      } catch (err) {
+        console.error('Failed to copy SVG:', err);
+        setTimeout(() => {
+          clickTooltip.style.opacity = '0';
+          clickTooltip.style.transform = 'translateX(-50%) translateY(0)';
+        }, 1000);
+      }
+    };
+
+    easterEggPlant.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handleInteraction();
+    });
+
+    easterEggPlant.addEventListener('click', handleInteraction);
+  }
+});
