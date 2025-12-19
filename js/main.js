@@ -31,11 +31,9 @@ projects.forEach((link, index) => {
 // 3. Initialize Hover Effect
 const { moveBackground, hideBackground } = setupHoverEffect(nav);
 
-// Helper: List -> Grid (With Hover Intent Delay)
 const bindListToGridEvents = (listItem, gridCard) => {
-  let hoverTimeout; // Variable to store the timer
+  let hoverTimeout; 
 
-  // The actual action to perform (Scroll + Dim)
   const activateGrid = () => {
     masonryWrapper.classList.add('dim-mode');
     gridCard.classList.add('highlighted');
@@ -53,19 +51,17 @@ const bindListToGridEvents = (listItem, gridCard) => {
 
   // 1. MOUSE ENTER: Wait 250ms before acting
   const onMouseEnter = () => {
-    // Clear any existing timer just in case
     clearTimeout(hoverTimeout);
     
-    // Start a new timer
     hoverTimeout = setTimeout(() => {
       activateGrid();
-    }, 250); // <--- THE DELAY (adjust this number if you want it faster/slower)
+    }, 250); 
   };
 
   // 2. MOUSE LEAVE: Cancel timer if we leave too fast
   const onMouseLeave = () => {
-    clearTimeout(hoverTimeout); // Stop the scroll from happening!
-    deactivateGrid();           // Turn off effects if they were active
+    clearTimeout(hoverTimeout);
+    deactivateGrid();           
   };
 
   // 3. KEYBOARD (Focus): Immediate action (no delay needed)
@@ -98,40 +94,43 @@ const bindGridToListEvents = (gridCard, listItem) => {
 
 // 4. Build Grid View (Distribute Even/Odd)
 projects.forEach((link, index) => {
-  const card = document.createElement('a');
-  card.href = link.href;
-  card.className = 'grid-card';
-  card.dataset.index = index;
-
-  const video = document.createElement('video');
-  video.classList.add('grid-video');
-  video.muted = true;
-  video.loop = true;
-  video.playsInline = true;
-  video.controls = false;
+    const card = document.createElement('a');
+    card.href = link.href;
+    card.className = 'grid-card';
+    card.dataset.index = index;
   
-  const projectName = link.label.split(' ')[1];
-  video.src = `assets/video/${projectName}.mp4`;
-
-  if (isMobile && video.readyState === 0) {
-    video.load();
-  }
-
-  card.appendChild(video);
-
-  if (index % 2 === 0) {
-    col1.appendChild(card);
-  } else {
-    col2.appendChild(card);
-  }
-
-  const listItem = nav.querySelector(`[data-index="${index}"]`);
-  if (listItem) {
-    bindListToGridEvents(listItem, card);
-    bindGridToListEvents(card, listItem);
-  }
-
-  video.addEventListener('loadeddata', async () => {
-    try { await video.play(); } catch (e) {}
+    const video = document.createElement('video');
+    video.classList.add('grid-video');
+    video.muted = true;
+    video.loop = true;
+    video.playsInline = true;
+    video.controls = false;
+    
+    video.preload = 'metadata'; 
+    
+    const projectName = link.label.split(' ')[1];
+    video.src = `assets/video/${projectName}.mp4`;
+  
+    video.addEventListener('loadeddata', () => {
+      video.classList.add('loaded'); 
+      video.play().catch(() => {});  
+    });
+  
+    if (isMobile) {
+      video.load();
+    }
+  
+    card.appendChild(video);
+  
+    if (index % 2 === 0) {
+      col1.appendChild(card);
+    } else {
+      col2.appendChild(card);
+    }
+  
+    const listItem = nav.querySelector(`[data-index="${index}"]`);
+    if (listItem) {
+      bindListToGridEvents(listItem, card);
+      bindGridToListEvents(card, listItem);
+    }
   });
-});

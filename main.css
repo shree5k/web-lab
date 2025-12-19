@@ -164,23 +164,33 @@ body {
 
 .grid-card {
     text-decoration: none;
-    color: #A1A1A1;
+    background-color: #1a1a1a; 
+    border-radius: 4px;
+
     display: block;
     width: 100%;
-    margin: 0; 
+    margin: 0;
     position: relative;
     backface-visibility: hidden;
     transform: translateZ(0);
     transition: opacity 0.4s ease, transform 0.3s ease, filter 0.4s ease;
-    opacity: 1;
+    min-height: 100px; 
 }
 
 .grid-video {
-    width: 100%;
-    height: auto;
-    border-radius: 4px;
-    pointer-events: none;
-    display: block;
+width: 100%;
+height: auto;
+border-radius: 4px;
+pointer-events: none;
+display: block;
+
+opacity: 0;
+
+transition: opacity 0.5s ease-in;
+}
+
+.grid-video.loaded {
+opacity: 1;
 }
 
 .masonry-stack.dim-mode .grid-card {
