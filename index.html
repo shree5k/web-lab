@@ -204,6 +204,7 @@
       height: auto;
       border-radius: 4px;
       pointer-events: none;
+      display: block;
     }
 
     .grid-label {
@@ -223,9 +224,31 @@
       background-color: #D4D4D4;
       color: #000000;
     }
+    
+    /* Custom scrollbar with opacity */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 0, 0, 0.4);
+    }
+    /* Firefox scrollbar opacity */
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+    }
+
     @media (max-width: 900px) {
       .gridView { column-count: 2; }
     }
+
     @media (max-width: 600px) {
       .gridView { column-count: 1; }
       .header {
@@ -277,13 +300,14 @@
     const links = [
       { href: 'prespectiveCards/studioTray.html', label: '250424 studioTray' },
       { href: 'watchList/theBear.html', label: '250425 theBearWatchlist' },
-      { href: 'thalaivarCard/index.html', label: '250427 thalaivarCard' },
-      { href: 'matchAndWatch/index.html', label: '250507 matchAndWatch' },
-      { href: 'playerMemory/index.html', label: '250612 playerMemory' },
-      { href: 'searchFeelingLucky/index.html', label: '250620 searchFeelingLucky' },
-      { href: 'profileBroadcast/index.html', label: '250704 profileBroadcast' },
-      { href: 'myspaceChristmasTheme/index.html', label: '251201 myspaceChristmasTheme' },
-      { href: 'vennDiscovery/index.html', label: '251210 vennDiscovery' }
+      { href: 'thalaivarCard/', label: '250427 thalaivarCard' },
+      { href: 'matchAndWatch/', label: '250507 matchAndWatch' },
+      { href: 'playerMemory/', label: '250612 playerMemory' },
+      { href: 'searchFeelingLucky/', label: '250620 searchFeelingLucky' },
+      { href: 'profileBroadcast/', label: '250704 profileBroadcast' },
+      { href: 'myspaceChristmasTheme/', label: '251201 myspaceChristmasTheme' },
+      { href: 'vennDiscovery/', label: '251210 vennDiscovery' },
+      { href: 'easterEggITWelcomeToDerry/', label: '251217 easterEggITWelcomeToDerry' }
     ];
 
     const nav = document.querySelector('.linksList');
@@ -355,6 +379,19 @@
       grid.appendChild(card);
     });
 
+    // Function to auto-play videos in grid view
+    const autoPlayGridVideos = () => {
+      const gridVideos = document.querySelectorAll('.grid-video');
+      gridVideos.forEach(async (video) => {
+        try {
+          if (video.readyState === 0) video.load();
+          await video.play();
+        } catch (e) {
+          // Silently handle autoplay failures (browsers may block autoplay)
+        }
+      });
+    };
+
     // 3. Toggle Logic
     toggleBtn.addEventListener('click', () => {
       const showingGrid = grid.hasAttribute('hidden');
@@ -370,11 +407,14 @@
           listItems.forEach((listItem, i) => {
             const video = listItem.querySelector('video');
             if (video) {
+              // Stop video if playing in list view
+              video.pause();
+              video.currentTime = 0;
+
               video.classList.remove('hover-image');
               video.classList.add('grid-video');
               const gridCard = gridItems[i];
               gridCard.insertBefore(video, gridCard.firstChild);
-              bindVideoEvents(gridCard, video);
 
               // Force load video on mobile for preview
               if (isMobile && video.readyState === 0) {
@@ -387,11 +427,18 @@
           nav.setAttribute('hidden', '');
           toggleBtn.setAttribute('aria-pressed', 'true');
 
+          // Auto-play all videos in grid view
+          setTimeout(autoPlayGridVideos, 100);
+
         } else {
           // switch to list view
           gridItems.forEach((gridItem, i) => {
             const video = gridItem.querySelector('video');
             if (video) {
+              // Stop video if playing in grid view
+              video.pause();
+              video.currentTime = 0;
+
               video.classList.remove('grid-video');
               video.classList.add('hover-image');
               const listItem = listItems[i];
