@@ -211,20 +211,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     easterEggPlant.addEventListener('click', handleInteraction);
   }
-
-  const projectLinks = document.querySelectorAll('.grid-card, .list-item');
-
-  projectLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const href = link.href;
-
-      const rootContainer = document.querySelector('.rootContainer');
-      rootContainer.classList.add('exit-transition');
-
-      setTimeout(() => {
-        window.location.href = href;
-      }, 300);
-    });
-  });
 });
