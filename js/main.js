@@ -138,12 +138,28 @@ projects.forEach((link, index) => {
 });
 
 let hasBeenClicked = false;
+let hoverCount = 0;
 document.addEventListener('DOMContentLoaded', () => {
   const easterEggPlant = document.querySelector('.easter-egg-container');
   const clickTooltip = document.querySelector('.easter-egg-click-tooltip');
   const hoverTooltip = document.querySelector('.easter-egg-tooltip');
 
+  const updateTooltipText = () => {
+    if (hoverCount === 2) {
+      hoverTooltip.textContent = "is it just me, or does that plant look like a github commit? i need a nap";
+    } else {
+      hoverTooltip.textContent = "another human. great. tap me!? i'll follow you";
+    }
+  };
+
+  updateTooltipText();
+
   if (easterEggPlant && clickTooltip && hoverTooltip) {
+    easterEggPlant.addEventListener('mouseenter', () => {
+      hoverCount++;
+      updateTooltipText();
+    });
+
     easterEggPlant.addEventListener('mouseleave', () => {
       hoverTooltip.style.opacity = '';
       hoverTooltip.style.animation = '';
