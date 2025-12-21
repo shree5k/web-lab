@@ -144,11 +144,34 @@ document.addEventListener('DOMContentLoaded', () => {
   const clickTooltip = document.querySelector('.easter-egg-click-tooltip');
   const hoverTooltip = document.querySelector('.easter-egg-tooltip');
 
+  const isHolidayPeriod = () => {
+    const now = new Date();
+    const month = now.getMonth();
+    const day = now.getDate();
+    return month === 11 && day >= 20 && day <= 31;
+  };
+
   const updateTooltipText = () => {
-    if (hoverCount === 2) {
-      hoverTooltip.textContent = "is it just me, or does that plant look like a github commit? i need a nap";
+    const isHoliday = isHolidayPeriod();
+
+    if (isHoliday) {
+      if (hoverCount === 1) {
+        hoverTooltip.textContent = "psst. it’s december. slow down, nap more";
+      } 
+      else if (hoverCount === 2){
+        hoverTooltip.textContent = "tap me!? i'll follow you";
+      }
+      else if (hoverCount === 3) {
+        hoverTooltip.textContent = "is it just me, or does this plant look like a github commit? i need a nap";
+      } else {
+        hoverTooltip.textContent = "ah you still here, tap me!? i'll follow you";
+      }
     } else {
-      hoverTooltip.textContent = "another human. great. tap me!? i'll follow you";
+      if (hoverCount === 2) {
+        hoverTooltip.textContent = "is it just me, or does this plant look like a github commit? i need a nap";
+      } else {
+        hoverTooltip.textContent = "another human. great. tap me!? i'll follow you";
+      }
     }
   };
 
