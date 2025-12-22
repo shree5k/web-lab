@@ -156,15 +156,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (isHoliday) {
       if (hoverCount === 1) {
-        hoverTooltip.textContent = "psst. it’s december. slow down, nap more";
+        hoverTooltip.textContent = "psst... december means nap szn. you know this right";
       } 
       else if (hoverCount === 2){
-        hoverTooltip.textContent = "tap me!? i'll follow you";
+        hoverTooltip.textContent = "wait did you just hover again. ok i see you. tap me?";
       }
       else if (hoverCount === 3) {
-        hoverTooltip.textContent = "is it just me, or does this plant look like a github commit? i need a nap";
+        hoverTooltip.textContent = "fun game: stare at this plant and pretend it's your github activity. see? we're both unemployed. nap time";
       } else {
-        hoverTooltip.textContent = "ah you still here, tap me!? i'll follow you";
+        hoverTooltip.textContent = "you're really still here huh. tap me i'll follow you around";
       }
     } else {
       if (hoverCount === 2) {
