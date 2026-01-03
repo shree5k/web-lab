@@ -167,10 +167,16 @@ document.addEventListener('DOMContentLoaded', () => {
         hoverTooltip.textContent = "you're really still here huh. tap me i'll follow you around";
       }
     } else {
-      if (hoverCount === 2) {
-        hoverTooltip.textContent = "is it just me, or does this plant look like a github commit? i need a nap";
-      } else {
+      if (hoverCount === 1) {
         hoverTooltip.textContent = "another human. great. tap me!? i'll follow you";
+      } 
+      else if (hoverCount === 2){
+        hoverTooltip.textContent = "wait did you just hover again. ok i see you. tap me?";
+      }
+      else if (hoverCount === 3) {
+        hoverTooltip.textContent = "fun game: stare at this plant and pretend it's your github activity. see? we're both unemployed. nap time";
+      } else {
+        hoverTooltip.textContent = "you're really still here huh. tap me i'll follow you around";
       }
     }
   };
