@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>sub-rex</title>
+  <link rel="icon" type="image/png" href="assets/t-rex-red.png">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #1a1a1a;
+      background: #f6f6f6;
+    }
+    main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+    .page-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.25rem;
+    }
+    .brand-mark {
+      width: min(82px, 100%);
+      aspect-ratio: 16 / 9;
+      background: #050505 url("assets/t-rex-red.png") center / cover no-repeat;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-radius: 6px;
+      border: 1px solid #161616;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 0;
+    }
+    .brand-mark::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(255, 255, 255, 0.08), transparent 42%),
+        radial-gradient(circle at top center, rgba(255, 255, 255, 0.08), transparent 48%);
+      pointer-events: none;
+    }
+    .brand-controls {
+      position: absolute;
+      inset: auto 0.3rem 0.2rem 0.3rem;
+      display: flex;
+      justify-content: center;
+    }
+    .brand-caption {
+      padding: 0.04rem 0.2rem;
+      color: #f5f5f5;
+      font-size: clamp(0.68rem, 2.25vw, 0.82rem);
+      font-weight: 700;
+      letter-spacing: 0;
+      text-transform: lowercase;
+      background: rgba(0, 0, 0, 0.78);
+      border-radius: 6px;
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 30% 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+    .col-input textarea {
+      min-height: 420px;
+    }
+    .col-results {
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .col-results .verdict {
+      margin-bottom: 0;
+    }
+    .results-placeholder {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #888;
+      font-size: 0.9rem;
+      padding: 2rem 1rem;
+      border: 1px dashed #ccc;
+      border-radius: 6px;
+      background: #fff;
+    }
+    .col-results .summary {
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    }
+    .col-results .issue-list {
+      max-height: none;
+      flex: 1;
+      min-height: 200px;
+      max-height: 48vh;
+      overflow-y: auto;
+    }
+    .subtitle {
+      color: #666;
+      margin: 0;
+      font-size: 0.9rem;
+      max-width: 60ch;
+      flex: 1 1 320px;
+      line-height: 124%;
+    }
+    @media (max-width: 640px) {
+      .page-header {
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+      .subtitle {
+        flex-basis: 100%;
+      }
+    }
+    section {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1rem;
+    }
+    section h2 {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #666;
+      margin: 0 0 0.75rem;
+    }
+    label { display: block; font-size: 0.85rem; margin-bottom: 0.35rem; }
+    input[type="file"] { font-size: 0.85rem; }
+    textarea {
+      width: 100%;
+      min-height: 140px;
+      padding: 0.6rem 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-family: ui-monospace, monospace;
+      font-size: 0.8rem;
+      resize: vertical;
+    }
+    .actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 0.75rem;
+    }
+    button {
+      padding: 0.45rem 0.9rem;
+      font-size: 0.85rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: #fff;
+      cursor: pointer;
+    }
+    button:hover { background: #f0f0f0; }
+    button.primary {
+      background: #1a1a1a;
+      color: #fff;
+      border-color: #1a1a1a;
+    }
+    button.primary:hover { background: #333; }
+    button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+    button:disabled:hover { background: #fff; }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 0.75rem;
+    }
+    .stat {
+      padding: 0.6rem 0.75rem;
+      background: #f9f9f9;
+      border-radius: 4px;
+    }
+    .stat .value {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+    .stat .label {
+      font-size: 0.75rem;
+      color: #666;
+    }
+    .stat.fail .value { color: #b00020; }
+    .stat.warn .value { color: #b86e00; }
+    .stat.pass .value { color: #0d6b3a; }
+    .verdict {
+      padding: 0.75rem 1rem;
+      border-radius: 4px;
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+    .verdict.fail { background: #fde8eb; color: #8a0016; }
+    .verdict.warn { background: #fff4e0; color: #7a4d00; }
+    .verdict.pass { background: #e6f4ec; color: #0d6b3a; }
+    .issue-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      max-height: 360px;
+      overflow-y: auto;
+    }
+    .issue-list li {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #eee;
+    }
+    .issue-list li:last-child { border-bottom: none; }
+    .issue-group {
+      display: grid;
+      grid-template-columns: minmax(150px, 210px) 1fr;
+      gap: 0.9rem;
+    }
+    .issue-anchor {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      padding-top: 0.1rem;
+    }
+    .issue-anchor-title {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+    .issue-anchor-meta {
+      font-size: 0.74rem;
+      color: #666;
+    }
+    .issue-anchor .time {
+      font-family: ui-monospace, monospace;
+      color: #1a4d8f;
+    }
+    .issue-items {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+    .issue-item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      column-gap: 0.5rem;
+      align-items: start;
+    }
+    .issue-title {
+      min-width: 0;
+      font-size: 0.74rem;
+      color: #666;
+      line-height: 1.35;
+    }
+    .issue-body {
+      min-width: 0;
+    }
+    .issue-detail {
+      font-size: 0.78rem;
+      color: #444;
+      line-height: 1.4;
+      margin-top: 0.15rem;
+    }
+    .issue-detail mark {
+      background: #fff1c2;
+      color: #1a1a1a;
+      padding: 0.05rem 0.15rem;
+      border-radius: 3px;
+    }
+    .issue-hint {
+      color: #666;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 3px;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-right: 0.35rem;
+    }
+    .badge.error { background: #fde8eb; color: #8a0016; }
+    .badge.warn { background: #fff4e0; color: #7a4d00; }
+    .badge.info { background: #e8f0fe; color: #1a4d8f; }
+    .empty { color: #888; font-size: 0.9rem; }
+    .tabs {
+      display: flex;
+      gap: 0.25rem;
+      margin-bottom: 0.75rem;
+    }
+    .tabs button {
+      border: none;
+      background: transparent;
+      padding: 0.35rem 0.6rem;
+      border-radius: 4px;
+    }
+    .tabs button.active {
+      background: #eee;
+      font-weight: 600;
+    }
+    .hidden { display: none; }
+    body.dragover {
+      background: #ececec;
+    }
+    body.dragover main {
+      outline: 2px dashed #1a4d8f;
+      outline-offset: -10px;
+    }
+    @media (max-width: 700px) {
+      .issue-group {
+        grid-template-columns: 1fr;
+        gap: 0.45rem;
+      }
+      .issue-detail {
+        padding-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="page-header">
+      <div class="brand-mark" aria-label="sub-rex">
+        <div class="brand-controls">
+          <div class="brand-caption">sub-rex</div>
+        </div>
+      </div>
+      <p class="subtitle">subtitles validator, stomps out bad formatting, <br> and detects encoding corruptions with precision</p>
+    </div>
+
+    <div class="layout">
+      <div class="col-input">
+        <section>
+          <h2>Input</h2>
+          <label for="file">Upload file (.vtt, .srt, .txt)</label>
+          <input type="file" id="file" accept=".vtt,.srt,.txt,text/plain">
+          <label for="content" style="margin-top: 0.75rem;">Or paste subtitle content</label>
+          <textarea id="content" placeholder="WEBVTT&#10;&#10;1&#10;00:00:01.000 --> 00:00:04.000&#10;Hello world"></textarea>
+          <div class="actions">
+            <button type="button" class="primary" id="analyze">Analyze</button>
+            <button type="button" id="fix-encoding">Fix encoding</button>
+            <button type="button" id="download" class="hidden" disabled>Download fixed</button>
+            <button type="button" id="clear">Clear</button>
+          </div>
+        </section>
+      </div>
+
+      <div class="col-results">
+        <div id="results-placeholder" class="results-placeholder">
+          Upload or paste subtitles, then click Analyze to see results.
+        </div>
+
+        <div id="results" class="hidden">
+          <div id="verdict" class="verdict"></div>
+
+          <section>
+            <h2>Summary</h2>
+            <div class="summary" id="summary"></div>
+          </section>
+
+          <section>
+            <h2>Issues</h2>
+            <div class="tabs" id="tabs"></div>
+            <ul class="issue-list" id="issue-list"></ul>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const MOJIBAKE_PATTERNS = [
+      { id: 'double_latin1', label: 'Double UTF-8 (Latin-1)', severity: 'error', re: /Ã¢Â€Â./g },
+      { id: 'double_cp1252', label: 'Double UTF-8 (CP1252)', severity: 'error', re: /Ã¢â‚¬./g },
+      { id: 'single_cp1252', label: 'Single CP1252 mojibake', severity: 'error', re: /â€[¦™œ"\u009d\u0093]/g },
+      { id: 'triple', label: 'Triple encoding', severity: 'error', re: /ÃƒÂ/g },
+      { id: 'bom_text', label: 'BOM as text', severity: 'error', re: /ï»¿/g },
+      { id: 'replacement', label: 'Replacement character', severity: 'error', re: /\uFFFD/g },
+      { id: 'html_entity', label: 'HTML entity', severity: 'warn', re: /&(?:hellip|mdash|rsquo|lsquo|rdquo|ldquo|nbsp|#\d+|#x[0-9a-fA-F]+);/g },
+      { id: 'json_escape', label: 'JSON unicode escape', severity: 'warn', re: /\\u[0-9a-fA-F]{4}/g },
+      { id: 'latin_snowman', label: 'Latin-1 snowman', severity: 'warn', re: /Ã[^\s]{0,2}Â/g },
+    ];
+
+    const TEXT_PATTERNS = [
+      { id: 'l_not_I', label: '"l" instead of "I"', severity: 'warn', re: /"l\s+[a-z]/g, hint: 'Use capital I, not lowercase l' },
+      { id: 'double_period', label: 'Double period (..)', severity: 'info', re: /[^.]\.\.(?:\s|$|-|,)/g, hint: 'Use ... for ellipsis' },
+      { id: 'maybe_grammar', label: 'Grammar: "it maybe"', severity: 'warn', re: /\bit maybe\b/gi, hint: 'Should be "it may be"' },
+      { id: 'its_combination', label: 'Grammar: "its combination"', severity: 'warn', re: /\bits combination\b/gi, hint: 'Should be "it\'s combination"' },
+      { id: 'longing_for_for', label: 'Redundant "for"', severity: 'warn', re: /longing for"/gi, hint: '"for which I was longing" — drop extra "for"' },
+      { id: 'oh_dot_parrot', label: 'Punctuation: "Oh."', severity: 'info', re: /"Oh\.\s+[a-z]/g, hint: 'Likely "Oh," not "Oh."' },
+    ];
+
+    const TIMESTAMP_RE = /\d{2}:\d{2}:\d{2}[.,]\d{3}|\d{2}:\d{2}[.,]\d{3}/;
+    const TS_RE = new RegExp(`^\\s*(${TIMESTAMP_RE.source})\\s*-->\\s*(${TIMESTAMP_RE.source})(?:\\s+.*)?$`);
+
+    function lineNumber(text, index) {
+      return text.slice(0, index).split('\n').length;
+    }
+
+    function contextLine(text, index) {
+      const lines = text.split('\n');
+      const num = lineNumber(text, index) - 1;
+      return lines[num] || '';
+    }
+
+    function formatMs(ms) {
+      const h = Math.floor(ms / 3600000);
+      const m = Math.floor((ms % 3600000) / 60000);
+      const s = Math.floor((ms % 60000) / 1000);
+      const msPart = ms % 1000;
+      return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}.${String(msPart).padStart(3, '0')}`;
+    }
+
+    function findCueAtLine(lineNum, cues) {
+      for (const cue of cues) {
+        if (lineNum >= cue.lineStart && lineNum <= cue.lineEnd) return cue;
+      }
+      return null;
+    }
+
+    function attachCueTiming(issues, cues) {
+      return issues.map((issue) => {
+        const cue = findCueAtLine(issue.line, cues);
+        if (!cue) return { ...issue, cueId: null, timestamp: null };
+        return {
+          ...issue,
+          cueId: cue.id,
+          timestamp: cue.timestamp || `${formatMs(cue.start)} → ${formatMs(cue.end)}`,
+          timeStart: cue.start,
+        };
+      });
+    }
+
+    function issueSortKey(issue) {
+      return issue.timeStart ?? issue.line * 1e9;
+    }
+
+    function parseTimestamp(ts) {
+      const norm = ts.replace(',', '.');
+      const parts = norm.split(':');
+      const rest = parts.pop();
+      const m = parts.pop() || '0';
+      const h = parts.pop() || '0';
+      const [sec, ms] = rest.split('.');
+      return (+h * 3600000) + (+m * 60000) + (+sec * 1000) + (+ms || 0);
+    }
+
+    function parseCues(text) {
+      const lines = text.split('\n');
+      const cues = [];
+      let i = 0;
+
+      while (i < lines.length) {
+        const line = lines[i].trim();
+        let id = null;
+        let tsLine = i;
+        let tsMatch = lines[i].match(TS_RE);
+
+        if (!tsMatch && line && i + 1 < lines.length) {
+          const nextMatch = lines[i + 1].match(TS_RE);
+          if (nextMatch) {
+            id = line;
+            tsLine = i + 1;
+            tsMatch = nextMatch;
+          }
+        }
+
+        if (tsMatch) {
+          const start = parseTimestamp(tsMatch[1]);
+          const end = parseTimestamp(tsMatch[2]);
+          const textLines = [];
+          let j = tsLine + 1;
+          while (j < lines.length && lines[j].trim() !== '') {
+            const currentIsCueStart = TS_RE.test(lines[j])
+              || (lines[j].trim() && j + 1 < lines.length && TS_RE.test(lines[j + 1]));
+            if (textLines.length > 0 && currentIsCueStart) break;
+            textLines.push(lines[j]);
+            j++;
+          }
+          cues.push({
+            id: id || cues.length + 1,
+            start,
+            end,
+            text: textLines,
+            line: tsLine + 1,
+            lineStart: id ? i + 1 : tsLine + 1,
+            lineEnd: Math.max(tsLine + 1, j),
+            timestamp: `${tsMatch[1].replace(',', '.')} → ${tsMatch[2].replace(',', '.')}`,
+          });
+          i = j;
+          continue;
+        }
+        i++;
+      }
+      return cues;
+    }
+
+    function scanPatterns(text, patterns, category) {
+      const issues = [];
+      patterns.forEach((p, priority) => {
+        const re = new RegExp(p.re.source, p.re.flags.includes('g') ? p.re.flags : p.re.flags + 'g');
+        let m;
+        while ((m = re.exec(text)) !== null) {
+          issues.push({
+            category,
+            severity: p.severity,
+            kind: p.id,
+            label: p.label,
+            match: m[0],
+            line: lineNumber(text, m.index),
+            context: contextLine(text, m.index).trim(),
+            hint: p.hint || '',
+            index: m.index,
+            end: m.index + m[0].length,
+            priority,
+          });
+        }
+      });
+      return issues;
+    }
+
+    function rangesOverlap(a, b) {
+      return a.index < b.end && b.index < a.end;
+    }
+
+    function dedupeEncodingIssues(issues) {
+      const sorted = [...issues].sort((a, b) => {
+        if (a.index !== b.index) return a.index - b.index;
+        if (a.priority !== b.priority) return a.priority - b.priority;
+        return (b.end - b.index) - (a.end - a.index);
+      });
+
+      const kept = [];
+      for (const issue of sorted) {
+        const overlaps = kept.some((existing) => rangesOverlap(existing, issue));
+        if (!overlaps) kept.push(issue);
+      }
+      return kept.sort((a, b) => a.index - b.index);
+    }
+
+    function analyzeStructure(text, cues) {
+      const issues = [];
+      const header = text.trimStart().slice(0, 20);
+
+      if (/^WEBVTT/i.test(text.trimStart()) || cues.length > 0) {
+        if (!/^WEBVTT/i.test(text.trimStart()) && cues.length > 0) {
+          issues.push({
+            category: 'structure',
+            severity: 'info',
+            kind: 'no_webvtt_header',
+            label: 'Missing WEBVTT header',
+            match: '',
+            line: 1,
+            context: header,
+            hint: 'WEBVTT files should start with "WEBVTT"',
+          });
+        }
+      }
+
+      for (const cue of cues) {
+        if (cue.end <= cue.start) {
+          issues.push({
+            category: 'structure',
+            severity: 'error',
+            kind: 'bad_duration',
+            label: 'End before start',
+            match: `cue ${cue.id}`,
+            line: cue.line,
+            context: cue.text.join(' | '),
+            hint: '',
+          });
+        }
+      }
+
+      for (let n = 1; n < cues.length; n++) {
+        const prev = cues[n - 1];
+        const cur = cues[n];
+        if (cur.start < prev.end) {
+          issues.push({
+            category: 'structure',
+            severity: 'warn',
+            kind: 'overlap',
+            label: 'Overlapping cues',
+            match: `${prev.id} → ${cur.id}`,
+            line: cur.line,
+            context: cur.text.join(' | '),
+            hint: `${((prev.end - cur.start) / 1000).toFixed(2)}s overlap`,
+          });
+        }
+      }
+
+      for (const cue of cues) {
+        if (!cue.text.length) {
+          issues.push({
+            category: 'structure',
+            severity: 'warn',
+            kind: 'empty_cue',
+            label: 'Empty cue',
+            match: `cue ${cue.id}`,
+            line: cue.line,
+            context: '',
+            hint: '',
+          });
+        }
+      }
+
+      return issues;
+    }
+
+    function suspicionScore(text) {
+      const suspicious = (text.match(/[ÃÂâ€]/g) || []).length;
+      return text.length ? suspicious / text.length : 0;
+    }
+
+    // Windows-1252 decode table (bytes 0x80-0x9F)
+    const CP1252_HIGH = [
+      0x20AC, 0x0081, 0x201A, 0x0192, 0x201E, 0x2026, 0x2020, 0x2021,
+      0x02C6, 0x2030, 0x0160, 0x2039, 0x0152, 0x008D, 0x017D, 0x008F,
+      0x0090, 0x2018, 0x2019, 0x201C, 0x201D, 0x2022, 0x2013, 0x2014,
+      0x02DC, 0x2122, 0x0161, 0x203A, 0x0153, 0x009D, 0x017E, 0x0178,
+    ];
+
+    const CP1252_ENCODE = new Map();
+    for (let i = 0; i < CP1252_HIGH.length; i++) {
+      CP1252_ENCODE.set(CP1252_HIGH[i], 0x80 + i);
+    }
+
+    function encodeCp1252(str) {
+      const bytes = [];
+      for (const ch of str) {
+        const code = ch.charCodeAt(0);
+        if (code <= 0xFF) {
+          bytes.push(code);
+        } else if (CP1252_ENCODE.has(code)) {
+          bytes.push(CP1252_ENCODE.get(code));
+        } else {
+          throw new Error(`Cannot encode U+${code.toString(16)} in CP1252`);
+        }
+      }
+      return new Uint8Array(bytes);
+    }
+
+    function encodeLatin1(str) {
+      const bytes = [];
+      for (const ch of str) {
+        const code = ch.charCodeAt(0);
+        if (code > 0xFF) throw new Error(`Cannot encode U+${code.toString(16)} in Latin-1`);
+        bytes.push(code);
+      }
+      return new Uint8Array(bytes);
+    }
+
+    function bytesToUtf8(bytes) {
+      return new TextDecoder('utf-8').decode(bytes);
+    }
+
+    function cp1252ToUtf8(str) {
+      return bytesToUtf8(encodeCp1252(str));
+    }
+
+    function latin1ToUtf8(str) {
+      return bytesToUtf8(encodeLatin1(str));
+    }
+
+    function decodeCp1252Bytes(bytes) {
+      try {
+        return new TextDecoder('windows-1252').decode(bytes);
+      } catch (_) {
+        let out = '';
+        for (const byte of bytes) {
+          if (byte >= 0x80 && byte <= 0x9F) {
+            out += String.fromCodePoint(CP1252_HIGH[byte - 0x80]);
+          } else {
+            out += String.fromCharCode(byte);
+          }
+        }
+        return out;
+      }
+    }
+
+    function decodeLatin1Bytes(bytes) {
+      let out = '';
+      for (const byte of bytes) out += String.fromCharCode(byte);
+      return out;
+    }
+
+    function decodeScore(text) {
+      const mojibake = countMojibake(text);
+      const replacements = (text.match(/\uFFFD/g) || []).length;
+      return (mojibake.error * 10) + (mojibake.warn * 2) + (replacements * 10) + suspicionScore(text);
+    }
+
+    function decodeUploadedBytes(bytes) {
+      try {
+        return {
+          text: new TextDecoder('utf-8', { fatal: true }).decode(bytes),
+          encoding: 'UTF-8',
+          validUtf8: true,
+          issue: null,
+        };
+      } catch (_) {
+        const candidates = [
+          { encoding: 'Windows-1252', text: decodeCp1252Bytes(bytes) },
+          { encoding: 'Latin-1', text: decodeLatin1Bytes(bytes) },
+          { encoding: 'UTF-8 replacement', text: new TextDecoder('utf-8').decode(bytes) },
+        ].sort((a, b) => decodeScore(a.text) - decodeScore(b.text));
+
+        const best = candidates[0];
+        return {
+          text: best.text,
+          encoding: best.encoding,
+          validUtf8: false,
+          issue: {
+            category: 'encoding',
+            severity: 'error',
+            kind: 'invalid_utf8_upload',
+            label: 'Uploaded file is not valid UTF-8',
+            match: best.encoding,
+            line: 1,
+            context: '',
+            hint: `Decoded as ${best.encoding} for analysis. Save/download as UTF-8 before publishing.`,
+          },
+        };
+      }
+    }
+
+    // Known hybrid sequences where CP1252 round-trip needs a manual last-byte fix
+    const HYBRID_SUFFIX_MAP = new Map([
+      ['\u00A6', '\u2026'], // ¦ -> …
+      ['\u2122', '\u2019'], // ™ -> '
+      ['\u0153', '\u201C'], // œ -> "
+      ['\u009D', '\u201D'], // control 0x9D -> "
+    ]);
+
+    const HYBRID_PREFIX = 'Ã¢Â€Â';
+    const DOUBLE_CP1252_PREFIX = 'Ã¢â‚¬';
+
+    const SINGLE_MOJIBAKE = new Map([
+      ['â€¦', '\u2026'],
+      ['â€™', '\u2019'],
+      ['â€œ', '\u201C'],
+      ['â€\u009D', '\u201D'],
+      ['â€"', '\u2014'],
+    ]);
+
+    function fixHybridSequence(chunk) {
+      if (!chunk.startsWith(HYBRID_PREFIX) || chunk.length < HYBRID_PREFIX.length + 1) {
+        return null;
+      }
+      const suffix = chunk.slice(HYBRID_PREFIX.length);
+      if (suffix.length !== 1) return null;
+
+      try {
+        return latin1ToUtf8(cp1252ToUtf8(chunk));
+      } catch (_) {
+        return HYBRID_SUFFIX_MAP.get(suffix) || null;
+      }
+    }
+
+    function fixDoubleCp1252Sequence(chunk) {
+      if (!chunk.startsWith(DOUBLE_CP1252_PREFIX) || chunk.length < DOUBLE_CP1252_PREFIX.length + 1) {
+        return null;
+      }
+      try {
+        return cp1252ToUtf8(cp1252ToUtf8(chunk));
+      } catch (_) {
+        const suffix = chunk.slice(DOUBLE_CP1252_PREFIX.length);
+        const single = 'â€' + suffix;
+        return SINGLE_MOJIBAKE.get(single) || null;
+      }
+    }
+
+    function tryFixEncoding(text) {
+      const beforeHits = countMojibake(text).error;
+      if (beforeHits === 0) return { text, fixed: 0, beforeHits, afterHits: 0 };
+
+      let result = '';
+      let i = 0;
+
+      while (i < text.length) {
+        let replaced = false;
+
+        if (text.startsWith(HYBRID_PREFIX, i)) {
+          const chunk = text.slice(i, i + HYBRID_PREFIX.length + 1);
+          const fixed = fixHybridSequence(chunk);
+          if (fixed) {
+            result += fixed;
+            i += chunk.length;
+            replaced = true;
+          }
+        }
+
+        if (!replaced && text.startsWith(DOUBLE_CP1252_PREFIX, i)) {
+          const chunk = text.slice(i, i + DOUBLE_CP1252_PREFIX.length + 1);
+          const fixed = fixDoubleCp1252Sequence(chunk);
+          if (fixed) {
+            result += fixed;
+            i += chunk.length;
+            replaced = true;
+          }
+        }
+
+        if (!replaced) {
+          for (const [bad, good] of SINGLE_MOJIBAKE) {
+            if (text.startsWith(bad, i)) {
+              result += good;
+              i += bad.length;
+              replaced = true;
+              break;
+            }
+          }
+        }
+
+        if (!replaced) {
+          result += text[i];
+          i++;
+        }
+      }
+
+      // Second pass: single-step CP1252 mojibake via round-trip on whole text lines
+      try {
+        const pass2 = cp1252ToUtf8(result);
+        if (countMojibake(pass2).error < countMojibake(result).error) {
+          result = pass2;
+        }
+      } catch (_) {}
+
+      // Third pass: Latin-1 round-trip for remaining snowman patterns
+      try {
+        const pass3 = latin1ToUtf8(result);
+        if (countMojibake(pass3).error < countMojibake(result).error) {
+          result = pass3;
+        }
+      } catch (_) {}
+
+      const afterHits = countMojibake(result).error;
+      return { text: result, fixed: beforeHits - afterHits, beforeHits, afterHits };
+    }
+
+    function countMojibake(text) {
+      let error = 0;
+      let warn = 0;
+      for (const p of MOJIBAKE_PATTERNS) {
+        const matches = text.match(new RegExp(p.re.source, 'g')) || [];
+        if (p.severity === 'error') error += matches.length;
+        else warn += matches.length;
+      }
+      return { error, warn };
+    }
+
+    function analyze(text, sourceInfo = null) {
+      const cues = parseCues(text);
+      const encodingIssues = dedupeEncodingIssues(scanPatterns(text, MOJIBAKE_PATTERNS, 'encoding'));
+      const textIssues = scanPatterns(text, TEXT_PATTERNS, 'text');
+      const structureIssues = analyzeStructure(text, cues);
+      const sourceIssues = sourceInfo && sourceInfo.issue ? [sourceInfo.issue] : [];
+      const all = attachCueTiming(
+        [...sourceIssues, ...encodingIssues, ...textIssues, ...structureIssues],
+        cues,
+      ).sort((a, b) => issueSortKey(a) - issueSortKey(b));
+      const score = suspicionScore(text);
+      const mojibake = countMojibake(text);
+
+      const errors = all.filter(i => i.severity === 'error').length;
+      const warnings = all.filter(i => i.severity === 'warn').length;
+
+      let verdict = 'pass';
+      let verdictText = 'No critical issues found.';
+      if (mojibake.error > 0 || errors > 0) {
+        verdict = 'fail';
+        verdictText = `Found ${mojibake.error} encoding corruption(s) and ${errors} error(s). Fix before publishing.`;
+      } else if (warnings > 0 || score > 0.001) {
+        verdict = 'warn';
+        verdictText = `No encoding corruption, but ${warnings} warning(s) to review.`;
+      }
+
+      return {
+        cues,
+        issues: all,
+        score,
+        mojibake,
+        errors,
+        warnings,
+        verdict,
+        verdictText,
+        format: /^WEBVTT/i.test(text.trimStart()) ? 'WEBVTT' : (cues.length ? 'SRT-like' : 'Unknown'),
+      };
+    }
+
+    function renderResults(result) {
+      const resultsEl = document.getElementById('results');
+      const placeholderEl = document.getElementById('results-placeholder');
+      const verdictEl = document.getElementById('verdict');
+      const summaryEl = document.getElementById('summary');
+      const listEl = document.getElementById('issue-list');
+      const tabsEl = document.getElementById('tabs');
+
+      resultsEl.classList.remove('hidden');
+      placeholderEl.classList.add('hidden');
+      verdictEl.className = `verdict ${result.verdict}`;
+      verdictEl.textContent = result.verdictText;
+
+      const stats = [
+        { label: 'Format', value: result.format, cls: '' },
+        { label: 'Cues', value: result.cues.length, cls: '' },
+        { label: 'Encoding errors', value: result.mojibake.error, cls: result.mojibake.error ? 'fail' : 'pass' },
+        { label: 'Warnings', value: result.warnings, cls: result.warnings ? 'warn' : 'pass' },
+        { label: 'Suspicion ratio', value: (result.score * 100).toFixed(3) + '%', cls: result.score > 0.001 ? 'warn' : 'pass' },
+        { label: 'Total issues', value: result.issues.length, cls: result.issues.length ? 'warn' : 'pass' },
+      ];
+
+      summaryEl.innerHTML = stats.map(s => `
+        <div class="stat ${s.cls}">
+          <div class="value">${s.value}</div>
+          <div class="label">${s.label}</div>
+        </div>
+      `).join('');
+
+      const categories = [
+        { id: 'encoding', label: 'Encoding' },
+        { id: 'text', label: 'Text' },
+        { id: 'structure', label: 'Structure' },
+      ];
+
+      let activeTab = categories.find(c => result.issues.some(i => i.category === c.id))?.id || categories[0].id;
+
+      function renderList() {
+        const filtered = result.issues.filter(i => i.category === activeTab);
+
+        if (!filtered.length) {
+          listEl.innerHTML = '<li class="empty">No issues in this category.</li>';
+          return;
+        }
+
+        const groups = groupIssues(filtered);
+        listEl.innerHTML = groups.map(group => `
+          <li>
+            <div class="issue-group">
+              <div class="issue-anchor">
+                <div class="issue-anchor-title">${group.title}</div>
+                <div class="issue-anchor-meta">${group.meta}</div>
+              </div>
+              <div class="issue-items">
+                ${group.issues.map(issue => {
+                  const detail = renderIssueDetail(issue);
+                  return `
+                    <div class="issue-item">
+                      <span class="badge ${issue.severity}">${issue.severity}</span>
+                      <div class="issue-body">
+                        <div class="issue-title">${escapeHtml(issue.label)}</div>
+                        ${detail ? `<div class="issue-detail">${detail}</div>` : ''}
+                      </div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          </li>
+        `).join('');
+      }
+
+      tabsEl.innerHTML = categories.map(c => {
+        const count = result.issues.filter(i => i.category === c.id).length;
+        return `<button type="button" data-tab="${c.id}" class="${c.id === activeTab ? 'active' : ''}">${c.label} (${count})</button>`;
+      }).join('');
+
+      tabsEl.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeTab = btn.dataset.tab;
+          tabsEl.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.tab === activeTab));
+          renderList();
+        });
+      });
+
+      renderList();
+    }
+
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function highlightIssueText(text, match) {
+      const safeText = escapeHtml(text);
+      if (!match) return safeText;
+      const safeMatch = escapeHtml(match);
+      if (!safeMatch) return safeText;
+      return safeText.replace(safeMatch, `<mark>${safeMatch}</mark>`);
+    }
+
+    function renderIssueDetail(issue) {
+      const parts = [];
+      const context = issue.context || issue.match;
+      if (context) {
+        parts.push(highlightIssueText(context, issue.match));
+      } else if (issue.match) {
+        parts.push(`<mark>${escapeHtml(issue.match)}</mark>`);
+      }
+      if (issue.hint) {
+        parts.push(`<span class="issue-hint">${escapeHtml(issue.hint)}</span>`);
+      }
+      return parts.join(' | ');
+    }
+
+    function groupIssues(issues) {
+      const groups = [];
+      for (const issue of issues) {
+        const key = issue.cueId != null
+          ? `cue:${issue.cueId}:${issue.timestamp || ''}`
+          : `line:${issue.line}`;
+        const title = issue.cueId != null
+          ? `Cue ${escapeHtml(String(issue.cueId))}`
+          : `Line ${issue.line}`;
+        const meta = issue.cueId != null
+          ? [
+              issue.timestamp ? `<span class="time">${escapeHtml(issue.timestamp)}</span>` : '',
+              `Line ${issue.line}`,
+            ].filter(Boolean).join(' · ')
+          : issue.timestamp
+            ? `<span class="time">${escapeHtml(issue.timestamp)}</span>`
+            : 'No cue timing';
+
+        const existing = groups[groups.length - 1];
+        if (existing && existing.key === key) {
+          existing.issues.push(issue);
+        } else {
+          groups.push({ key, title, meta, issues: [issue] });
+        }
+      }
+      return groups;
+    }
+
+    const contentEl = document.getElementById('content');
+    const fileEl = document.getElementById('file');
+    const downloadEl = document.getElementById('download');
+    let loadedFileName = '';
+    let loadedDecodeInfo = null;
+
+    function guessExtension(text) {
+      if (/^WEBVTT/i.test(text.trimStart())) return '.vtt';
+      if (/^\d+\s*\n\d{2}:\d{2}:\d{2}/m.test(text)) return '.srt';
+      return '.txt';
+    }
+
+    function downloadFileName() {
+      if (loadedFileName) {
+        const dot = loadedFileName.lastIndexOf('.');
+        if (dot > 0) {
+          return loadedFileName.slice(0, dot) + '-fixed' + loadedFileName.slice(dot);
+        }
+        return loadedFileName + '-fixed';
+      }
+      return 'subtitles-fixed' + guessExtension(contentEl.value);
+    }
+
+    function setDownloadReady(ready) {
+      downloadEl.classList.toggle('hidden', !ready);
+      downloadEl.disabled = !ready;
+    }
+
+    function downloadContent() {
+      const text = contentEl.value;
+      if (!text.trim()) return;
+
+      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = downloadFileName();
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function readFileAsBytes(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(new Uint8Array(reader.result));
+        reader.onerror = () => reject(reader.error || new Error('Could not read file'));
+        reader.readAsArrayBuffer(file);
+      });
+    }
+
+    async function loadSubtitleFile(file) {
+      if (!file) return;
+      loadedFileName = file.name;
+      loadedDecodeInfo = null;
+      setDownloadReady(false);
+      try {
+        const bytes = await readFileAsBytes(file);
+        loadedDecodeInfo = decodeUploadedBytes(bytes);
+        contentEl.value = loadedDecodeInfo.text;
+        setDownloadReady(!loadedDecodeInfo.validUtf8);
+      } catch (err) {
+        alert(`Could not read file: ${err.message}`);
+      }
+    }
+
+    fileEl.addEventListener('change', async () => {
+      await loadSubtitleFile(fileEl.files[0]);
+    });
+
+    contentEl.addEventListener('input', () => {
+      loadedDecodeInfo = null;
+      setDownloadReady(false);
+    });
+
+    document.addEventListener('dragover', (event) => {
+      event.preventDefault();
+      document.body.classList.add('dragover');
+    });
+
+    document.addEventListener('dragleave', (event) => {
+      if (event.relatedTarget == null || !document.body.contains(event.relatedTarget)) {
+        document.body.classList.remove('dragover');
+      }
+    });
+
+    document.addEventListener('drop', async (event) => {
+      event.preventDefault();
+      document.body.classList.remove('dragover');
+      const file = event.dataTransfer?.files?.[0];
+      if (!file) return;
+      await loadSubtitleFile(file);
+    });
+
+    document.getElementById('analyze').addEventListener('click', () => {
+      const text = contentEl.value;
+      if (!text.trim()) {
+        alert('Paste or upload subtitle content first.');
+        return;
+      }
+      renderResults(analyze(text, loadedDecodeInfo));
+    });
+
+    document.getElementById('fix-encoding').addEventListener('click', () => {
+      const text = contentEl.value;
+      if (!text.trim()) return;
+
+      const { text: fixed, fixed: repaired, beforeHits, afterHits } = tryFixEncoding(text);
+
+      if (fixed !== text) {
+        contentEl.value = fixed;
+        loadedDecodeInfo = null;
+        renderResults(analyze(fixed));
+        setDownloadReady(true);
+        const msg = repaired > 0
+          ? `Repaired ${repaired} encoding issue(s). ${beforeHits} → ${afterHits} remaining.`
+          : `Text updated. ${beforeHits} → ${afterHits} encoding issue(s) remaining.`;
+        alert(msg);
+      } else if (beforeHits > 0) {
+        alert(`Could not auto-repair ${beforeHits} encoding issue(s). Pattern may need manual editing.`);
+      } else {
+        alert('No encoding issues detected — nothing to fix.');
+      }
+    });
+
+    document.getElementById('download').addEventListener('click', downloadContent);
+
+    document.getElementById('clear').addEventListener('click', () => {
+      contentEl.value = '';
+      fileEl.value = '';
+      loadedFileName = '';
+      loadedDecodeInfo = null;
+      setDownloadReady(false);
+      document.getElementById('results').classList.add('hidden');
+      document.getElementById('results-placeholder').classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>
