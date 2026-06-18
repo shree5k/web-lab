@@ -145,7 +145,28 @@
       margin: 0 0 0.75rem;
     }
     label { display: block; font-size: 0.85rem; margin-bottom: 0.35rem; }
-    input[type="file"] { font-size: 0.85rem; }
+    label[for="file"] {
+      display: inline-block;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.85rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: #fff;
+      cursor: pointer;
+      margin-bottom: 0.75rem;
+    }
+    label[for="file"]:hover { background: #f0f0f0; }
+    input[type="file"] {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
     textarea {
       width: 100%;
       min-height: 140px;
