@@ -107,10 +107,9 @@
       grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
     }
     .col-results .issue-list {
-      max-height: none;
       flex: 1;
-      min-height: 200px;
-      max-height: 48vh;
+      min-height: 0;
+      max-height: 360px;
       overflow-y: auto;
     }
     .subtitle {
@@ -178,6 +177,13 @@
       border-color: #1a1a1a;
     }
     button.primary:hover { background: #333; }
+    button.ready {
+      background: #0d6b3a;
+      color: #fff;
+      border-color: #0d6b3a;
+      box-shadow: 0 0 0 3px rgba(13, 107, 58, 0.18);
+    }
+    button.ready:hover { background: #0a5a31; }
     button:disabled {
       opacity: 0.45;
       cursor: not-allowed;
@@ -1073,6 +1079,7 @@
     function setDownloadReady(ready) {
       downloadEl.classList.toggle('hidden', !ready);
       downloadEl.disabled = !ready;
+      downloadEl.classList.toggle('ready', ready);
     }
 
     function downloadContent() {
