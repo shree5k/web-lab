@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>sub-rex</title>
   <link rel="icon" type="image/png" href="assets/t-rex-red.png">
+  <link rel="stylesheet" href="../thoughtNoteModalPage/styles.css">
+  <script src="../thoughtNoteModalPage/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     body {
@@ -408,6 +411,18 @@
       </div>
     </div>
   </main>
+
+  <div id="cd-icon" title="Open Thought Note">💿</div>
+
+  <div id="modal-page">
+    <div class="modal-header">
+      <span class="modal-title">Thought Note</span>
+      <button id="close-modal-btn" aria-label="Close modal">×</button>
+    </div>
+    <div class="modal-content-container">
+      <p>Loading notes...</p>
+    </div>
+  </div>
 
   <script>
     const MOJIBAKE_PATTERNS = [
